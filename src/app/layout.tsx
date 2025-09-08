@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { LanguageProvider } from '@/context/language-context';
-import Header from '@/components/header';
 
 export const metadata: Metadata = {
   title: 'Alter Finans',
@@ -23,7 +22,6 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased bg-background">
         <LanguageProvider>
-          <Header />
           {children}
         </LanguageProvider>
         <Toaster />

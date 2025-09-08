@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useRouter } from 'next/navigation';
+import LanguageSwitcher from '@/components/language-switcher';
 
 export default function LoginPage() {
   const { translations } = useLanguage();
@@ -19,7 +20,10 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="container mx-auto flex items-center justify-center min-h-[calc(100vh-80px)] p-4">
+    <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
+       <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-primary">Alter Finans</h1>

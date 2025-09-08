@@ -38,7 +38,7 @@ export default function FinancialDashboard() {
   const balance = totalIncome - totalExpense;
 
   return (
-    <main className="container mx-auto p-4 sm:p-8">
+    <div className="container mx-auto p-4 sm:p-8">
       <header className="flex justify-between items-center mb-8">
         <div>
             <h1 className="text-4xl font-bold text-foreground">{t.title}</h1>
@@ -96,7 +96,7 @@ export default function FinancialDashboard() {
             <CardDescription>{t.income_expense_chart_desc}</CardDescription>
           </CardHeader>
           <CardContent className="pl-2">
-            <ChartContainer config={{}} className="min-h-[350px] w-full">
+             <ChartContainer config={{}} className="min-h-[350px] w-full">
                  <BarChart data={chartData} accessibilityLayer>
                     <CartesianGrid vertical={false} />
                     <XAxis
@@ -144,6 +144,6 @@ export default function FinancialDashboard() {
         </Card>
       </div>
 
-    </main>
+    </div>
   );
 }
