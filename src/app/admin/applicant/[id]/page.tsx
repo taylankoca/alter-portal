@@ -14,6 +14,7 @@ import { useLanguage } from "@/context/language-context";
 const applicantData = {
     name: "Jane Doe",
     email: "jane.doe@example.com",
+    phone: "+1-202-555-0104",
     role: "Software Engineer",
     applied: "2023-10-27",
     experience: "5+ years of experience in full-stack development, specializing in React and Node.js. Led a team of 3 engineers at previous company.",
@@ -88,7 +89,7 @@ export default function ApplicantDetailPage({ params }: { params: { id: string }
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email-subject">{t.email_subject_label}</Label>
-                  <Input id="email-subject" placeholder={t.email_subject_placeholder} />
+                  <Input id="email-subject" placeholder={t.email_subject_placeholder} defaultValue={t.email_subject_placeholder} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email-body">{t.message_label}</Label>
@@ -99,7 +100,7 @@ export default function ApplicantDetailPage({ params }: { params: { id: string }
               <TabsContent value="sms" className="space-y-4 pt-4">
                  <div className="space-y-2">
                   <Label htmlFor="sms-recipient">{t.sms_recipient_label}</Label>
-                  <Input id="sms-recipient" type="tel" placeholder="+1234567890" />
+                  <Input id="sms-recipient" type="tel" defaultValue={applicantData.phone} placeholder="+1234567890" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="sms-body">{t.message_label}</Label>
