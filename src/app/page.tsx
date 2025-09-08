@@ -29,6 +29,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8 flex flex-col items-center">
             <Image src="/alter_logo_ready.png" alt="Alter Portal Logo" width={180} height={50} className="mb-4" />
+            <h1 className="text-4xl font-bold text-primary mb-2">Portal</h1>
             <p className="text-muted-foreground">{t.welcome_back}</p>
         </div>
         <Card>
