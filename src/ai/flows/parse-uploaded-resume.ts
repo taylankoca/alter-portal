@@ -29,32 +29,14 @@ const ParseResumeInputSchema = z.object({
       "A resume file, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'"
     ),
 });
-type ParseResumeInput = z.infer<typeof ParseResumeInputSchema>;
+export type ParseResumeInput = z.infer<typeof ParseResumeInputSchema>;
 
 const ParseResumeOutputSchema = z.object({
   experience: z.array(ExperienceSchema).describe('The extracted work experience from the resume.'),
   education: z.array(EducationSchema).describe('The extracted education history from the resume.'),
 });
-type ParseResumeOutput = z.infer<typeof ParseResumeOutputSchema>;
+export type ParseResumeOutput = z.infer<typeof ParseResumeOutputSchema>;
 
-
-export async function parseUploadedResume(input: ParseResumeInput): Promise<ParseResumeOutput> {
-  return parseUploadedResumeFlow(input);
-}
-
-const prompt = ai.definePrompt({
-  name: 'parseUploadedResumePrompt',
-  input: {schema: ParseResumeInputSchema},
-  output: {schema: ParseResumeOutputSchema},
-  prompt: `You are an expert resume parser. Your task is to analyze the provided resume and extract the user's work experience and education history in a structured format.
-
-Please extract the following information:
-- For work experience, identify the company name, the position or job title, and the years of employment.
-- For education, identify the educational institution, the degree or field of study, and the years of attendance.
-
-Here is the resume:
-{{media url=resumeDataUri}}`,
-});
 
 const parseUploadedResumeFlow = ai.defineFlow(
   {
@@ -63,7 +45,26 @@ const parseUploadedResumeFlow = ai.defineFlow(
     outputSchema: ParseResumeOutputSchema,
   },
   async input => {
+    const prompt = ai.definePrompt({
+      name: 'parseUploadedResumePrompt',
+      input: {schema: ParseResumeInputSchema},
+      output: {schema: ParseResumeOutputSchema},
+      prompt: `You are an expert resume parser. Your task is to analyze the provided resume and extract the user's work experience and education history in a structured format.
+
+Please extract the following information:
+- For work experience, identify the company name, the position or job title, and the years of employment.
+- For education, identify the educational institution, the degree or field of study, and the years of attendance.
+
+Here is the resume:
+{{media url=resumeDataUri}}`,
+    });
+    
     const {output} = await prompt(input);
     return output!;
   }
 );
+
+
+export async function parseUploadedResume(input: ParseResumeInput): Promise<ParseResumeOutput> {
+  return parseUploadedResumeFlow(input);
+}
