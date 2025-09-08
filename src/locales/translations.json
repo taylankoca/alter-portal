@@ -2,7 +2,8 @@
   "tr": {
     "navigation": {
       "home": "Ana Sayfa",
-      "positions": "Açık Pozisyonlar"
+      "positions": "Açık Pozisyonlar",
+      "admin": "Yönetici"
     },
     "home": {
       "title": "Alter Kariyer",
@@ -86,15 +87,23 @@
       "city_placeholder": "Ankara",
       "upload_resume": "CV Yükle",
       "select_resume": "CV Seç",
-      "resume_desc": "PDF veya Word dosyası (Maks. 5MB)",
+      "resume_desc": "PDF veya Word dosyası (Maks. 5MB). Bilgileriniz AI ile otomatik olarak doldurulacaktır.",
       "next_button": "İleri",
       "step2_title": "Profesyonel Detaylar",
-      "step2_desc": "Bize geçmişiniz ve ilgi alanlarınız hakkında daha fazla bilgi verin.",
+      "step2_desc": "CV'nizden alınan bilgileri kontrol edin ve eksikleri tamamlayın.",
       "experience": "İş Deneyimi",
-      "experience_placeholder": "Örn: ABC A.Ş. - Yazılım Geliştirici (2020-2023)",
-      "education": "Eğitim",
-      "education_placeholder": "Örn: Örnek Üniversitesi - Bilgisayar Müh. (2016-2020)",
+      "experience_company": "Kurum",
+      "experience_company_placeholder": "ABC A.Ş.",
+      "experience_position": "Pozisyon",
+      "experience_position_placeholder": "Yazılım Geliştirici",
+      "years": "Yıllar",
+      "years_placeholder": "2020-2023",
       "add_experience": "Deneyim Ekle",
+      "education": "Eğitim",
+      "education_institution": "Kurum",
+      "education_institution_placeholder": "Örnek Üniversitesi",
+      "education_degree": "Bölüm/Derece",
+      "education_degree_placeholder": "Bilgisayar Müh.",
       "add_education": "Eğitim Ekle",
       "hobbies": "Hobiler & İlgi Alanları",
       "hobbies_placeholder": "ör., Yürüyüş, satranç, açık kaynak katkıları",
@@ -105,7 +114,9 @@
         "file_too_large_title": "Dosya çok büyük",
         "file_too_large_desc": "Lütfen 5MB'den küçük bir CV yükleyin.",
         "submit_success_title": "Başvuru Gönderildi!",
-        "submit_success_desc": "Başvurunuz için teşekkür ederiz. Kısa süre içinde sizinle iletişime geçeceğiz."
+        "submit_success_desc": "Başvurunuz için teşekkür ederiz. Kısa süre içinde sizinle iletişime geçeceğiz.",
+        "parse_error_title": "CV Okunurken Hata",
+        "parse_error_desc": "CV'niz ayrıştırılamadı. Lütfen bilgileri manuel olarak girin."
       },
       "validation": {
         "name_min": "İsim en az 2 karakter olmalıdır.",
@@ -166,7 +177,8 @@
   "en": {
     "navigation": {
       "home": "Home",
-      "positions": "Open Positions"
+      "positions": "Open Positions",
+      "admin": "Admin"
     },
     "home": {
       "title": "Alter Careers",
@@ -250,15 +262,23 @@
       "city_placeholder": "New York",
       "upload_resume": "Upload Resume",
       "select_resume": "Select CV",
-      "resume_desc": "PDF or Word file (Max 5MB)",
+      "resume_desc": "PDF or Word file (Max 5MB). Your information will be auto-filled with AI.",
       "next_button": "Next",
       "step2_title": "Professional Details",
-      "step2_desc": "Tell us more about your background and interests.",
+      "step2_desc": "Review the information extracted from your resume and fill in any missing details.",
       "experience": "Work Experience",
-      "experience_placeholder": "e.g., ABC Inc. - Software Developer (2020-2023)",
-      "education": "Education",
-      "education_placeholder": "e.g., Example University - B.S. in CS (2016-2020)",
+      "experience_company": "Company",
+      "experience_company_placeholder": "ABC Inc.",
+      "experience_position": "Position",
+      "experience_position_placeholder": "Software Developer",
+      "years": "Years",
+      "years_placeholder": "2020-2023",
       "add_experience": "Add Experience",
+      "education": "Education",
+      "education_institution": "Institution",
+      "education_institution_placeholder": "Example University",
+      "education_degree": "Degree/Field",
+      "education_degree_placeholder": "B.S. in Computer Science",
       "add_education": "Add Education",
       "hobbies": "Hobbies & Interests",
       "hobbies_placeholder": "e.g., Hiking, chess, open-source contributions",
@@ -269,7 +289,9 @@
         "file_too_large_title": "File too large",
         "file_too_large_desc": "Please upload a resume smaller than 5MB.",
         "submit_success_title": "Application Submitted!",
-        "submit_success_desc": "Thank you for your application. We will be in touch shortly."
+        "submit_success_desc": "Thank you for your application. We will be in touch shortly.",
+        "parse_error_title": "Error Parsing Resume",
+        "parse_error_desc": "Could not parse your resume. Please enter the details manually."
       },
       "validation": {
         "name_min": "Name must be at least 2 characters.",
@@ -330,7 +352,8 @@
   "ru": {
     "navigation": {
       "home": "Главная",
-      "positions": "Открытые вакансии"
+      "positions": "Открытые вакансии",
+      "admin": "Админ"
     },
     "home": {
       "title": "Карьера в Alter",
@@ -414,15 +437,23 @@
       "city_placeholder": "Москва",
       "upload_resume": "Загрузить резюме",
       "select_resume": "Выбрать резюме",
-      "resume_desc": "Файл PDF или Word (макс. 5 МБ)",
+      "resume_desc": "Файл PDF или Word (макс. 5 МБ). Ваша информация будет заполнена автоматически с помощью AI.",
       "next_button": "Далее",
       "step2_title": "Профессиональные данные",
-      "step2_desc": "Расскажите нам больше о своем опыте и интересах.",
+      "step2_desc": "Проверьте информацию, извлеченную из вашего резюме, и заполните недостающие данные.",
       "experience": "Опыт работы",
-      "experience_placeholder": "напр., ООО 'Рога и копыта' - Разработчик (2020-2023)",
-      "education": "Образование",
-      "education_placeholder": "напр., Примерный Университет - Бакалавр (2016-2020)",
+      "experience_company": "Компания",
+      "experience_company_placeholder": "ООО 'Рога и копыта'",
+      "experience_position": "Должность",
+      "experience_position_placeholder": "Разработчик",
+      "years": "Годы",
+      "years_placeholder": "2020-2023",
       "add_experience": "Добавить опыт",
+      "education": "Образование",
+      "education_institution": "Учебное заведение",
+      "education_institution_placeholder": "Примерный Университет",
+      "education_degree": "Специальность/Степень",
+      "education_degree_placeholder": "Бакалавр компьютерных наук",
       "add_education": "Добавить образование",
       "hobbies": "Хобби и интересы",
       "hobbies_placeholder": "например, походы, шахматы, вклад в открытый исходный код",
@@ -433,7 +464,9 @@
         "file_too_large_title": "Файл слишком большой",
         "file_too_large_desc": "Пожалуйста, загрузите резюме размером менее 5 МБ.",
         "submit_success_title": "Заявка отправлена!",
-        "submit_success_desc": "Спасибо за вашу заявку. Мы свяжемся с вами в ближайшее время."
+        "submit_success_desc": "Спасибо за вашу заявку. Мы свяжемся с вами в ближайшее время.",
+        "parse_error_title": "Ошибка при разборе резюме",
+        "parse_error_desc": "Не удалось разобрать ваше резюме. Пожалуйста, введите данные вручную."
       },
       "validation": {
         "name_min": "Имя должно содержать не менее 2 символов.",
