@@ -5,6 +5,16 @@
       "reports": "Raporlar",
       "settings": "Ayarlar"
     },
+    "login": {
+      "welcome_back": "Tekrar hoş geldiniz! Lütfen giriş yapın.",
+      "login_title": "Giriş Yap",
+      "login_description": "Devam etmek için kullanıcı adı ve şifrenizi girin.",
+      "username_label": "Kullanıcı Adı",
+      "username_placeholder": "kullanici.adiniz",
+      "password_label": "Şifre",
+      "password_placeholder": "********",
+      "login_button": "Giriş Yap"
+    },
     "dashboard": {
       "title": "Finansal Durum",
       "description": "Gelir ve giderlerinize genel bir bakış.",
@@ -29,6 +39,16 @@
       "reports": "Reports",
       "settings": "Settings"
     },
+     "login": {
+      "welcome_back": "Welcome back! Please sign in.",
+      "login_title": "Login",
+      "login_description": "Enter your username and password to continue.",
+      "username_label": "Username",
+      "username_placeholder": "your.username",
+      "password_label": "Password",
+      "password_placeholder": "********",
+      "login_button": "Login"
+    },
     "dashboard": {
       "title": "Financial Overview",
       "description": "A general overview of your income and expenses.",
@@ -52,6 +72,16 @@
       "dashboard": "Панель приборов",
       "reports": "Отчеты",
       "settings": "Настройки"
+    },
+    "login": {
+      "welcome_back": "С возвращением! Пожалуйста, войдите в систему.",
+      "login_title": "Войти",
+      "login_description": "Введите имя пользователя и пароль, чтобы продолжить.",
+      "username_label": "Имя пользователя",
+      "username_placeholder": "ваше.имя.пользователя",
+      "password_label": "Пароль",
+      "password_placeholder": "********",
+      "login_button": "Войти"
     },
     "dashboard": {
       "title": "Финансовый обзор",

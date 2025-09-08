@@ -12,7 +12,7 @@ export default function Header() {
     const pathname = usePathname();
 
     const navLinks = [
-        { href: "/", label: translations.navigation.dashboard },
+        { href: "/dashboard", label: translations.navigation.dashboard },
     ];
 
     return (
