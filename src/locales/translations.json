@@ -116,6 +116,14 @@
       }
     },
     "admin": {
+      "auth": {
+        "title": "Yönetici Erişimi",
+        "description": "Yönetici paneline erişmek için lütfen şifreyi girin.",
+        "password_label": "Şifre",
+        "password_placeholder": "Şifreyi girin",
+        "unlock_button": "Kilidi Aç",
+        "incorrect_password": "Yanlış şifre. Lütfen tekrar deneyin."
+      },
       "dashboard": {
         "title": "Yönetici Paneli",
         "description": "Adayları arayın ve başvuruları yönetin.",
@@ -272,6 +280,14 @@
       }
     },
     "admin": {
+      "auth": {
+        "title": "Admin Access",
+        "description": "Please enter the password to access the admin dashboard.",
+        "password_label": "Password",
+        "password_placeholder": "Enter password",
+        "unlock_button": "Unlock",
+        "incorrect_password": "Incorrect password. Please try again."
+      },
       "dashboard": {
         "title": "Admin Dashboard",
         "description": "Search for applicants and manage applications.",
@@ -428,6 +444,14 @@
       }
     },
     "admin": {
+      "auth": {
+        "title": "Доступ администратора",
+        "description": "Пожалуйста, введите пароль для доступа к панели администратора.",
+        "password_label": "Пароль",
+        "password_placeholder": "Введите пароль",
+        "unlock_button": "Разблокировать",
+        "incorrect_password": "Неверный пароль. Пожалуйста, попробуйте еще раз."
+      },
       "dashboard": {
         "title": "Панель администратора",
         "description": "Ищите кандидатов и управляйте заявками.",
@@ -468,5 +492,3 @@
     }
   }
 }
-
-    

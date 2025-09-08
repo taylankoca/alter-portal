@@ -11,13 +11,14 @@ function PasswordScreen({ onUnlock }: { onUnlock: () => void }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { translations } = useLanguage();
+  const t = translations.admin.auth;
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === "password") {
       onUnlock();
     } else {
-      setError("Incorrect password. Please try again.");
+      setError(t.incorrect_password);
     }
   };
 
@@ -25,24 +26,24 @@ function PasswordScreen({ onUnlock }: { onUnlock: () => void }) {
     <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Admin Access</CardTitle>
-          <CardDescription>Please enter the password to access the admin dashboard.</CardDescription>
+          <CardTitle>{t.title}</CardTitle>
+          <CardDescription>{t.description}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handlePasswordSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t.password_label}</Label>
               <Input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
+                placeholder={t.password_placeholder}
               />
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
             <Button type="submit" className="w-full">
-              Unlock
+              {t.unlock_button}
             </Button>
           </form>
         </CardContent>
