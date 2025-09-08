@@ -8,34 +8,26 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Search, FileText, ChevronRight, Download } from "lucide-react";
+import { Search, ChevronRight, Download } from "lucide-react";
 
 const applicants = [
   {
     name: "Jane Doe",
     email: "jane.doe@example.com",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
     role: "Software Engineer",
     applied: "2023-10-27",
-    status: "Interviewing",
   },
   {
     name: "John Smith",
     email: "john.smith@example.com",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704e",
     role: "Product Manager",
     applied: "2023-10-25",
-    status: "Pending",
   },
   {
     name: "Emily White",
     email: "emily.white@example.com",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704f",
     role: "UX Designer",
     applied: "2023-10-22",
-    status: "Rejected",
   },
 ];
 
@@ -87,7 +79,6 @@ function AdminDashboard() {
                     <TableHeader>
                       <TableRow>
                         <TableHead>Applicant</TableHead>
-                        <TableHead>Status</TableHead>
                         <TableHead className="text-right">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -96,22 +87,10 @@ function AdminDashboard() {
                         searchResults.map((applicant) => (
                           <TableRow key={applicant.email}>
                             <TableCell>
-                              <div className="flex items-center gap-4">
-                                <Avatar>
-                                  <AvatarImage src={applicant.avatar} alt={applicant.name} />
-                                  <AvatarFallback>{applicant.name.charAt(0)}</AvatarFallback>
-                                </Avatar>
-                                <div>
-                                  <p className="font-medium">{applicant.name}</p>
-                                  <p className="text-sm text-muted-foreground">{applicant.email}</p>
-                                </div>
+                              <div>
+                                <p className="font-medium">{applicant.name}</p>
+                                <p className="text-sm text-muted-foreground">{applicant.email}</p>
                               </div>
-                            </TableCell>
-                            <TableCell>
-                              <Badge variant={
-                                applicant.status === 'Interviewing' ? 'default' :
-                                applicant.status === 'Rejected' ? 'destructive' : 'secondary'
-                              }>{applicant.status}</Badge>
                             </TableCell>
                             <TableCell className="text-right">
                                <Button variant="ghost" size="icon">
@@ -127,7 +106,7 @@ function AdminDashboard() {
                         ))
                       ) : (
                          <TableRow>
-                          <TableCell colSpan={3} className="text-center text-muted-foreground">
+                          <TableCell colSpan={2} className="text-center text-muted-foreground">
                             No results found.
                           </TableCell>
                         </TableRow>
