@@ -14,21 +14,27 @@ const applicants = [
     id: "1",
     name: "Jane Doe",
     email: "jane.doe@example.com",
-    role: "Software Engineer",
+    phone: "+1-202-555-0104",
+    country: "USA",
+    city: "New York",
     applied: "2023-10-27",
   },
   {
     id: "2",
     name: "John Smith",
     email: "john.smith@example.com",
-    role: "Product Manager",
+    phone: "+44-20-7946-0958",
+    country: "UK",
+    city: "London",
     applied: "2023-10-25",
   },
   {
     id: "3",
     name: "Emily White",
     email: "emily.white@example.com",
-    role: "UX Designer",
+    phone: "+90-555-123-4567",
+    country: "Turkey",
+    city: "Ankara",
     applied: "2023-10-22",
   },
 ];
@@ -79,8 +85,11 @@ function AdminDashboard() {
                   <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Applicant</TableHead>
-                      <TableHead>Role</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Email</TableHead>
+                      <TableHead>Phone</TableHead>
+                      <TableHead>Country</TableHead>
+                      <TableHead>City</TableHead>
                       <TableHead>Applied On</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
@@ -88,20 +97,18 @@ function AdminDashboard() {
                   <TableBody>
                     {searchResults.length > 0 ? (
                       searchResults.map((applicant) => (
-                        <TableRow key={applicant.email}>
-                          <TableCell>
-                            <div>
-                              <p className="font-medium">{applicant.name}</p>
-                              <p className="text-sm text-muted-foreground">{applicant.email}</p>
-                            </div>
-                          </TableCell>
-                          <TableCell>{applicant.role}</TableCell>
-                           <TableCell>{applicant.applied}</TableCell>
+                        <TableRow key={applicant.id}>
+                          <TableCell className="font-medium">{applicant.name}</TableCell>
+                          <TableCell>{applicant.email}</TableCell>
+                          <TableCell>{applicant.phone}</TableCell>
+                          <TableCell>{applicant.country}</TableCell>
+                          <TableCell>{applicant.city}</TableCell>
+                          <TableCell>{applicant.applied}</TableCell>
                           <TableCell className="text-right">
                               <Button variant="ghost" size="icon">
-                              <Download className="h-4 w-4" />
-                              <span className="sr-only">Download CV</span>
-                            </Button>
+                                <Download className="h-4 w-4" />
+                                <span className="sr-only">Download CV</span>
+                              </Button>
                             <Button asChild variant="ghost" size="icon">
                               <Link href={`/admin/applicant/${applicant.id}`}>
                                 <ChevronRight className="h-4 w-4" />
@@ -113,7 +120,7 @@ function AdminDashboard() {
                       ))
                     ) : (
                         <TableRow>
-                        <TableCell colSpan={4} className="text-center text-muted-foreground">
+                        <TableCell colSpan={7} className="text-center text-muted-foreground">
                           No results found.
                         </TableCell>
                       </TableRow>
