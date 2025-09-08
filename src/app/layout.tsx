@@ -4,8 +4,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { LanguageProvider } from '@/context/language-context';
 
 export const metadata: Metadata = {
-  title: 'Alter Finans',
-  description: 'Şirketinizin finansal gelir ve giderlerini yönetin.',
+  title: 'Alter Portal',
+  description: 'İş süreçleriniz için modern portal çözümü.',
 };
 
 export default function RootLayout({

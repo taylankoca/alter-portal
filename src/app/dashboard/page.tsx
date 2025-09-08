@@ -1,149 +1,146 @@
+
 "use client";
 
 import { useLanguage } from '@/context/language-context';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { DollarSign, ArrowUpRight, ArrowDownLeft, FileText, PlusCircle } from 'lucide-react';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from '@/components/ui/badge';
+import { ArrowRight, Bell, Calendar, CheckCircle, Clock, Gift, Users } from 'lucide-react';
 
-const chartData = [
-  { month: "Ocak", income: 1860, expense: 800 },
-  { month: "Şubat", income: 3050, expense: 1398 },
-  { month: "Mart", income: 2370, expense: 980 },
-  { month: "Nisan", income: 730, expense: 398 },
-  { month: "Mayıs", income: 2090, expense: 480 },
-  { month: "Haziran", income: 2149, expense: 1180 },
-];
-
-const transactions = [
-    { id: 1, date: "2024-07-28", description: "Yazılım Lisans Ücreti", category: "Yazılım", amount: -250.00 },
-    { id: 2, date: "2024-07-27", description: "Proje A Ödemesi", category: "Müşteri Ödemesi", amount: 5000.00 },
-    { id: 3, date: "2024-07-26", description: "Ofis Malzemeleri", category: "Ofis Giderleri", amount: -150.75 },
-    { id: 4, date: "2024-07-25", description: "Proje B Avans", category: "Müşteri Ödemesi", amount: 2500.00 },
-    { id: 5, date: "2024-07-24", description: "Sunucu Kiralama", category: "IT Giderleri", amount: -75.00 },
-];
-
-const formatCurrency = (amount: number, currency = "TRY") => {
-    return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: currency }).format(amount);
-}
-
-export default function FinancialDashboard() {
+export default function PortalDashboard() {
   const { translations } = useLanguage();
   const t = translations.dashboard;
 
-  const totalIncome = 12289;
-  const totalExpense = 4236.75;
-  const balance = totalIncome - totalExpense;
+  const summaryCards = [
+    { title: t.today_events, value: "3", icon: Calendar, color: "text-blue-500" },
+    { title: t.overdue_tasks, value: "5", icon: Clock, color: "text-red-500" },
+    { title: t.birthdays, value: "2", icon: Gift, color: "text-pink-500" },
+    { title: "Onay Bekleyenler", value: "4", icon: Bell, color: "text-yellow-500" },
+  ];
+
+  const upcomingTasks = [
+      { id: 1, title: "Proje A sunumunu hazırla", dueDate: "2024-09-10", priority: "High" },
+      { id: 2, title: "Müşteri geri bildirimlerini topla", dueDate: "2024-09-12", priority: "Medium" },
+      { id: 3, title: "Q3 raporunu tamamla", dueDate: "2024-09-15", priority_desc: "Yüksek", priority: "High" },
+  ];
+
+  const pendingApprovals = [
+      { id: 1, type: "İzin Formu", applicant: "Ahmet Yılmaz", date: "2024-09-08" },
+      { id: 2, type: "Masraf Formu", applicant: "Ayşe Kaya", date: "2024-09-07" },
+  ]
+
+  const recentActivities = [
+    { id: 1, user: "Zeynep Öztürk", action: "yeni bir görev oluşturdu:", target: "UI/UX Revizyonu", time: "2 saat önce" },
+    { id: 2, user: "Mehmet Demir", action: "projeye bir yorum ekledi:", target: "Mobil Uygulama Geliştirme", time: "5 saat önce" },
+  ]
+
 
   return (
-    <div className="container mx-auto p-4 sm:p-8">
-      <header className="flex justify-between items-center mb-8">
+    <div className="space-y-6">
+      <header className="flex justify-between items-start">
         <div>
-            <h1 className="text-4xl font-bold text-foreground">{t.title}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground">{t.title}</h1>
             <p className="text-muted-foreground">{t.description}</p>
-        </div>
-        <div className="flex gap-2">
-            <Button variant="outline">
-                <FileText className="mr-2 h-4 w-4" />
-                {t.reports_button}
-            </Button>
-            <Button>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                {t.add_transaction_button}
-            </Button>
         </div>
       </header>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t.total_income}</CardTitle>
-            <ArrowUpRight className="h-4 w-4 text-green-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(totalIncome)}</div>
-            <p className="text-xs text-muted-foreground">{t.last_30_days}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t.total_expense}</CardTitle>
-            <ArrowDownLeft className="h-4 w-4 text-red-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(totalExpense)}</div>
-             <p className="text-xs text-muted-foreground">{t.last_30_days}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t.balance}</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(balance)}</div>
-            <p className="text-xs text-muted-foreground">{t.current_balance}</p>
-          </CardContent>
-        </Card>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {summaryCards.map((card, index) => (
+             <Card key={index}>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">{card.title}</CardTitle>
+                    <card.icon className={`h-5 w-5 ${card.color}`} />
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">{card.value}</div>
+                </CardContent>
+            </Card>
+        ))}
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-5">
-        <Card className="lg:col-span-3">
-          <CardHeader>
-            <CardTitle>{t.income_expense_chart_title}</CardTitle>
-            <CardDescription>{t.income_expense_chart_desc}</CardDescription>
-          </CardHeader>
-          <CardContent className="pl-2">
-             <ChartContainer config={{}} className="min-h-[350px] w-full">
-                 <BarChart data={chartData} accessibilityLayer>
-                    <CartesianGrid vertical={false} />
-                    <XAxis
-                        dataKey="month"
-                        tickLine={false}
-                        tickMargin={10}
-                        axisLine={false}
-                    />
-                    <YAxis tickLine={false} axisLine={false} stroke="#888888" fontSize={12} tickFormatter={(value) => `${value/1000}k`}/>
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <Bar dataKey="income" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="expense" fill="hsl(var(--destructive))" radius={[4, 4, 0, 0]} />
-                </BarChart>
-            </ChartContainer>
-          </CardContent>
-        </Card>
-        <Card className="lg:col-span-2">
-            <CardHeader>
-                <CardTitle>{t.recent_transactions_title}</CardTitle>
-                <CardDescription>{t.recent_transactions_desc}</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>{t.table_header_description}</TableHead>
-                            <TableHead className="text-right">{t.table_header_amount}</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {transactions.map((transaction) => (
-                        <TableRow key={transaction.id}>
-                            <TableCell>
-                                <div className="font-medium">{transaction.description}</div>
-                                <div className="text-sm text-muted-foreground">{transaction.date}</div>
-                            </TableCell>
-                            <TableCell className={`text-right font-medium ${transaction.amount > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                {formatCurrency(transaction.amount)}
-                            </TableCell>
-                        </TableRow>
+      <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+        <div className="xl:col-span-2 space-y-6">
+            <Card>
+                <CardHeader className="flex flex-row items-center justify-between">
+                    <div>
+                        <CardTitle>{t.upcoming_tasks_title}</CardTitle>
+                        <CardDescription>{t.upcoming_tasks_desc}</CardDescription>
+                    </div>
+                     <Button variant="ghost" size="sm">
+                        {t.view_all} <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                </CardHeader>
+                <CardContent>
+                    <ul className="space-y-4">
+                        {upcomingTasks.map(task => (
+                            <li key={task.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/50">
+                                <div className='flex items-center gap-3'>
+                                    <CheckCircle className="h-5 w-5 text-muted-foreground" />
+                                    <div>
+                                        <p className="font-medium text-foreground">{task.title}</p>
+                                        <p className="text-sm text-muted-foreground">Son Tarih: {task.dueDate}</p>
+                                    </div>
+                                </div>
+                                <Badge variant={task.priority === 'High' ? 'destructive' : 'secondary'}>{task.priority}</Badge>
+                            </li>
                         ))}
-                    </TableBody>
-                </Table>
-            </CardContent>
-        </Card>
-      </div>
+                    </ul>
+                </CardContent>
+            </Card>
+             <Card>
+                <CardHeader className="flex flex-row items-center justify-between">
+                     <div>
+                        <CardTitle>{t.pending_approvals_title}</CardTitle>
+                        <CardDescription>{t.pending_approvals_desc}</CardDescription>
+                    </div>
+                     <Button variant="ghost" size="sm">
+                        {t.view_all} <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                </CardHeader>
+                <CardContent>
+                    <ul className="space-y-4">
+                        {pendingApprovals.map(approval => (
+                            <li key={approval.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/50">
+                                <div>
+                                    <p className="font-medium text-foreground">{approval.type}</p>
+                                    <p className="text-sm text-muted-foreground">Başvuran: {approval.applicant}</p>
+                                </div>
+                                <Button variant="outline" size="sm">İncele</Button>
+                            </li>
+                        ))}
+                    </ul>
+                </CardContent>
+            </Card>
+        </div>
 
+        <div className="space-y-6">
+             <Card>
+                <CardHeader>
+                    <CardTitle>{t.recent_activity_title}</CardTitle>
+                    <CardDescription>{t.recent_activity_desc}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <ul className="space-y-4">
+                       {recentActivities.map(activity => (
+                             <li key={activity.id} className="flex items-start gap-3">
+                                <Avatar className="h-9 w-9">
+                                     <AvatarImage src={`https://i.pravatar.cc/150?u=${activity.user}`} />
+                                    <AvatarFallback>{activity.user.charAt(0)}</AvatarFallback>
+                                </Avatar>
+                                <div>
+                                    <p className="text-sm">
+                                        <span className="font-medium">{activity.user}</span> {activity.action} <span className="font-medium text-primary">{activity.target}</span>
+                                    </p>
+                                    <p className="text-xs text-muted-foreground">{activity.time}</p>
+                                </div>
+                            </li>
+                       ))}
+                    </ul>
+                </CardContent>
+            </Card>
+        </div>
+      </div>
     </div>
   );
 }

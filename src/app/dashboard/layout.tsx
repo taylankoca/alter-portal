@@ -1,6 +1,7 @@
+
 "use client";
 
-import { Home, PanelLeft, Settings, FileText } from "lucide-react";
+import { Home, PanelLeft, Settings, FolderKanban, CheckSquare, FileText, Calendar } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -25,11 +26,15 @@ export default function DashboardLayout({
 }) {
   const { translations } = useLanguage();
   const pathname = usePathname();
+  const t = translations.navigation;
 
   const navLinks = [
-    { href: "/dashboard", label: translations.navigation.dashboard, icon: Home },
-    { href: "/dashboard/reports", label: translations.navigation.reports, icon: FileText },
-    { href: "/dashboard/settings", label: translations.navigation.settings, icon: Settings },
+    { href: "/dashboard", label: t.dashboard, icon: Home },
+    { href: "/dashboard/projects", label: t.projects, icon: FolderKanban },
+    { href: "/dashboard/tasks", label: t.tasks, icon: CheckSquare },
+    { href: "/dashboard/forms", label: t.forms, icon: FileText },
+    { href: "/dashboard/calendar", label: t.calendar, icon: Calendar },
+    { href: "/dashboard/settings", label: t.settings, icon: Settings },
   ];
 
   return (
@@ -37,7 +42,7 @@ export default function DashboardLayout({
       <Sidebar variant="floating">
         <SidebarHeader>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-semibold text-sidebar-primary">Alter Finans</h1>
+            <h1 className="text-xl font-semibold text-sidebar-primary">Alter Portal</h1>
           </div>
         </SidebarHeader>
         <SidebarContent>
@@ -59,7 +64,7 @@ export default function DashboardLayout({
         </SidebarContent>
       </Sidebar>
       <SidebarInset>
-        <header className="flex items-center justify-between p-4 border-b md:p-6">
+        <header className="flex items-center justify-between p-4 border-b md:p-6 sticky top-0 bg-background/80 backdrop-blur-sm z-10">
             <SidebarTrigger>
                 <PanelLeft />
             </SidebarTrigger>
@@ -68,7 +73,9 @@ export default function DashboardLayout({
               <UserMenu />
             </div>
         </header>
-        {children}
+        <main className="p-4 md:p-6">
+         {children}
+        </main>
         </SidebarInset>
     </SidebarProvider>
   );
