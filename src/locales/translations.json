@@ -91,9 +91,11 @@
       "step2_title": "Profesyonel Detaylar",
       "step2_desc": "Bize geçmişiniz ve ilgi alanlarınız hakkında daha fazla bilgi verin.",
       "experience": "İş Deneyimi",
-      "experience_placeholder": "İş deneyiminizi açıklayın...",
+      "experience_placeholder": "Örn: ABC A.Ş. - Yazılım Geliştirici (2020-2023)",
       "education": "Eğitim",
-      "education_placeholder": "Derecelerinizi ve sertifikalarınızı listeleyin...",
+      "education_placeholder": "Örn: Örnek Üniversitesi - Bilgisayar Müh. (2016-2020)",
+      "add_experience": "Deneyim Ekle",
+      "add_education": "Eğitim Ekle",
       "hobbies": "Hobiler & İlgi Alanları",
       "hobbies_placeholder": "ör., Yürüyüş, satranç, açık kaynak katkıları",
       "hobbies_desc": "Virgülle ayırın.",
@@ -245,9 +247,11 @@
       "step2_title": "Professional Details",
       "step2_desc": "Tell us more about your background and interests.",
       "experience": "Work Experience",
-      "experience_placeholder": "Describe your work experience...",
+      "experience_placeholder": "e.g., ABC Inc. - Software Developer (2020-2023)",
       "education": "Education",
-      "education_placeholder": "List your degrees and certificates...",
+      "education_placeholder": "e.g., Example University - B.S. in CS (2016-2020)",
+      "add_experience": "Add Experience",
+      "add_education": "Add Education",
       "hobbies": "Hobbies & Interests",
       "hobbies_placeholder": "e.g., Hiking, chess, open-source contributions",
       "hobbies_desc": "Separate with commas.",
@@ -399,9 +403,11 @@
       "step2_title": "Профессиональные данные",
       "step2_desc": "Расскажите нам больше о своем опыте и интересах.",
       "experience": "Опыт работы",
-      "experience_placeholder": "Опишите свой опыт работы...",
+      "experience_placeholder": "напр., ООО 'Рога и копыта' - Разработчик (2020-2023)",
       "education": "Образование",
-      "education_placeholder": "Перечислите свои степени и сертификаты...",
+      "education_placeholder": "напр., Примерный Университет - Бакалавр (2016-2020)",
+      "add_experience": "Добавить опыт",
+      "add_education": "Добавить образование",
       "hobbies": "Хобби и интересы",
       "hobbies_placeholder": "например, походы, шахматы, вклад в открытый исходный код",
       "hobbies_desc": "Разделяйте запятыми.",
@@ -462,3 +468,5 @@
     }
   }
 }
+
+    

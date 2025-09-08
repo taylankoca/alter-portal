@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 import { useState, useRef } from "react";
 import {
@@ -16,6 +16,8 @@ import {
   ArrowLeft,
   MapPin,
   Globe,
+  Plus,
+  Trash2,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -40,6 +42,7 @@ import {
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/context/language-context";
+import { cn } from "@/lib/utils";
 
 const createFormSchema = (translations: any) => z.object({
   name: z.string().min(2, { message: translations.form.validation.name_min }),
@@ -48,14 +51,15 @@ const createFormSchema = (translations: any) => z.object({
   country: z.string().min(2, { message: translations.form.validation.country_min }),
   city: z.string().min(2, { message: translations.form.validation.city_min }),
   resume: z.any().optional(),
-  education: z.string().optional(),
-  experience: z.string().optional(),
+  experience: z.array(z.object({ value: z.string() })).optional(),
+  education: z.array(z.object({ value: z.string() })).optional(),
   hobbies: z.string().optional(),
 });
 
 
 export function ApplicationForm() {
   const { translations } = useLanguage();
+  const t = translations.form;
   const [step, setStep] = useState(1);
   const [fileName, setFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -71,21 +75,31 @@ export function ApplicationForm() {
       phone: "",
       country: "",
       city: "",
-      education: "",
-      experience: "",
+      experience: [{ value: "" }],
+      education: [{ value: "" }],
       hobbies: "",
     },
     mode: "onChange",
   });
   
+  const { fields: experienceFields, append: appendExperience, remove: removeExperience } = useFieldArray({
+    control: form.control,
+    name: "experience",
+  });
+
+  const { fields: educationFields, append: appendEducation, remove: removeEducation } = useFieldArray({
+    control: form.control,
+    name: "education",
+  });
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) { // 5MB limit
         toast({
           variant: "destructive",
-          title: translations.form.toast.file_too_large_title,
-          description: translations.form.toast.file_too_large_desc,
+          title: t.toast.file_too_large_title,
+          description: t.toast.file_too_large_desc,
         });
         return;
       }
@@ -108,8 +122,8 @@ export function ApplicationForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     toast({
-      title: translations.form.toast.submit_success_title,
-      description: translations.form.toast.submit_success_desc,
+      title: t.toast.submit_success_title,
+      description: t.toast.submit_success_desc,
     });
     form.reset();
     setFileName(null);
@@ -123,9 +137,9 @@ export function ApplicationForm() {
         {step === 1 && (
            <Card>
             <CardHeader>
-              <CardTitle>{translations.form.step1_title}</CardTitle>
+              <CardTitle>{t.step1_title}</CardTitle>
               <CardDescription>
-                {translations.form.step1_desc}
+                {t.step1_desc}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -134,11 +148,11 @@ export function ApplicationForm() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{translations.form.full_name}</FormLabel>
+                    <FormLabel>{t.full_name}</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input placeholder={translations.form.full_name_placeholder} {...field} className="pl-10" />
+                        <Input placeholder={t.full_name_placeholder} {...field} className="pl-10" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -150,11 +164,11 @@ export function ApplicationForm() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{translations.form.email}</FormLabel>
+                    <FormLabel>{t.email}</FormLabel>
                      <FormControl>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input type="email" placeholder={translations.form.email_placeholder} {...field} className="pl-10" />
+                        <Input type="email" placeholder={t.email_placeholder} {...field} className="pl-10" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -166,11 +180,11 @@ export function ApplicationForm() {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{translations.form.phone}</FormLabel>
+                    <FormLabel>{t.phone}</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input type="tel" placeholder={translations.form.phone_placeholder} {...field} className="pl-10" />
+                        <Input type="tel" placeholder={t.phone_placeholder} {...field} className="pl-10" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -183,11 +197,11 @@ export function ApplicationForm() {
                     name="country"
                     render={({ field }) => (
                     <FormItem>
-                        <FormLabel>{translations.form.country}</FormLabel>
+                        <FormLabel>{t.country}</FormLabel>
                         <FormControl>
                         <div className="relative">
                             <Globe className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input placeholder={translations.form.country_placeholder} {...field} className="pl-10" />
+                            <Input placeholder={t.country_placeholder} {...field} className="pl-10" />
                         </div>
                         </FormControl>
                         <FormMessage />
@@ -199,11 +213,11 @@ export function ApplicationForm() {
                     name="city"
                     render={({ field }) => (
                     <FormItem>
-                        <FormLabel>{translations.form.city}</FormLabel>
+                        <FormLabel>{t.city}</FormLabel>
                         <FormControl>
                         <div className="relative">
                             <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input placeholder={translations.form.city_placeholder} {...field} className="pl-10" />
+                            <Input placeholder={t.city_placeholder} {...field} className="pl-10" />
                         </div>
                         </FormControl>
                         <FormMessage />
@@ -212,11 +226,11 @@ export function ApplicationForm() {
                 />
               </div>
               <FormItem>
-                <FormLabel>{translations.form.upload_resume}</FormLabel>
+                <FormLabel>{t.upload_resume}</FormLabel>
                  <div className="flex items-center space-x-4">
                    <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()}>
                      <UploadCloud className="mr-2 h-4 w-4" />
-                     {translations.form.select_resume}
+                     {t.select_resume}
                    </Button>
                    <Input 
                      ref={fileInputRef}
@@ -233,13 +247,13 @@ export function ApplicationForm() {
                    )}
                 </div>
                 <FormDescription>
-                  {translations.form.resume_desc}
+                  {t.resume_desc}
                 </FormDescription>
               </FormItem>
             </CardContent>
              <CardFooter className="flex justify-end">
                 <Button type="button" onClick={handleNext}>
-                  {translations.form.next_button}
+                  {t.next_button}
                 </Button>
             </CardFooter>
           </Card>
@@ -249,47 +263,79 @@ export function ApplicationForm() {
           <>
             <Card>
               <CardHeader>
-                <CardTitle>{translations.form.step2_title}</CardTitle>
-                <CardDescription>{translations.form.step2_desc}</CardDescription>
+                <CardTitle>{t.step2_title}</CardTitle>
+                <CardDescription>{t.step2_desc}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="experience"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center"><Briefcase className="mr-2 h-4 w-4"/> {translations.form.experience}</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder={translations.form.experience_placeholder} {...field} rows={6} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="education"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center"><GraduationCap className="mr-2 h-4 w-4"/> {translations.form.education}</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder={translations.form.education_placeholder} {...field} rows={4} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="space-y-4">
+                   <FormLabel className="flex items-center"><Briefcase className="mr-2 h-4 w-4"/> {t.experience}</FormLabel>
+                   {experienceFields.map((field, index) => (
+                      <FormField
+                        key={field.id}
+                        control={form.control}
+                        name={`experience.${index}.value`}
+                        render={({ field }) => (
+                          <FormItem className="flex items-center gap-2">
+                             <FormControl>
+                                <Input placeholder={t.experience_placeholder} {...field} />
+                              </FormControl>
+                            {experienceFields.length > 1 && (
+                                <Button type="button" variant="ghost" size="icon" onClick={() => removeExperience(index)} className="shrink-0">
+                                    <Trash2 className="h-4 w-4 text-destructive" />
+                                </Button>
+                            )}
+                          </FormItem>
+                        )}
+                      />
+                   ))}
+                   <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => appendExperience({ value: "" })}>
+                    <Plus className="mr-2 h-4 w-4" /> {t.add_experience}
+                   </Button>
+                </div>
+                 <div className="space-y-4">
+                   <FormLabel className="flex items-center"><GraduationCap className="mr-2 h-4 w-4"/> {t.education}</FormLabel>
+                   {educationFields.map((field, index) => (
+                      <FormField
+                        key={field.id}
+                        control={form.control}
+                        name={`education.${index}.value`}
+                        render={({ field }) => (
+                          <FormItem className="flex items-center gap-2">
+                             <FormControl>
+                                <Input placeholder={t.education_placeholder} {...field} />
+                              </FormControl>
+                            {educationFields.length > 1 && (
+                                <Button type="button" variant="ghost" size="icon" onClick={() => removeEducation(index)} className="shrink-0">
+                                    <Trash2 className="h-4 w-4 text-destructive" />
+                                </Button>
+                            )}
+                          </FormItem>
+                        )}
+                      />
+                   ))}
+                   <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => appendEducation({ value: "" })}>
+                    <Plus className="mr-2 h-4 w-4" /> {t.add_education}
+                   </Button>
+                </div>
                  <FormField
                   control={form.control}
                   name="hobbies"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center"><Heart className="mr-2 h-4 w-4"/> {translations.form.hobbies}</FormLabel>
+                      <FormLabel className="flex items-center"><Heart className="mr-2 h-4 w-4"/> {t.hobbies}</FormLabel>
                       <FormControl>
-                        <Input placeholder={translations.form.hobbies_placeholder} {...field} />
+                        <Input placeholder={t.hobbies_placeholder} {...field} />
                       </FormControl>
                        <FormDescription>
-                        {translations.form.hobbies_desc}
+                        {t.hobbies_desc}
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -300,10 +346,10 @@ export function ApplicationForm() {
 
             <div className="flex justify-between">
               <Button type="button" variant="outline" onClick={handleBack}>
-                <ArrowLeft className="mr-2 h-4 w-4" /> {translations.form.back_button}
+                <ArrowLeft className="mr-2 h-4 w-4" /> {t.back_button}
               </Button>
               <Button type="submit" size="lg">
-                {translations.form.submit_button}
+                {t.submit_button}
               </Button>
             </div>
           </>
@@ -312,3 +358,5 @@ export function ApplicationForm() {
     </Form>
   );
 }
+
+    
