@@ -1,6 +1,7 @@
 
 "use client";
 
+import Image from 'next/image';
 import { useLanguage } from '@/context/language-context';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -26,8 +27,8 @@ export default function LoginPage() {
         <LanguageSwitcher />
       </div>
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-primary">Alter Portal</h1>
+        <div className="text-center mb-8 flex flex-col items-center">
+            <Image src="/alter_logo_ready.png" alt="Alter Portal Logo" width={180} height={50} className="mb-4" />
             <p className="text-muted-foreground">{t.welcome_back}</p>
         </div>
         <Card>
