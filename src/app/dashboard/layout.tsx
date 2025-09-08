@@ -32,7 +32,7 @@ export default function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <Sidebar>
+      <Sidebar variant="floating">
         <SidebarHeader>
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-semibold text-sidebar-primary">Alter Finans</h1>
