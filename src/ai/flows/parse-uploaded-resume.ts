@@ -22,20 +22,20 @@ const EducationSchema = z.object({
   years: z.string().describe('The start and end years of the education. (e.g., "2016-2020")'),
 });
 
-export const ParseResumeInputSchema = z.object({
+const ParseResumeInputSchema = z.object({
   resumeDataUri: z
     .string()
     .describe(
-      "A resume file, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
+      "A resume file, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'"
     ),
 });
-export type ParseResumeInput = z.infer<typeof ParseResumeInputSchema>;
+type ParseResumeInput = z.infer<typeof ParseResumeInputSchema>;
 
-export const ParseResumeOutputSchema = z.object({
+const ParseResumeOutputSchema = z.object({
   experience: z.array(ExperienceSchema).describe('The extracted work experience from the resume.'),
   education: z.array(EducationSchema).describe('The extracted education history from the resume.'),
 });
-export type ParseResumeOutput = z.infer<typeof ParseResumeOutputSchema>;
+type ParseResumeOutput = z.infer<typeof ParseResumeOutputSchema>;
 
 
 export async function parseUploadedResume(input: ParseResumeInput): Promise<ParseResumeOutput> {
