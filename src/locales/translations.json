@@ -110,6 +110,9 @@
       "hobbies_desc": "Virgülle ayırın.",
       "back_button": "Geri",
       "submit_button": "Başvuruyu Gönder",
+      "description": "Açıklama",
+      "experience_description_placeholder": "Sorumluluklarınızı ve başarılarınızı kısaca açıklayın...",
+      "education_description_placeholder": "Başarılar veya özel projeler gibi ek detayları belirtin...",
       "toast": {
         "file_too_large_title": "Dosya çok büyük",
         "file_too_large_desc": "Lütfen 5MB'den küçük bir CV yükleyin.",
@@ -285,6 +288,9 @@
       "hobbies_desc": "Separate with commas.",
       "back_button": "Back",
       "submit_button": "Submit Application",
+      "description": "Description",
+      "experience_description_placeholder": "Briefly describe your responsibilities and achievements...",
+      "education_description_placeholder": "Mention any extra details like honors or special projects...",
       "toast": {
         "file_too_large_title": "File too large",
         "file_too_large_desc": "Please upload a resume smaller than 5MB.",
@@ -460,6 +466,9 @@
       "hobbies_desc": "Разделяйте запятыми.",
       "back_button": "Назад",
       "submit_button": "Отправить заявку",
+      "description": "Описание",
+      "experience_description_placeholder": "Кратко опишите свои обязанности и достижения...",
+      "education_description_placeholder": "Укажите любые дополнительные детали, такие как награды или специальные проекты...",
       "toast": {
         "file_too_large_title": "Файл слишком большой",
         "file_too_large_desc": "Пожалуйста, загрузите резюме размером менее 5 МБ.",

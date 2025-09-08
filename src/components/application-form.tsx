@@ -43,17 +43,21 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/context/language-context";
 import { parseUploadedResume } from "@/ai/flows/parse-uploaded-resume";
+import type { ParseResumeOutput } from "@/ai/schemas";
+import { Textarea } from "./ui/textarea";
 
 const experienceSchema = z.object({
     company: z.string().min(1, 'Required'),
     position: z.string().min(1, 'Required'),
     years: z.string().min(1, 'Required'),
+    description: z.string().optional(),
 });
 
 const educationSchema = z.object({
     institution: z.string().min(1, 'Required'),
     degree: z.string().min(1, 'Required'),
     years: z.string().min(1, 'Required'),
+    description: z.string().optional(),
 });
 
 
@@ -131,27 +135,41 @@ export function ApplicationForm() {
     if (!resumeFile) return;
 
     setIsParsing(true);
+    
+    const goToNextStep = (parsedData?: ParseResumeOutput) => {
+        if (parsedData?.experience?.length) {
+            replaceExperience(parsedData.experience);
+        } else {
+            replaceExperience([{ company: '', position: '', years: '', description: '' }]);
+        }
+
+        if (parsedData?.education?.length) {
+            replaceEducation(parsedData.education);
+        } else {
+            replaceEducation([{ institution: '', degree: '', years: '', description: '' }]);
+        }
+        setStep(2);
+        setIsParsing(false);
+    }
 
     try {
       const reader = new FileReader();
       reader.readAsDataURL(resumeFile);
       reader.onload = async () => {
-        const resumeDataUri = reader.result as string;
-        const parsedData = await parseUploadedResume({ resumeDataUri });
-
-        if (parsedData.experience) {
-            replaceExperience(parsedData.experience);
-        } else {
-            replaceExperience([{ company: '', position: '', years: '' }]);
+        try {
+            const resumeDataUri = reader.result as string;
+            const parsedData = await parseUploadedResume({ resumeDataUri });
+            goToNextStep(parsedData);
+        } catch(e) {
+             console.error("AI Parsing Error:", e);
+              toast({
+                variant: "destructive",
+                title: t.toast.parse_error_title,
+                description: t.toast.parse_error_desc,
+              });
+              // Proceed to next step even if AI fails, with empty fields
+              goToNextStep();
         }
-
-        if (parsedData.education) {
-            replaceEducation(parsedData.education);
-        } else {
-            replaceEducation([{ institution: '', degree: '', years: '' }]);
-        }
-        
-        setStep(2);
       };
       reader.onerror = (error) => {
         console.error("File reading error:", error);
@@ -159,18 +177,14 @@ export function ApplicationForm() {
         setIsParsing(false);
       }
     } catch (error) {
-      console.error("AI Parsing Error:", error);
+      console.error("Form Handling Error:", error);
       toast({
         variant: "destructive",
         title: t.toast.parse_error_title,
         description: t.toast.parse_error_desc,
       });
-      // Proceed to next step even if AI fails, with empty fields
-      replaceExperience([{ company: '', position: '', years: '' }]);
-      replaceEducation([{ institution: '', degree: '', years: '' }]);
-      setStep(2);
-    } finally {
-        setIsParsing(false);
+      // Proceed to next step even if form handling fails, with empty fields
+      goToNextStep();
     }
   };
 
@@ -336,60 +350,75 @@ export function ApplicationForm() {
                 <div className="space-y-4">
                    <FormLabel className="flex items-center text-lg font-semibold"><Briefcase className="mr-2 h-5 w-5"/> {t.experience}</FormLabel>
                    {experienceFields.map((field, index) => (
-                      <div key={field.id} className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto_auto] gap-4 p-4 border rounded-lg relative">
-                          <FormField
-                            control={form.control}
-                            name={`experience.${index}.company`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>{t.experience_company}</FormLabel>
-                                <FormControl>
-                                  <Input placeholder={t.experience_company_placeholder} {...field} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+                      <div key={field.id} className="grid grid-cols-1 gap-4 p-4 border rounded-lg relative">
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <FormField
+                                control={form.control}
+                                name={`experience.${index}.company`}
+                                render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>{t.experience_company}</FormLabel>
+                                    <FormControl>
+                                    <Input placeholder={t.experience_company_placeholder} {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name={`experience.${index}.position`}
+                                render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>{t.experience_position}</FormLabel>
+                                    <FormControl>
+                                    <Input placeholder={t.experience_position_placeholder} {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name={`experience.${index}.years`}
+                                render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>{t.years}</FormLabel>
+                                    <FormControl>
+                                    <Input placeholder={t.years_placeholder} {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                                )}
+                            />
+                          </div>
                            <FormField
                             control={form.control}
-                            name={`experience.${index}.position`}
+                            name={`experience.${index}.description`}
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>{t.experience_position}</FormLabel>
+                                <FormLabel>{t.description}</FormLabel>
                                 <FormControl>
-                                  <Input placeholder={t.experience_position_placeholder} {...field} />
+                                  <Textarea placeholder={t.experience_description_placeholder} {...field} />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
                             )}
                           />
-                           <FormField
-                            control={form.control}
-                            name={`experience.${index}.years`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>{t.years}</FormLabel>
-                                <FormControl>
-                                  <Input placeholder={t.years_placeholder} {...field} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <div className="flex items-end">
-                             {experienceFields.length > 1 && (
+                          {experienceFields.length > 1 && (
+                            <div className="flex justify-end">
                                 <Button type="button" variant="ghost" size="icon" onClick={() => removeExperience(index)} className="shrink-0">
                                     <Trash2 className="h-4 w-4 text-destructive" />
                                 </Button>
-                            )}
-                          </div>
+                            </div>
+                          )}
                       </div>
                    ))}
                    <Button
                     type="button"
                     variant="outline"
                     size="sm"
-                    onClick={() => appendExperience({ company: "", position: "", years: "" })}>
+                    onClick={() => appendExperience({ company: "", position: "", years: "", description: "" })}>
                     <Plus className="mr-2 h-4 w-4" /> {t.add_experience}
                    </Button>
                 </div>
@@ -398,60 +427,75 @@ export function ApplicationForm() {
                  <div className="space-y-4">
                    <FormLabel className="flex items-center text-lg font-semibold"><GraduationCap className="mr-2 h-5 w-5"/> {t.education}</FormLabel>
                    {educationFields.map((field, index) => (
-                      <div key={field.id} className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto_auto] gap-4 p-4 border rounded-lg relative">
+                      <div key={field.id} className="grid grid-cols-1 gap-4 p-4 border rounded-lg relative">
+                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <FormField
+                                control={form.control}
+                                name={`education.${index}.institution`}
+                                render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>{t.education_institution}</FormLabel>
+                                    <FormControl>
+                                    <Input placeholder={t.education_institution_placeholder} {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name={`education.${index}.degree`}
+                                render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>{t.education_degree}</FormLabel>
+                                    <FormControl>
+                                    <Input placeholder={t.education_degree_placeholder} {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name={`education.${index}.years`}
+                                render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>{t.years}</FormLabel>
+                                    <FormControl>
+                                    <Input placeholder={t.years_placeholder} {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                                )}
+                            />
+                         </div>
                          <FormField
                             control={form.control}
-                            name={`education.${index}.institution`}
+                            name={`education.${index}.description`}
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>{t.education_institution}</FormLabel>
+                                <FormLabel>{t.description}</FormLabel>
                                 <FormControl>
-                                  <Input placeholder={t.education_institution_placeholder} {...field} />
+                                  <Textarea placeholder={t.education_description_placeholder} {...field} />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
                             )}
                           />
-                          <FormField
-                            control={form.control}
-                            name={`education.${index}.degree`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>{t.education_degree}</FormLabel>
-                                <FormControl>
-                                  <Input placeholder={t.education_degree_placeholder} {...field} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={form.control}
-                            name={`education.${index}.years`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>{t.years}</FormLabel>
-                                <FormControl>
-                                  <Input placeholder={t.years_placeholder} {...field} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                           <div className="flex items-end">
-                              {educationFields.length > 1 && (
-                                  <Button type="button" variant="ghost" size="icon" onClick={() => removeEducation(index)} className="shrink-0">
-                                      <Trash2 className="h-4 w-4 text-destructive" />
-                                  </Button>
-                              )}
-                           </div>
+                          {educationFields.length > 1 && (
+                            <div className="flex justify-end">
+                                <Button type="button" variant="ghost" size="icon" onClick={() => removeEducation(index)} className="shrink-0">
+                                    <Trash2 className="h-4 w-4 text-destructive" />
+                                </Button>
+                            </div>
+                          )}
                       </div>
                    ))}
                    <Button
                     type="button"
                     variant="outline"
                     size="sm"
-                    onClick={() => appendEducation({ institution: "", degree: "", years: "" })}>
+                    onClick={() => appendEducation({ institution: "", degree: "", years: "", description: "" })}>
                     <Plus className="mr-2 h-4 w-4" /> {t.add_education}
                    </Button>
                 </div>
