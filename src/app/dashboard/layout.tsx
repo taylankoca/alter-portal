@@ -2,6 +2,7 @@
 "use client";
 
 import { Home, PanelLeft, Settings, FolderKanban, CheckSquare, FileText, Calendar } from "lucide-react";
+import Image from "next/image";
 import {
   Sidebar,
   SidebarContent,
@@ -41,8 +42,8 @@ export default function DashboardLayout({
     <SidebarProvider>
       <Sidebar variant="floating">
         <SidebarHeader>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-semibold text-sidebar-primary">Alter Portal</h1>
+          <div className="flex items-center justify-start p-2">
+            <Image src="/alter_logo_ready.png" alt="Alter Portal Logo" width={140} height={40} />
           </div>
         </SidebarHeader>
         <SidebarContent>

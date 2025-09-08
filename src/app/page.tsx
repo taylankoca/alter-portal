@@ -21,13 +21,13 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4 bg-background">
+    <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
        <div className="absolute top-4 right-4">
         <LanguageSwitcher />
       </div>
       <div className="w-full max-w-md">
-        <div className="text-center mb-8 flex flex-col items-center">
-            <h1 className="text-4xl font-bold text-foreground">Alter Portal</h1>
+        <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-primary">Alter Portal</h1>
             <p className="text-muted-foreground">{t.welcome_back}</p>
         </div>
         <Card>
