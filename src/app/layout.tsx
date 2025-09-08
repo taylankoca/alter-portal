@@ -5,8 +5,8 @@ import { LanguageProvider } from '@/context/language-context';
 import Header from '@/components/header';
 
 export const metadata: Metadata = {
-  title: 'Alter Careers',
-  description: 'Submit your application to Alter Careers.',
+  title: 'Alter Finans',
+  description: 'Şirketinizin finansal gelir ve giderlerini yönetin.',
 };
 
 export default function RootLayout({

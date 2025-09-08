@@ -12,8 +12,7 @@ export default function Header() {
     const pathname = usePathname();
 
     const navLinks = [
-        { href: "/", label: translations.navigation.home },
-        { href: "/positions", label: translations.navigation.positions },
+        { href: "/", label: translations.navigation.dashboard },
     ];
 
     return (
@@ -21,7 +20,7 @@ export default function Header() {
             <div className="container mx-auto flex justify-between items-center p-4">
                 <nav className="flex items-center gap-6">
                     <Link href="/" className="text-2xl font-bold text-primary">
-                        Alter
+                        Alter Finans
                     </Link>
                     <div className="hidden md:flex gap-4">
                         {navLinks.map(link => (

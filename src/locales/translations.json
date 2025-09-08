@@ -1,536 +1,74 @@
 {
   "tr": {
     "navigation": {
-      "home": "Ana Sayfa",
-      "positions": "Açık Pozisyonlar",
-      "admin": "Yönetici"
+      "dashboard": "Gösterge Paneli",
+      "reports": "Raporlar",
+      "settings": "Ayarlar"
     },
-    "home": {
-      "title": "Alter Kariyer",
-      "description": "Kariyerinizdeki bir sonraki adım sadece birkaç tık uzağınızda. Başlamak için aşağıdaki genel başvuru formunu doldurun."
-    },
-    "positions": {
-      "title": "Açık Pozisyonlar",
-      "description": "Ekibimize katılacak yetenekli profesyoneller arıyoruz. Mevcut fırsatlarımıza göz atın.",
-      "list_title": "Mevcut Pozisyonlar",
-      "list_description": "İlgilendiğiniz pozisyonun detaylarını görmek için üzerine tıklayın.",
-      "application_label": "Başvuru: ",
-      "jobs": [
-        {
-          "title": "Teknik Ressam",
-          "location": "Ankara Merkez Ofis",
-          "intro": "50 yıllık mühendislik firmamızın Ankara'daki Merkez Ofisinde görevlendirilmek üzere;",
-          "requirements": [
-            "Teknik Lise veya Meslek Yüksek Okul Bölümü Mezunu olmak,",
-            "Alt Yapı Projelerinde mimari- betonarme disiplinlerinde en az 3 yıl iş tecrübesi bulunması,(İller Bankası ve DSİ şartnamelerine uygun sanat yapıları, terfi merkezi pompa istasyonu, su deposu manevra odası, içme suyu isale hatları, su ve atıksu arıtma tesisleri projeleri gibi),",
-            "AutoCad 3D/REVIT çizim programını bilen,",
-            "MS, Windows, Office uygulamalarını kullanabilen,",
-            "Gerektiğinde esnek çalışma saatlerinde mesai yapabilecek ve takım çalışmasına uyumlu,",
-            "Erkek adaylar için askerlikle ilgisi bulunmayan,",
-            "Teknik Ressam işe alınacaktır."
-          ],
-          "application": "Lütfen CV'nizi konu bölümüne Ankara / TR01 referans numarasını yazarak alter@alter.com.tr adresine gönderiniz."
-        },
-        {
-          "title": "Teknik Ressam",
-          "location": "İstanbul Ofis",
-          "intro": "50 yıllık mühendislik firmamızın İstanbul'daki Ofisinde görevlendirilmek üzere;",
-          "requirements": [
-            "Üniversitelerin Yapı Ressamlığı veya İnşaat Teknikerliği bölümlerinden mezun,",
-            "Betonarme yapıların projelendirilmesinde tecrübeli,",
-            "Tercihen mevcut yapıların rölöve ölçümlerini yapabilecek nitelikte,",
-            "Tercihen güçlendirme projelerinin hazırlanmasında tecrübe sahibi,",
-            "Seyahat engeli olmayan ve tercihen aktif araç kullanabilen,",
-            "AutoCad, Civil 3D çizim programlarının en az birine hakim olması",
-            "MS, Windows, Office uygulamalarını kullanabilecek,",
-            "Erkek adaylar için askerlikle ilgisi bulunmayan,",
-            "Teknik Ressam işe alınacaktır."
-          ],
-          "application": "Lütfen CV'nizi konu bölümüne İstanbul/TR01 referans numarasını yazarak alter@alter.com.tr adresine gönderiniz."
-        },
-        {
-          "title": "İnşaat Mühendisi",
-          "location": "İstanbul Ofis",
-          "intro": "50 yıllık mühendislik firmamızın İstanbul Ofisi'nde görevlendirilmek üzere,",
-          "requirements": [
-            "İnşaat Mühendisliği Bölümü'nden mezun,",
-            "Betonarme veya çelik projelendirme konusunda deneyimli,",
-            "Yerel ve uluslararası şartnamelere hakim,",
-            "Sap2000, Etabs yazılımlarını etkin şekilde kullanabilen,",
-            "Tercihen şekil değiştirmeye göre analiz yapabilecek yeterlilikte,",
-            "Tercihen mevcut yapıların rölöve ölçümlerini yapabilecek tecrübede,",
-            "Performans analizi ve güçlendirme projeleri hazırlanması konusunda kendini geliştirmek isteyen,",
-            "Tercihen üniversitelerin Yapı/ Deprem Mühendisliği yüksek lisans programlarında eğitimine devam eden veya bu bölümlerden mezun,",
-            "İletişim ve problem çözme becerileri kuvvetli,",
-            "Sorumluluk sahibi, zaman yönetimi yapabilen, takım çalışmasına yatkın, ",
-            "AutoCAD ve MS Office programlarına hakim,",
-            "Seyahat engeli olmayan ve tercihen aktif araç kullanabilen,",
-            "Erkek adaylar için askerlik görevini yapmış olan,",
-            "İnşaat Mühendisi işe alınacaktır."
-          ],
-          "application": "Lütfen CV'nizi konu bölümüne İstanbul/İM01 referans numarasını yazarak alter@alter.com.tr adresine gönderiniz."
-        }
-      ]
-    },
-    "form": {
-      "step1_title": "Kişisel Bilgiler",
-      "step1_desc": "Lütfen iletişim bilgilerinizi girin ve CV'nizi yükleyin.",
-      "full_name": "Tam Adı",
-      "full_name_placeholder": "Jane Doe",
-      "email": "Email Adresi",
-      "email_placeholder": "jane.doe@example.com",
-      "phone": "Telefon Numarası",
-      "phone_placeholder": "(123) 456-7890",
-      "country": "Ülke",
-      "country_placeholder": "Türkiye",
-      "city": "Şehir",
-      "city_placeholder": "Ankara",
-      "upload_resume": "CV Yükle",
-      "select_resume": "CV Seç",
-      "resume_desc": "PDF veya Word dosyası (Maks. 5MB). Bilgileriniz AI ile otomatik olarak doldurulacaktır.",
-      "next_button": "İleri",
-      "step2_title": "Profesyonel Detaylar",
-      "step2_desc": "CV'nizden alınan bilgileri kontrol edin ve eksikleri tamamlayın.",
-      "experience": "İş Deneyimi",
-      "experience_company": "Kurum",
-      "experience_company_placeholder": "ABC A.Ş.",
-      "experience_position": "Pozisyon",
-      "experience_position_placeholder": "Yazılım Geliştirici",
-      "years": "Yıllar",
-      "years_placeholder": "2020-2023",
-      "add_experience": "Deneyim Ekle",
-      "education": "Eğitim",
-      "education_institution": "Kurum",
-      "education_institution_placeholder": "Örnek Üniversitesi",
-      "education_degree": "Bölüm/Derece",
-      "education_degree_placeholder": "Bilgisayar Müh.",
-      "add_education": "Eğitim Ekle",
-      "hobbies": "Hobiler & İlgi Alanları",
-      "hobbies_placeholder": "ör., Yürüyüş, satranç, açık kaynak katkıları",
-      "hobbies_desc": "Virgülle ayırın.",
-      "back_button": "Geri",
-      "submit_button": "Başvuruyu Gönder",
-      "description": "Açıklama",
-      "experience_description_placeholder": "Sorumluluklarınızı ve başarılarınızı kısaca açıklayın...",
-      "education_description_placeholder": "Başarılar veya özel projeler gibi ek detayları belirtin...",
-      "toast": {
-        "file_too_large_title": "Dosya çok büyük",
-        "file_too_large_desc": "Lütfen 5MB'den küçük bir CV yükleyin.",
-        "submit_success_title": "Başvuru Gönderildi!",
-        "submit_success_desc": "Başvurunuz için teşekkür ederiz. Kısa süre içinde sizinle iletişime geçeceğiz.",
-        "parse_error_title": "CV Okunurken Hata",
-        "parse_error_desc": "CV'niz ayrıştırılamadı. Lütfen bilgileri manuel olarak girin."
-      },
-      "validation": {
-        "name_min": "İsim en az 2 karakter olmalıdır.",
-        "email_invalid": "Lütfen geçerli bir e-posta adresi girin.",
-        "phone_min": "Lütfen geçerli bir telefon numarası girin.",
-        "country_min": "Ülke en az 2 karakter olmalıdır.",
-        "city_min": "Şehir en az 2 karakter olmalıdır."
-      }
-    },
-    "admin": {
-      "auth": {
-        "title": "Yönetici Erişimi",
-        "description": "Yönetici paneline erişmek için lütfen şifreyi girin.",
-        "password_label": "Şifre",
-        "password_placeholder": "Şifreyi girin",
-        "unlock_button": "Kilidi Aç",
-        "incorrect_password": "Yanlış şifre. Lütfen tekrar deneyin."
-      },
-      "dashboard": {
-        "title": "Yönetici Paneli",
-        "description": "Adayları arayın ve başvuruları yönetin.",
-        "search_card_title": "Aday Ara",
-        "search_card_description": "Adayları isme, e-postaya veya anahtar kelimelere göre bulun.",
-        "search_placeholder": "ör., Jane Doe, pazarlama, React",
-        "search_button": "Ara",
-        "results_card_title": "Arama Sonuçları",
-        "results_card_description": "Kriterlerinize uyan {count} aday bulundu.",
-        "table_header_name": "Ad",
-        "table_header_email": "E-posta",
-        "table_header_phone": "Telefon",
-        "table_header_country": "Ülke",
-        "table_header_city": "Şehir",
-        "table_header_applied": "Başvuru Tarihi",
-        "table_header_actions": "Eylemler",
-        "view_details_button": "Detayları Görüntüle",
-        "no_results": "Sonuç bulunamadı."
-      },
-      "applicant_detail": {
-        "back_button": "Adaylara Geri Dön",
-        "applied_for": "{role} pozisyonuna {date} tarihinde başvurdu",
-        "experience_title": "Deneyim",
-        "education_title": "Eğitim",
-        "hobbies_title": "Hobiler",
-        "contact_card_title": "İletişime Geç",
-        "contact_card_description": "Adayla e-posta veya SMS yoluyla iletişime geçin.",
-        "email_recipient_label": "Alıcı E-posta",
-        "email_subject_label": "Konu",
-        "email_subject_placeholder": "Başvurunuz hakkında...",
-        "message_label": "Mesaj",
-        "message_placeholder_email": "Mesajınızı buraya yazın...",
-        "send_email_button": "E-posta Gönder",
-        "sms_recipient_label": "Alıcı Telefon",
-        "message_placeholder_sms": "SMS mesajınızı buraya yazın...",
-        "send_sms_button": "SMS Gönder"
-      }
+    "dashboard": {
+      "title": "Finansal Durum",
+      "description": "Gelir ve giderlerinize genel bir bakış.",
+      "reports_button": "Raporları Görüntüle",
+      "add_transaction_button": "Yeni İşlem Ekle",
+      "total_income": "Toplam Gelir",
+      "total_expense": "Toplam Gider",
+      "balance": "Bakiye",
+      "last_30_days": "Son 30 günün özeti",
+      "current_balance": "Mevcut net bakiye",
+      "income_expense_chart_title": "Gelir & Gider Grafiği",
+      "income_expense_chart_desc": "Son 6 aydaki aylık gelir ve giderleriniz.",
+      "recent_transactions_title": "Son İşlemler",
+      "recent_transactions_desc": "Bu ay yaptığınız son 5 işlem.",
+      "table_header_description": "Açıklama",
+      "table_header_amount": "Tutar"
     }
   },
   "en": {
     "navigation": {
-      "home": "Home",
-      "positions": "Open Positions",
-      "admin": "Admin"
+      "dashboard": "Dashboard",
+      "reports": "Reports",
+      "settings": "Settings"
     },
-    "home": {
-      "title": "Alter Careers",
-      "description": "Your next career step is just a few clicks away. Fill out the general application form below to get started."
-    },
-    "positions": {
-      "title": "Open Positions",
-      "description": "We are looking for talented professionals to join our team. Check out our current opportunities.",
-      "list_title": "Current Positions",
-      "list_description": "Click on a position to see the details.",
-      "application_label": "Application: ",
-      "jobs": [
-        {
-          "title": "Technical Draftsman",
-          "location": "Ankara Head Office",
-          "intro": "To be employed in the Head Office of our 50-year-old engineering company in Ankara;",
-          "requirements": [
-            "Graduated from Technical High School or Vocational School Department,",
-            "At least 3 years of work experience in architectural-reinforced concrete disciplines in Infrastructure Projects (such as art structures, booster center pump stations, water tank maneuvering rooms, drinking water transmission lines, water and wastewater treatment plant projects in accordance with İller Bankası and DSI specifications),",
-            "Knowledge of AutoCAD 3D/REVIT drawing program,",
-            "Ability to use MS, Windows, Office applications,",
-            "Adaptable to flexible working hours and teamwork when necessary,",
-            "For male candidates, no military service obligation,",
-            "A Technical Draftsman will be hired."
-          ],
-          "application": "Please send your CV to alter@alter.com.tr with the reference number Ankara / TR01 in the subject line."
-        },
-        {
-          "title": "Technical Draftsman",
-          "location": "Istanbul Office",
-          "intro": "To be employed in the Istanbul Office of our 50-year-old engineering company;",
-          "requirements": [
-            "Graduated from the departments of Building Drafting or Construction Technician,",
-            "Experienced in the projecting of reinforced concrete structures,",
-            "Preferably able to perform as-built surveys of existing structures,",
-            "Preferably experienced in the preparation of strengthening projects,",
-            "No travel restrictions and preferably an active driver,",
-            "Proficient in at least one of AutoCAD, Civil 3D drawing programs,",
-            "Ability to use MS, Windows, Office applications,",
-            "For male candidates, no military service obligation,",
-            "A Technical Draftsman will be hired."
-          ],
-          "application": "Please send your CV to alter@alter.com.tr with the reference number Istanbul/TR01 in the subject line."
-        },
-        {
-          "title": "Civil Engineer",
-          "location": "Istanbul Office",
-          "intro": "To be employed in the Istanbul Office of our 50-year-old engineering company,",
-          "requirements": [
-            "Graduated from the Civil Engineering Department,",
-            "Experienced in reinforced concrete or steel projecting,",
-            "Familiar with local and international specifications,",
-            "Able to use Sap2000, Etabs software effectively,",
-            "Preferably competent in analysis based on deformation,",
-            "Preferably experienced in performing as-built surveys of existing structures,",
-            "Willing to improve in performance analysis and preparation of strengthening projects,",
-            "Preferably continuing education in or graduated from master's programs in Structural/Earthquake Engineering,",
-            "Strong communication and problem-solving skills,",
-            "Responsible, with time management skills, and prone to teamwork,",
-            "Proficient in AutoCAD and MS Office programs,",
-            "No travel restrictions and preferably an active driver,",
-            "For male candidates, military service must be completed,",
-            "A Civil Engineer will be hired."
-          ],
-          "application": "Please send your CV to alter@alter.com.tr with the reference number Istanbul/İM01 in the subject line."
-        }
-      ]
-    },
-    "form": {
-      "step1_title": "Personal Information",
-      "step1_desc": "Please enter your contact details and upload your resume.",
-      "full_name": "Full Name",
-      "full_name_placeholder": "Jane Doe",
-      "email": "Email Address",
-      "email_placeholder": "jane.doe@example.com",
-      "phone": "Phone Number",
-      "phone_placeholder": "(123) 456-7890",
-      "country": "Country",
-      "country_placeholder": "USA",
-      "city": "City",
-      "city_placeholder": "New York",
-      "upload_resume": "Upload Resume",
-      "select_resume": "Select CV",
-      "resume_desc": "PDF or Word file (Max 5MB). Your information will be auto-filled with AI.",
-      "next_button": "Next",
-      "step2_title": "Professional Details",
-      "step2_desc": "Review the information extracted from your resume and fill in any missing details.",
-      "experience": "Work Experience",
-      "experience_company": "Company",
-      "experience_company_placeholder": "ABC Inc.",
-      "experience_position": "Position",
-      "experience_position_placeholder": "Software Developer",
-      "years": "Years",
-      "years_placeholder": "2020-2023",
-      "add_experience": "Add Experience",
-      "education": "Education",
-      "education_institution": "Institution",
-      "education_institution_placeholder": "Example University",
-      "education_degree": "Degree/Field",
-      "education_degree_placeholder": "B.S. in Computer Science",
-      "add_education": "Add Education",
-      "hobbies": "Hobbies & Interests",
-      "hobbies_placeholder": "e.g., Hiking, chess, open-source contributions",
-      "hobbies_desc": "Separate with commas.",
-      "back_button": "Back",
-      "submit_button": "Submit Application",
-      "description": "Description",
-      "experience_description_placeholder": "Briefly describe your responsibilities and achievements...",
-      "education_description_placeholder": "Mention any extra details like honors or special projects...",
-      "toast": {
-        "file_too_large_title": "File too large",
-        "file_too_large_desc": "Please upload a resume smaller than 5MB.",
-        "submit_success_title": "Application Submitted!",
-        "submit_success_desc": "Thank you for your application. We will be in touch shortly.",
-        "parse_error_title": "Error Parsing Resume",
-        "parse_error_desc": "Could not parse your resume. Please enter the details manually."
-      },
-      "validation": {
-        "name_min": "Name must be at least 2 characters.",
-        "email_invalid": "Please enter a valid email address.",
-        "phone_min": "Please enter a valid phone number.",
-        "country_min": "Country must be at least 2 characters.",
-        "city_min": "City must be at least 2 characters."
-      }
-    },
-    "admin": {
-      "auth": {
-        "title": "Admin Access",
-        "description": "Please enter the password to access the admin dashboard.",
-        "password_label": "Password",
-        "password_placeholder": "Enter password",
-        "unlock_button": "Unlock",
-        "incorrect_password": "Incorrect password. Please try again."
-      },
-      "dashboard": {
-        "title": "Admin Dashboard",
-        "description": "Search for applicants and manage applications.",
-        "search_card_title": "Search Applicants",
-        "search_card_description": "Find applicants by name, email, or keywords.",
-        "search_placeholder": "e.g., Jane Doe, marketing, React",
-        "search_button": "Search",
-        "results_card_title": "Search Results",
-        "results_card_description": "Found {count} applicants matching your criteria.",
-        "table_header_name": "Name",
-        "table_header_email": "Email",
-        "table_header_phone": "Phone",
-        "table_header_country": "Country",
-        "table_header_city": "City",
-        "table_header_applied": "Applied On",
-        "table_header_actions": "Actions",
-        "view_details_button": "View Details",
-        "no_results": "No results found."
-      },
-      "applicant_detail": {
-        "back_button": "Back to Applicants",
-        "applied_for": "Applied for {role} on {date}",
-        "experience_title": "Experience",
-        "education_title": "Education",
-        "hobbies_title": "Hobbies",
-        "contact_card_title": "Contact",
-        "contact_card_description": "Contact an applicant via email or SMS.",
-        "email_recipient_label": "Recipient Email",
-        "email_subject_label": "Subject",
-        "email_subject_placeholder": "Regarding your application...",
-        "message_label": "Message",
-        "message_placeholder_email": "Your message here...",
-        "send_email_button": "Send Email",
-        "sms_recipient_label": "Recipient Phone",
-        "message_placeholder_sms": "Your SMS message here...",
-        "send_sms_button": "Send SMS"
-      }
+    "dashboard": {
+      "title": "Financial Overview",
+      "description": "A general overview of your income and expenses.",
+      "reports_button": "View Reports",
+      "add_transaction_button": "Add New Transaction",
+      "total_income": "Total Income",
+      "total_expense": "Total Expense",
+      "balance": "Balance",
+      "last_30_days": "Summary of the last 30 days",
+      "current_balance": "Current net balance",
+      "income_expense_chart_title": "Income & Expense Chart",
+      "income_expense_chart_desc": "Your monthly income and expenses for the last 6 months.",
+      "recent_transactions_title": "Recent Transactions",
+      "recent_transactions_desc": "Your last 5 transactions this month.",
+      "table_header_description": "Description",
+      "table_header_amount": "Amount"
     }
   },
   "ru": {
     "navigation": {
-      "home": "Главная",
-      "positions": "Открытые вакансии",
-      "admin": "Админ"
+      "dashboard": "Панель приборов",
+      "reports": "Отчеты",
+      "settings": "Настройки"
     },
-    "home": {
-      "title": "Карьера в Alter",
-      "description": "Ваш следующий шаг в карьере всего в нескольких кликах. Заполните общую форму заявки ниже, чтобы начать."
-    },
-    "positions": {
-      "title": "Открытые вакансии",
-      "description": "Мы ищем талантливых специалистов для нашей команды. Ознакомьтесь с нашими текущими предложениями.",
-      "list_title": "Текущие вакансии",
-      "list_description": "Нажмите на вакансию, чтобы увидеть подробности.",
-      "application_label": "Заявка: ",
-      "jobs": [
-        {
-          "title": "Техник-чертежник",
-          "location": "Главный офис в Анкаре",
-          "intro": "Для работы в главном офисе нашей 50-летней инженерной компании в Анкаре;",
-          "requirements": [
-            "Выпускник технического лицея или профессионально-технического училища,",
-            "Опыт работы не менее 3 лет в архитектурно-железобетонных дисциплинах в инфраструктурных проектах (таких как художественные сооружения, насосные станции, маневровые комнаты резервуаров для воды, проекты линий передачи питьевой воды, очистных сооружений в соответствии со спецификациями İller Bankası и DSI),",
-            "Знание программы черчения AutoCAD 3D/REVIT,",
-            "Умение использовать приложения MS, Windows, Office,",
-            "Готовность к гибкому графику работы и работе в команде при необходимости,",
-            "Для кандидатов-мужчин — отсутствие воинской обязанности,",
-            "Требуется техник-чертежник."
-          ],
-          "application": "Пожалуйста, отправьте свое резюме по адресу alter@alter.com.tr с указанием референсного номера Ankara / TR01 в теме письма."
-        },
-        {
-          "title": "Техник-чертежник",
-          "location": "Офис в Стамбуле",
-          "intro": "Для работы в стамбульском офисе нашей 50-летней инженерной компании;",
-          "requirements": [
-            "Выпускник факультетов строительного черчения или строительной техники,",
-            "Опыт проектирования железобетонных конструкций,",
-            "Предпочтительно умение выполнять обмеры существующих зданий,",
-            "Предпочтительно опыт подготовки проектов усиления,",
-            "Отсутствие ограничений на командировки и, предпочтительно, наличие водительских прав,",
-            "Владение хотя бы одной из программ черчения AutoCAD, Civil 3D,",
-            "Умение использовать приложения MS, Windows, Office,",
-            "Для кандидатов-мужчин — отсутствие воинской обязанности,",
-            "Требуется техник-чертежник."
-          ],
-          "application": "Пожалуйста, отправьте свое резюме по адресу alter@alter.com.tr с указанием референсного номера Istanbul/TR01 в теме письма."
-        },
-        {
-          "title": "Инженер-строитель",
-          "location": "Офис в Стамбуле",
-          "intro": "Для работы в стамбульском офисе нашей 50-летней инженерной компании,",
-          "requirements": [
-            "Высшее образование по специальности «Промышленное и гражданское строительство»,",
-            "Опыт проектирования железобетонных или стальных конструкций,",
-            "Знание местных и международных стандартов,",
-            "Эффективное использование программ Sap2000, Etabs,",
-            "Предпочтительно умение проводить анализ на основе деформаций,",
-            "Предпочтительно опыт выполнения обмеров существующих зданий,",
-            "Желание развиваться в области анализа производительности и подготовки проектов усиления,",
-            "Предпочтительно продолжение обучения или окончание магистерских программ по конструкциям/сейсмостойкому строительству,",
-            "Сильные коммуникативные навыки и навыки решения проблем,",
-            "Ответственность, умение управлять временем, склонность к командной работе,",
-            "Владение программами AutoCAD и MS Office,",
-            "Отсутствие ограничений на командировки и, предпочтительно, наличие водительских прав,",
-            "Для кандидатов-мужчин — пройденная военная служба,",
-            "Требуется инженер-строитель."
-          ],
-          "application": "Пожалуйста, отправьте свое резюме по адресу alter@alter.com.tr с указанием референсного номера Istanbul/İM01 в теме письма."
-        }
-      ]
-    },
-    "form": {
-      "step1_title": "Личная информация",
-      "step1_desc": "Пожалуйста, введите свои контактные данные и загрузите резюме.",
-      "full_name": "Полное имя",
-      "full_name_placeholder": "Иван Иванов",
-      "email": "Адрес электронной почты",
-      "email_placeholder": "ivan.ivanov@example.com",
-      "phone": "Номер телефона",
-      "phone_placeholder": "(123) 456-7890",
-      "country": "Страна",
-      "country_placeholder": "Россия",
-      "city": "Город",
-      "city_placeholder": "Москва",
-      "upload_resume": "Загрузить резюме",
-      "select_resume": "Выбрать резюме",
-      "resume_desc": "Файл PDF или Word (макс. 5 МБ). Ваша информация будет заполнена автоматически с помощью AI.",
-      "next_button": "Далее",
-      "step2_title": "Профессиональные данные",
-      "step2_desc": "Проверьте информацию, извлеченную из вашего резюме, и заполните недостающие данные.",
-      "experience": "Опыт работы",
-      "experience_company": "Компания",
-      "experience_company_placeholder": "ООО 'Рога и копыта'",
-      "experience_position": "Должность",
-      "experience_position_placeholder": "Разработчик",
-      "years": "Годы",
-      "years_placeholder": "2020-2023",
-      "add_experience": "Добавить опыт",
-      "education": "Образование",
-      "education_institution": "Учебное заведение",
-      "education_institution_placeholder": "Примерный Университет",
-      "education_degree": "Специальность/Степень",
-      "education_degree_placeholder": "Бакалавр компьютерных наук",
-      "add_education": "Добавить образование",
-      "hobbies": "Хобби и интересы",
-      "hobbies_placeholder": "например, походы, шахматы, вклад в открытый исходный код",
-      "hobbies_desc": "Разделяйте запятыми.",
-      "back_button": "Назад",
-      "submit_button": "Отправить заявку",
-      "description": "Описание",
-      "experience_description_placeholder": "Кратко опишите свои обязанности и достижения...",
-      "education_description_placeholder": "Укажите любые дополнительные детали, такие как награды или специальные проекты...",
-      "toast": {
-        "file_too_large_title": "Файл слишком большой",
-        "file_too_large_desc": "Пожалуйста, загрузите резюме размером менее 5 МБ.",
-        "submit_success_title": "Заявка отправлена!",
-        "submit_success_desc": "Спасибо за вашу заявку. Мы свяжемся с вами в ближайшее время.",
-        "parse_error_title": "Ошибка при разборе резюме",
-        "parse_error_desc": "Не удалось разобрать ваше резюме. Пожалуйста, введите данные вручную."
-      },
-      "validation": {
-        "name_min": "Имя должно содержать не менее 2 символов.",
-        "email_invalid": "Пожалуйста, введите действительный адрес электронной почты.",
-        "phone_min": "Пожалуйста, введите действительный номер телефона.",
-        "country_min": "Страна должна содержать не менее 2 символов.",
-        "city_min": "Город должен содержать не менее 2 символов."
-      }
-    },
-    "admin": {
-      "auth": {
-        "title": "Доступ администратора",
-        "description": "Пожалуйста, введите пароль для доступа к панели администратора.",
-        "password_label": "Пароль",
-        "password_placeholder": "Введите пароль",
-        "unlock_button": "Разблокировать",
-        "incorrect_password": "Неверный пароль. Пожалуйста, попробуйте еще раз."
-      },
-      "dashboard": {
-        "title": "Панель администратора",
-        "description": "Ищите кандидатов и управляйте заявками.",
-        "search_card_title": "Поиск кандидатов",
-        "search_card_description": "Найдите кандидатов по имени, электронной почте или ключевым словам.",
-        "search_placeholder": "например, Иван Иванов, маркетинг, React",
-        "search_button": "Поиск",
-        "results_card_title": "Результаты поиска",
-        "results_card_description": "Найдено {count} кандидатов, соответствующих вашим критериям.",
-        "table_header_name": "Имя",
-        "table_header_email": "Эл. почта",
-        "table_header_phone": "Телефон",
-        "table_header_country": "Страна",
-        "table_header_city": "Город",
-        "table_header_applied": "Дата подачи",
-        "table_header_actions": "Действия",
-        "view_details_button": "Посмотреть детали",
-        "no_results": "Результатов не найдено."
-      },
-      "applicant_detail": {
-        "back_button": "Назад к кандидатам",
-        "applied_for": "Подал заявку на {role} {date}",
-        "experience_title": "Опыт",
-        "education_title": "Образование",
-        "hobbies_title": "Хобби",
-        "contact_card_title": "Связаться",
-        "contact_card_description": "Свяжитесь с кандидатом по электронной почте или SMS.",
-        "email_recipient_label": "Эл. почта получателя",
-        "email_subject_label": "Тема",
-        "email_subject_placeholder": "Относительно вашей заявки...",
-        "message_label": "Сообщение",
-        "message_placeholder_email": "Ваше сообщение здесь...",
-        "send_email_button": "Отправить письмо",
-        "sms_recipient_label": "Телефон получателя",
-        "message_placeholder_sms": "Ваше SMS-сообщение здесь...",
-        "send_sms_button": "Отправить SMS"
-      }
+    "dashboard": {
+      "title": "Финансовый обзор",
+      "description": "Общий обзор ваших доходов и расходов.",
+      "reports_button": "Посмотреть отчеты",
+      "add_transaction_button": "Добавить новую транзакцию",
+      "total_income": "Общий доход",
+      "total_expense": "Общий расход",
+      "balance": "Баланс",
+      "last_30_days": "Сводка за последние 30 дней",
+      "current_balance": "Текущий чистый баланс",
+      "income_expense_chart_title": "График доходов и расходов",
+      "income_expense_chart_desc": "Ваши ежемесячные доходы и расходы за последние 6 месяцев.",
+      "recent_transactions_title": "Последние транзакции",
+      "recent_transactions_desc": "Ваши последние 5 транзакций в этом месяце.",
+      "table_header_description": "Описание",
+      "table_header_amount": "Сумма"
     }
   }
 }
