@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useRouter } from 'next/navigation';
 import LanguageSwitcher from '@/components/language-switcher';
-import { Briefcase } from 'lucide-react';
 
 export default function LoginPage() {
   const { translations } = useLanguage();
@@ -28,9 +27,6 @@ export default function LoginPage() {
       </div>
       <div className="w-full max-w-md">
         <div className="text-center mb-8 flex flex-col items-center">
-            <div className="bg-primary/10 p-3 rounded-full mb-4">
-                <Briefcase className="h-8 w-8 text-primary" />
-            </div>
             <h1 className="text-4xl font-bold text-foreground">Alter Portal</h1>
             <p className="text-muted-foreground">{t.welcome_back}</p>
         </div>
