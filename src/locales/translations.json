@@ -31,6 +31,10 @@
       "recent_transactions_desc": "Bu ay yaptığınız son 5 işlem.",
       "table_header_description": "Açıklama",
       "table_header_amount": "Tutar"
+    },
+    "user_menu": {
+      "settings": "Ayarlar",
+      "logout": "Çıkış Yap"
     }
   },
   "en": {
@@ -65,6 +69,10 @@
       "recent_transactions_desc": "Your last 5 transactions this month.",
       "table_header_description": "Description",
       "table_header_amount": "Amount"
+    },
+    "user_menu": {
+      "settings": "Settings",
+      "logout": "Logout"
     }
   },
   "ru": {
@@ -99,6 +107,10 @@
       "recent_transactions_desc": "Ваши последние 5 транзакций в этом месяце.",
       "table_header_description": "Описание",
       "table_header_amount": "Сумма"
+    },
+    "user_menu": {
+        "settings": "Настройки",
+        "logout": "Выйти"
     }
   }
 }

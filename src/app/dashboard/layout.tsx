@@ -15,6 +15,8 @@ import {
 import Link from "next/link";
 import { useLanguage } from "@/context/language-context";
 import { usePathname } from "next/navigation";
+import LanguageSwitcher from "@/components/language-switcher";
+import UserMenu from "@/components/user-menu";
 
 export default function DashboardLayout({
   children,
@@ -61,7 +63,10 @@ export default function DashboardLayout({
             <SidebarTrigger>
                 <PanelLeft />
             </SidebarTrigger>
-            <div>{/* Top right actions can go here */}</div>
+            <div className="flex items-center gap-4">
+              <LanguageSwitcher />
+              <UserMenu />
+            </div>
         </header>
         {children}
         </SidebarInset>
