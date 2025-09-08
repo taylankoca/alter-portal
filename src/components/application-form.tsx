@@ -14,6 +14,8 @@ import {
   User,
   FileText,
   ArrowLeft,
+  MapPin,
+  Globe,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -43,6 +45,8 @@ const createFormSchema = (translations: any) => z.object({
   name: z.string().min(2, { message: translations.form.validation.name_min }),
   email: z.string().email({ message: translations.form.validation.email_invalid }),
   phone: z.string().min(10, { message: translations.form.validation.phone_min }),
+  country: z.string().min(2, { message: translations.form.validation.country_min }),
+  city: z.string().min(2, { message: translations.form.validation.city_min }),
   resume: z.any().optional(),
   education: z.string().optional(),
   experience: z.string().optional(),
@@ -65,6 +69,8 @@ export function ApplicationForm() {
       name: "",
       email: "",
       phone: "",
+      country: "",
+      city: "",
       education: "",
       experience: "",
       hobbies: "",
@@ -89,7 +95,7 @@ export function ApplicationForm() {
   };
 
   const handleNext = async () => {
-    const isValid = await form.trigger(["name", "email", "phone"]);
+    const isValid = await form.trigger(["name", "email", "phone", "country", "city"]);
     if (isValid) {
       setStep(2);
     }
@@ -171,6 +177,40 @@ export function ApplicationForm() {
                   </FormItem>
                 )}
               />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <FormField
+                    control={form.control}
+                    name="country"
+                    render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>{translations.form.country}</FormLabel>
+                        <FormControl>
+                        <div className="relative">
+                            <Globe className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input placeholder={translations.form.country_placeholder} {...field} className="pl-10" />
+                        </div>
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="city"
+                    render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>{translations.form.city}</FormLabel>
+                        <FormControl>
+                        <div className="relative">
+                            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input placeholder={translations.form.city_placeholder} {...field} className="pl-10" />
+                        </div>
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                    )}
+                />
+              </div>
               <FormItem>
                 <FormLabel>{translations.form.upload_resume}</FormLabel>
                  <div className="flex items-center space-x-4">

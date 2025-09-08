@@ -1,7 +1,6 @@
 "use client";
 
 import { ApplicationForm } from '@/components/application-form';
-import LanguageSwitcher from '@/components/language-switcher';
 import { useLanguage } from '@/context/language-context';
 
 export default function Home() {
@@ -9,9 +8,6 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center p-4 sm:p-8 md:p-12">
       <div className="w-full max-w-4xl">
-        <div className="flex justify-end">
-          <LanguageSwitcher />
-        </div>
         <div className="space-y-8 py-12">
           <header className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl lg:text-6xl font-headline">

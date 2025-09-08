@@ -1,8 +1,75 @@
 {
   "tr": {
+    "navigation": {
+        "home": "Ana Sayfa",
+        "positions": "Açık Pozisyonlar"
+    },
     "home": {
       "title": "Alter Kariyer",
-      "description": "Kariyerinizdeki bir sonraki adım sadece birkaç tık uzağınızda. Başlamak için aşağıdaki formu doldurun."
+      "description": "Kariyerinizdeki bir sonraki adım sadece birkaç tık uzağınızda. Başlamak için aşağıdaki genel başvuru formunu doldurun."
+    },
+    "positions": {
+        "title": "Açık Pozisyonlar",
+        "description": "Ekibimize katılacak yetenekli profesyoneller arıyoruz. Mevcut fırsatlarımıza göz atın.",
+        "list_title": "Mevcut Pozisyonlar",
+        "list_description": "İlgilendiğiniz pozisyonun detaylarını görmek için üzerine tıklayın.",
+        "application_label": "Başvuru: ",
+        "jobs": [
+            {
+                "title": "Teknik Ressam",
+                "location": "Ankara Merkez Ofis",
+                "intro": "50 yıllık mühendislik firmamızın Ankara'daki Merkez Ofisinde görevlendirilmek üzere;",
+                "requirements": [
+                    "Teknik Lise veya Meslek Yüksek Okul Bölümü Mezunu olmak,",
+                    "Alt Yapı Projelerinde mimari- betonarme disiplinlerinde en az 3 yıl iş tecrübesi bulunması,(İller Bankası ve DSİ şartnamelerine uygun sanat yapıları, terfi merkezi pompa istasyonu, su deposu manevra odası, içme suyu isale hatları, su ve atıksu arıtma tesisleri projeleri gibi),",
+                    "AutoCad 3D/REVIT çizim programını bilen,",
+                    "MS, Windows, Office uygulamalarını kullanabilen,",
+                    "Gerektiğinde esnek çalışma saatlerinde mesai yapabilecek ve takım çalışmasına uyumlu,",
+                    "Erkek adaylar için askerlikle ilgisi bulunmayan,",
+                    "Teknik Ressam işe alınacaktır."
+                ],
+                "application": "Lütfen CV'nizi konu bölümüne Ankara / TR01 referans numarasını yazarak alter@alter.com.tr adresine gönderiniz."
+            },
+            {
+                "title": "Teknik Ressam",
+                "location": "İstanbul Ofis",
+                "intro": "50 yıllık mühendislik firmamızın İstanbul'daki Ofisinde görevlendirilmek üzere;",
+                "requirements": [
+                    "Üniversitelerin Yapı Ressamlığı veya İnşaat Teknikerliği bölümlerinden mezun,",
+                    "Betonarme yapıların projelendirilmesinde tecrübeli,",
+                    "Tercihen mevcut yapıların rölöve ölçümlerini yapabilecek nitelikte,",
+                    "Tercihen güçlendirme projelerinin hazırlanmasında tecrübe sahibi,",
+                    "Seyahat engeli olmayan ve tercihen aktif araç kullanabilen,",
+                    "AutoCad, Civil 3D çizim programlarının en az birine hakim olması",
+                    "MS, Windows, Office uygulamalarını kullanabilecek,",
+                    "Erkek adaylar için askerlikle ilgisi bulunmayan,",
+                    "Teknik Ressam işe alınacaktır."
+                ],
+                "application": "Lütfen CV'nizi konu bölümüne İstanbul/TR01 referans numarasını yazarak alter@alter.com.tr adresine gönderiniz."
+            },
+            {
+                "title": "İnşaat Mühendisi",
+                "location": "İstanbul Ofis",
+                "intro": "50 yıllık mühendislik firmamızın İstanbul Ofisi'nde görevlendirilmek üzere,",
+                "requirements": [
+                    "İnşaat Mühendisliği Bölümü'nden mezun,",
+                    "Betonarme veya çelik projelendirme konusunda deneyimli,",
+                    "Yerel ve uluslararası şartnamelere hakim,",
+                    "Sap2000, Etabs yazılımlarını etkin şekilde kullanabilen,",
+                    "Tercihen şekil değiştirmeye göre analiz yapabilecek yeterlilikte,",
+                    "Tercihen mevcut yapıların rölöve ölçümlerini yapabilecek tecrübede,",
+                    "Performans analizi ve güçlendirme projeleri hazırlanması konusunda kendini geliştirmek isteyen,",
+                    "Tercihen üniversitelerin Yapı/ Deprem Mühendisliği yüksek lisans programlarında eğitimine devam eden veya bu bölümlerden mezun,",
+                    "İletişim ve problem çözme becerileri kuvvetli,",
+                    "Sorumluluk sahibi, zaman yönetimi yapabilen, takım çalışmasına yatkın, ",
+                    "AutoCAD ve MS Office programlarına hakim,",
+                    "Seyahat engeli olmayan ve tercihen aktif araç kullanabilen,",
+                    "Erkek adaylar için askerlik görevini yapmış olan,",
+                    "İnşaat Mühendisi işe alınacaktır."
+                ],
+                "application": "Lütfen CV'nizi konu bölümüne İstanbul/İM01 referans numarasını yazarak alter@alter.com.tr adresine gönderiniz."
+            }
+        ]
     },
     "form": {
       "step1_title": "Kişisel Bilgiler",
@@ -13,6 +80,10 @@
       "email_placeholder": "jane.doe@example.com",
       "phone": "Telefon Numarası",
       "phone_placeholder": "(123) 456-7890",
+      "country": "Ülke",
+      "country_placeholder": "Türkiye",
+      "city": "Şehir",
+      "city_placeholder": "Ankara",
       "upload_resume": "CV Yükle",
       "select_resume": "CV Seç",
       "resume_desc": "PDF veya Word dosyası (Maks. 5MB)",
@@ -37,14 +108,83 @@
       "validation": {
           "name_min": "İsim en az 2 karakter olmalıdır.",
           "email_invalid": "Lütfen geçerli bir e-posta adresi girin.",
-          "phone_min": "Lütfen geçerli bir telefon numarası girin."
+          "phone_min": "Lütfen geçerli bir telefon numarası girin.",
+          "country_min": "Ülke en az 2 karakter olmalıdır.",
+          "city_min": "Şehir en az 2 karakter olmalıdır."
       }
     }
   },
   "en": {
+    "navigation": {
+        "home": "Home",
+        "positions": "Open Positions"
+    },
     "home": {
       "title": "Alter Careers",
-      "description": "Your next career step is just a few clicks away. Fill out the form below to get started."
+      "description": "Your next career step is just a few clicks away. Fill out the general application form below to get started."
+    },
+    "positions": {
+        "title": "Open Positions",
+        "description": "We are looking for talented professionals to join our team. Check out our current opportunities.",
+        "list_title": "Current Positions",
+        "list_description": "Click on a position to see the details.",
+        "application_label": "Application: ",
+        "jobs": [
+            {
+                "title": "Technical Draftsman",
+                "location": "Ankara Head Office",
+                "intro": "To be employed in the Head Office of our 50-year-old engineering company in Ankara;",
+                "requirements": [
+                    "Graduated from Technical High School or Vocational School Department,",
+                    "At least 3 years of work experience in architectural-reinforced concrete disciplines in Infrastructure Projects (such as art structures, booster center pump stations, water tank maneuvering rooms, drinking water transmission lines, water and wastewater treatment plant projects in accordance with İller Bankası and DSI specifications),",
+                    "Knowledge of AutoCAD 3D/REVIT drawing program,",
+                    "Ability to use MS, Windows, Office applications,",
+                    "Adaptable to flexible working hours and teamwork when necessary,",
+                    "For male candidates, no military service obligation,",
+                    "A Technical Draftsman will be hired."
+                ],
+                "application": "Please send your CV to alter@alter.com.tr with the reference number Ankara / TR01 in the subject line."
+            },
+            {
+                "title": "Technical Draftsman",
+                "location": "Istanbul Office",
+                "intro": "To be employed in the Istanbul Office of our 50-year-old engineering company;",
+                "requirements": [
+                    "Graduated from the departments of Building Drafting or Construction Technician,",
+                    "Experienced in the projecting of reinforced concrete structures,",
+                    "Preferably able to perform as-built surveys of existing structures,",
+                    "Preferably experienced in the preparation of strengthening projects,",
+                    "No travel restrictions and preferably an active driver,",
+                    "Proficient in at least one of AutoCAD, Civil 3D drawing programs,",
+                    "Ability to use MS, Windows, Office applications,",
+                    "For male candidates, no military service obligation,",
+                    "A Technical Draftsman will be hired."
+                ],
+                "application": "Please send your CV to alter@alter.com.tr with the reference number Istanbul/TR01 in the subject line."
+            },
+            {
+                "title": "Civil Engineer",
+                "location": "Istanbul Office",
+                "intro": "To be employed in the Istanbul Office of our 50-year-old engineering company,",
+                "requirements": [
+                    "Graduated from the Civil Engineering Department,",
+                    "Experienced in reinforced concrete or steel projecting,",
+                    "Familiar with local and international specifications,",
+                    "Able to use Sap2000, Etabs software effectively,",
+                    "Preferably competent in analysis based on deformation,",
+                    "Preferably experienced in performing as-built surveys of existing structures,",
+                    "Willing to improve in performance analysis and preparation of strengthening projects,",
+                    "Preferably continuing education in or graduated from master's programs in Structural/Earthquake Engineering,",
+                    "Strong communication and problem-solving skills,",
+                    "Responsible, with time management skills, and prone to teamwork,",
+                    "Proficient in AutoCAD and MS Office programs,",
+                    "No travel restrictions and preferably an active driver,",
+                    "For male candidates, military service must be completed,",
+                    "A Civil Engineer will be hired."
+                ],
+                "application": "Please send your CV to alter@alter.com.tr with the reference number Istanbul/İM01 in the subject line."
+            }
+        ]
     },
     "form": {
       "step1_title": "Personal Information",
@@ -55,6 +195,10 @@
       "email_placeholder": "jane.doe@example.com",
       "phone": "Phone Number",
       "phone_placeholder": "(123) 456-7890",
+      "country": "Country",
+      "country_placeholder": "USA",
+      "city": "City",
+      "city_placeholder": "New York",
       "upload_resume": "Upload Resume",
       "select_resume": "Select CV",
       "resume_desc": "PDF or Word file (Max 5MB)",
@@ -79,14 +223,83 @@
       "validation": {
           "name_min": "Name must be at least 2 characters.",
           "email_invalid": "Please enter a valid email address.",
-          "phone_min": "Please enter a valid phone number."
+          "phone_min": "Please enter a valid phone number.",
+          "country_min": "Country must be at least 2 characters.",
+          "city_min": "City must be at least 2 characters."
       }
     }
   },
   "ru": {
+    "navigation": {
+        "home": "Главная",
+        "positions": "Открытые вакансии"
+    },
     "home": {
       "title": "Карьера в Alter",
-      "description": "Ваш следующий шаг в карьере всего в нескольких кликах. Заполните форму ниже, чтобы начать."
+      "description": "Ваш следующий шаг в карьере всего в нескольких кликах. Заполните общую форму заявки ниже, чтобы начать."
+    },
+    "positions": {
+        "title": "Открытые вакансии",
+        "description": "Мы ищем талантливых специалистов для нашей команды. Ознакомьтесь с нашими текущими предложениями.",
+        "list_title": "Текущие вакансии",
+        "list_description": "Нажмите на вакансию, чтобы увидеть подробности.",
+        "application_label": "Заявка: ",
+        "jobs": [
+            {
+                "title": "Техник-чертежник",
+                "location": "Главный офис в Анкаре",
+                "intro": "Для работы в главном офисе нашей 50-летней инженерной компании в Анкаре;",
+                "requirements": [
+                    "Выпускник технического лицея или профессионально-технического училища,",
+                    "Опыт работы не менее 3 лет в архитектурно-железобетонных дисциплинах в инфраструктурных проектах (таких как художественные сооружения, насосные станции, маневровые комнаты резервуаров для воды, проекты линий передачи питьевой воды, очистных сооружений в соответствии со спецификациями İller Bankası и DSI),",
+                    "Знание программы черчения AutoCAD 3D/REVIT,",
+                    "Умение использовать приложения MS, Windows, Office,",
+                    "Готовность к гибкому графику работы и работе в команде при необходимости,",
+                    "Для кандидатов-мужчин — отсутствие воинской обязанности,",
+                    "Требуется техник-чертежник."
+                ],
+                "application": "Пожалуйста, отправьте свое резюме по адресу alter@alter.com.tr с указанием референсного номера Ankara / TR01 в теме письма."
+            },
+            {
+                "title": "Техник-чертежник",
+                "location": "Офис в Стамбуле",
+                "intro": "Для работы в стамбульском офисе нашей 50-летней инженерной компании;",
+                "requirements": [
+                    "Выпускник факультетов строительного черчения или строительной техники,",
+                    "Опыт проектирования железобетонных конструкций,",
+                    "Предпочтительно умение выполнять обмеры существующих зданий,",
+                    "Предпочтительно опыт подготовки проектов усиления,",
+                    "Отсутствие ограничений на командировки и, предпочтительно, наличие водительских прав,",
+                    "Владение хотя бы одной из программ черчения AutoCAD, Civil 3D,",
+                    "Умение использовать приложения MS, Windows, Office,",
+                    "Для кандидатов-мужчин — отсутствие воинской обязанности,",
+                    "Требуется техник-чертежник."
+                ],
+                "application": "Пожалуйста, отправьте свое резюме по адресу alter@alter.com.tr с указанием референсного номера Istanbul/TR01 в теме письма."
+            },
+            {
+                "title": "Инженер-строитель",
+                "location": "Офис в Стамбуле",
+                "intro": "Для работы в стамбульском офисе нашей 50-летней инженерной компании,",
+                "requirements": [
+                    "Высшее образование по специальности «Промышленное и гражданское строительство»,",
+                    "Опыт проектирования железобетонных или стальных конструкций,",
+                    "Знание местных и международных стандартов,",
+                    "Эффективное использование программ Sap2000, Etabs,",
+                    "Предпочтительно умение проводить анализ на основе деформаций,",
+                    "Предпочтительно опыт выполнения обмеров существующих зданий,",
+                    "Желание развиваться в области анализа производительности и подготовки проектов усиления,",
+                    "Предпочтительно продолжение обучения или окончание магистерских программ по конструкциям/сейсмостойкому строительству,",
+                    "Сильные коммуникативные навыки и навыки решения проблем,",
+                    "Ответственность, умение управлять временем, склонность к командной работе,",
+                    "Владение программами AutoCAD и MS Office,",
+                    "Отсутствие ограничений на командировки и, предпочтительно, наличие водительских прав,",
+                    "Для кандидатов-мужчин — пройденная военная служба,",
+                    "Требуется инженер-строитель."
+                ],
+                "application": "Пожалуйста, отправьте свое резюме по адресу alter@alter.com.tr с указанием референсного номера Istanbul/İM01 в теме письма."
+            }
+        ]
     },
     "form": {
       "step1_title": "Личная информация",
@@ -97,6 +310,10 @@
       "email_placeholder": "ivan.ivanov@example.com",
       "phone": "Номер телефона",
       "phone_placeholder": "(123) 456-7890",
+      "country": "Страна",
+      "country_placeholder": "Россия",
+      "city": "Город",
+      "city_placeholder": "Москва",
       "upload_resume": "Загрузить резюме",
       "select_resume": "Выбрать резюме",
       "resume_desc": "Файл PDF или Word (макс. 5 МБ)",
@@ -121,7 +338,9 @@
       "validation": {
           "name_min": "Имя должно содержать не менее 2 символов.",
           "email_invalid": "Пожалуйста, введите действительный адрес электронной почты.",
-          "phone_min": "Пожалуйста, введите действительный номер телефона."
+          "phone_min": "Пожалуйста, введите действительный номер телефона.",
+          "country_min": "Страна должна содержать не менее 2 символов.",
+          "city_min": "Город должен содержать не менее 2 символов."
       }
     }
   }
