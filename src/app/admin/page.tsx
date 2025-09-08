@@ -5,9 +5,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Search, ChevronRight, Download } from "lucide-react";
+import { Search, ChevronRight } from "lucide-react";
+import { useLanguage } from "@/context/language-context";
 
 const applicants = [
   {
@@ -40,7 +40,8 @@ const applicants = [
 ];
 
 
-function AdminDashboard() {
+export default function AdminDashboard() {
+  const { translations } = useLanguage();
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
 
@@ -51,25 +52,27 @@ function AdminDashboard() {
     setSearchResults(applicants);
   };
 
+  const t = translations.admin.dashboard;
+
   return (
      <div className="container mx-auto p-4 sm:p-8">
       <header className="mb-8">
-        <h1 className="text-4xl font-bold text-foreground">Admin Dashboard</h1>
-        <p className="text-muted-foreground">Search for applicants and manage applications.</p>
+        <h1 className="text-4xl font-bold text-foreground">{t.title}</h1>
+        <p className="text-muted-foreground">{t.description}</p>
       </header>
 
       <div className="space-y-8">
         <Card>
           <CardHeader>
-            <CardTitle>Search Applicants</CardTitle>
-            <CardDescription>Find applicants by name, email, or keywords.</CardDescription>
+            <CardTitle>{t.search_card_title}</CardTitle>
+            <CardDescription>{t.search_card_description}</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSearch} className="flex w-full items-center space-x-2">
-              <Input type="search" placeholder="e.g., Jane Doe, marketing, React" className="flex-1" />
+              <Input type="search" placeholder={t.search_placeholder} className="flex-1" />
               <Button type="submit" size="icon">
                 <Search className="h-4 w-4" />
-                <span className="sr-only">Search</span>
+                <span className="sr-only">{t.search_button}</span>
               </Button>
             </form>
           </CardContent>
@@ -78,20 +81,20 @@ function AdminDashboard() {
         {hasSearched && (
           <Card>
               <CardHeader>
-                  <CardTitle>Search Results</CardTitle>
-                  <CardDescription>Found {searchResults.length} applicants matching your criteria.</CardDescription>
+                  <CardTitle>{t.results_card_title}</CardTitle>
+                  <CardDescription>{t.results_card_description.replace('{count}', searchResults.length.toString())}</CardDescription>
               </CardHeader>
               <CardContent>
                   <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Phone</TableHead>
-                      <TableHead>Country</TableHead>
-                      <TableHead>City</TableHead>
-                      <TableHead>Applied On</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
+                      <TableHead>{t.table_header_name}</TableHead>
+                      <TableHead>{t.table_header_email}</TableHead>
+                      <TableHead>{t.table_header_phone}</TableHead>
+                      <TableHead>{t.table_header_country}</TableHead>
+                      <TableHead>{t.table_header_city}</TableHead>
+                      <TableHead>{t.table_header_applied}</TableHead>
+                      <TableHead className="text-right">{t.table_header_actions}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -105,14 +108,10 @@ function AdminDashboard() {
                           <TableCell>{applicant.city}</TableCell>
                           <TableCell>{applicant.applied}</TableCell>
                           <TableCell className="text-right">
-                              <Button variant="ghost" size="icon">
-                                <Download className="h-4 w-4" />
-                                <span className="sr-only">Download CV</span>
-                              </Button>
                             <Button asChild variant="ghost" size="icon">
                               <Link href={`/admin/applicant/${applicant.id}`}>
                                 <ChevronRight className="h-4 w-4" />
-                                <span className="sr-only">View Details</span>
+                                <span className="sr-only">{t.view_details_button}</span>
                               </Link>
                             </Button>
                           </TableCell>
@@ -121,7 +120,7 @@ function AdminDashboard() {
                     ) : (
                         <TableRow>
                         <TableCell colSpan={7} className="text-center text-muted-foreground">
-                          No results found.
+                          {t.no_results}
                         </TableCell>
                       </TableRow>
                     )}
@@ -133,58 +132,4 @@ function AdminDashboard() {
       </div>
     </div>
   )
-}
-
-function PasswordScreen({ onUnlock }: { onUnlock: () => void }) {
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const handlePasswordSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // In a real application, this should be a secure check against a server.
-    if (password === "password") { 
-      onUnlock();
-    } else {
-      setError("Incorrect password. Please try again.");
-    }
-  };
-
-  return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <CardTitle>Admin Access</CardTitle>
-          <CardDescription>Please enter the password to access the admin dashboard.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handlePasswordSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
-              />
-            </div>
-            {error && <p className="text-sm text-destructive">{error}</p>}
-            <Button type="submit" className="w-full">
-              Unlock
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
-  );
-}
-
-export default function AdminPage() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  if (!isAuthenticated) {
-    return <PasswordScreen onUnlock={() => setIsAuthenticated(true)} />;
-  }
-
-  return <AdminDashboard />;
 }
