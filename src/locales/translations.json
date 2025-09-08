@@ -1,3 +1,4 @@
+
 {
   "tr": {
     "navigation": {
@@ -31,6 +32,39 @@
       "recent_transactions_desc": "Bu ay yaptığınız son 5 işlem.",
       "table_header_description": "Açıklama",
       "table_header_amount": "Tutar"
+    },
+    "reports": {
+      "title": "Finansal Raporlar",
+      "description": "Detaylı gelir, gider ve kar-zarar analizleri.",
+      "pick_date": "Bir tarih aralığı seçin",
+      "filter_button": "Filtrele",
+      "download_button": "İndir",
+      "yearly_income_title": "Yıllık Gelir Özeti",
+      "yearly_income_desc": "Yıllara göre toplam brüt gelir.",
+      "expense_distribution_title": "Gider Kategorileri Dağılımı",
+      "expense_distribution_desc": "Giderlerinizin kategorilere göre dağılımı."
+    },
+    "settings": {
+      "title": "Ayarlar",
+      "description": "Hesap, şirket ve uygulama tercihlerinizi yönetin.",
+      "profile_tab": "Profil",
+      "company_tab": "Şirket",
+      "preferences_tab": "Tercihler",
+      "profile_title": "Kullanıcı Profili",
+      "profile_desc": "Kişisel bilgilerinizi buradan güncelleyebilirsiniz.",
+      "change_avatar_button": "Resmi Değiştir",
+      "username_label": "Kullanıcı Adı",
+      "email_label": "E-posta Adresi",
+      "company_title": "Şirket Bilgileri",
+      "company_desc": "Fatura ve yasal bilgiler için şirket detayları.",
+      "company_name_label": "Şirket Adı",
+      "tax_id_label": "Vergi Numarası",
+      "preferences_title": "Uygulama Tercihleri",
+      "preferences_desc": "Uygulamanın davranışını kişiselleştirin.",
+      "currency_label": "Para Birimi",
+      "notifications_label": "E-posta Bildirimleri",
+      "notifications_desc": "Önemli güncellemeler için bildirim alın.",
+      "save_button": "Değişiklikleri Kaydet"
     },
     "user_menu": {
       "settings": "Ayarlar",
@@ -71,6 +105,39 @@
       "table_header_description": "Description",
       "table_header_amount": "Amount"
     },
+     "reports": {
+      "title": "Financial Reports",
+      "description": "Detailed analysis of income, expenses, and profit-loss.",
+      "pick_date": "Pick a date range",
+      "filter_button": "Filter",
+      "download_button": "Download",
+      "yearly_income_title": "Yearly Income Summary",
+      "yearly_income_desc": "Total gross income by year.",
+      "expense_distribution_title": "Expense Category Distribution",
+      "expense_distribution_desc": "Distribution of your expenses across categories."
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "Manage your account, company, and application preferences.",
+      "profile_tab": "Profile",
+      "company_tab": "Company",
+      "preferences_tab": "Preferences",
+      "profile_title": "User Profile",
+      "profile_desc": "Update your personal information here.",
+      "change_avatar_button": "Change Avatar",
+      "username_label": "Username",
+      "email_label": "Email Address",
+      "company_title": "Company Information",
+      "company_desc": "Company details for billing and legal purposes.",
+      "company_name_label": "Company Name",
+      "tax_id_label": "Tax ID",
+      "preferences_title": "Application Preferences",
+      "preferences_desc": "Customize the application's behavior.",
+      "currency_label": "Currency",
+      "notifications_label": "Email Notifications",
+      "notifications_desc": "Receive notifications for important updates.",
+      "save_button": "Save Changes"
+    },
     "user_menu": {
       "settings": "Settings",
       "logout": "Logout",
@@ -109,6 +176,39 @@
       "recent_transactions_desc": "Ваши последние 5 транзакций в этом месяце.",
       "table_header_description": "Описание",
       "table_header_amount": "Сумма"
+    },
+    "reports": {
+      "title": "Финансовые отчеты",
+      "description": "Подробный анализ доходов, расходов и прибылей-убытков.",
+      "pick_date": "Выберите диапазон дат",
+      "filter_button": "Фильтр",
+      "download_button": "Скачать",
+      "yearly_income_title": "Годовой отчет о доходах",
+      "yearly_income_desc": "Общий валовой доход по годам.",
+      "expense_distribution_title": "Распределение расходов по категориям",
+      "expense_distribution_desc": "Распределение ваших расходов по категориям."
+    },
+    "settings": {
+      "title": "Настройки",
+      "description": "Управляйте своей учетной записью, компанией и настройками приложения.",
+      "profile_tab": "Профиль",
+      "company_tab": "Компания",
+      "preferences_tab": "Предпочтения",
+      "profile_title": "Профиль пользователя",
+      "profile_desc": "Обновите здесь свою личную информацию.",
+      "change_avatar_button": "Сменить фото",
+      "username_label": "Имя пользователя",
+      "email_label": "Адрес электронной почты",
+      "company_title": "Информация о компании",
+      "company_desc": "Данные компании для выставления счетов и юридических целей.",
+      "company_name_label": "Название компании",
+      "tax_id_label": "ИНН",
+      "preferences_title": "Настройки приложения",
+      "preferences_desc": "Настройте поведение приложения.",
+      "currency_label": "Валюта",
+      "notifications_label": "Уведомления по электронной почте",
+      "notifications_desc": "Получайте уведомления о важных обновлениях.",
+      "save_button": "Сохранить изменения"
     },
     "user_menu": {
         "settings": "Настройки",
