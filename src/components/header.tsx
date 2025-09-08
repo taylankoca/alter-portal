@@ -14,7 +14,6 @@ export default function Header() {
     const navLinks = [
         { href: "/", label: translations.navigation.home },
         { href: "/positions", label: translations.navigation.positions },
-        { href: "/admin", label: translations.navigation.admin },
     ];
 
     return (

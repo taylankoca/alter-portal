@@ -2,8 +2,7 @@
   "tr": {
     "navigation": {
         "home": "Ana Sayfa",
-        "positions": "Açık Pozisyonlar",
-        "admin": "Yönetici"
+        "positions": "Açık Pozisyonlar"
     },
     "home": {
       "title": "Alter Kariyer",
@@ -118,8 +117,7 @@
   "en": {
     "navigation": {
         "home": "Home",
-        "positions": "Open Positions",
-        "admin": "Admin"
+        "positions": "Open Positions"
     },
     "home": {
       "title": "Alter Careers",
@@ -234,8 +232,7 @@
   "ru": {
     "navigation": {
         "home": "Главная",
-        "positions": "Открытые вакансии",
-        "admin": "Админ"
+        "positions": "Открытые вакансии"
     },
     "home": {
       "title": "Карьера в Alter",

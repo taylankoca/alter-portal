@@ -1,39 +1,144 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
-import { Search } from "lucide-react"
+"use client";
 
-export default function AdminPage() {
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Search, FileText, ChevronRight, Download } from "lucide-react";
+
+const applicants = [
+  {
+    name: "Jane Doe",
+    email: "jane.doe@example.com",
+    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+    role: "Software Engineer",
+    applied: "2023-10-27",
+    status: "Interviewing",
+  },
+  {
+    name: "John Smith",
+    email: "john.smith@example.com",
+    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704e",
+    role: "Product Manager",
+    applied: "2023-10-25",
+    status: "Pending",
+  },
+  {
+    name: "Emily White",
+    email: "emily.white@example.com",
+    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704f",
+    role: "UX Designer",
+    applied: "2023-10-22",
+    status: "Rejected",
+  },
+];
+
+
+function AdminDashboard() {
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [hasSearched, setHasSearched] = useState(false);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    setHasSearched(true);
+    // In a real app, you would filter applicants based on the search term
+    setSearchResults(applicants);
+  };
+
   return (
-    <div className="container mx-auto p-4 sm:p-8">
+     <div className="container mx-auto p-4 sm:p-8">
       <header className="mb-8">
         <h1 className="text-4xl font-bold text-foreground">Admin Dashboard</h1>
         <p className="text-muted-foreground">Search for applicants and send messages.</p>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-        <Card>
-          <CardHeader>
-            <CardTitle>Search Applicants</CardTitle>
-            <CardDescription>Find applicants by name, email, or keywords.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex w-full items-center space-x-2">
-              <Input type="search" placeholder="e.g., Jane Doe, marketing, React" className="flex-1" />
-              <Button type="submit" size="icon">
-                <Search className="h-4 w-4" />
-                <span className="sr-only">Search</span>
-              </Button>
-            </div>
-            {/* Search results would be displayed here */}
-            <div className="mt-4 text-center text-muted-foreground">
-              <p>No results found.</p>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="space-y-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>Search Applicants</CardTitle>
+              <CardDescription>Find applicants by name, email, or keywords.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSearch} className="flex w-full items-center space-x-2">
+                <Input type="search" placeholder="e.g., Jane Doe, marketing, React" className="flex-1" />
+                <Button type="submit" size="icon">
+                  <Search className="h-4 w-4" />
+                  <span className="sr-only">Search</span>
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+
+           {hasSearched && (
+             <Card>
+                <CardHeader>
+                    <CardTitle>Search Results</CardTitle>
+                    <CardDescription>Found {searchResults.length} applicants matching your criteria.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                   <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Applicant</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {searchResults.length > 0 ? (
+                        searchResults.map((applicant) => (
+                          <TableRow key={applicant.email}>
+                            <TableCell>
+                              <div className="flex items-center gap-4">
+                                <Avatar>
+                                  <AvatarImage src={applicant.avatar} alt={applicant.name} />
+                                  <AvatarFallback>{applicant.name.charAt(0)}</AvatarFallback>
+                                </Avatar>
+                                <div>
+                                  <p className="font-medium">{applicant.name}</p>
+                                  <p className="text-sm text-muted-foreground">{applicant.email}</p>
+                                </div>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant={
+                                applicant.status === 'Interviewing' ? 'default' :
+                                applicant.status === 'Rejected' ? 'destructive' : 'secondary'
+                              }>{applicant.status}</Badge>
+                            </TableCell>
+                            <TableCell className="text-right">
+                               <Button variant="ghost" size="icon">
+                                <Download className="h-4 w-4" />
+                                <span className="sr-only">Download CV</span>
+                              </Button>
+                               <Button variant="ghost" size="icon">
+                                <ChevronRight className="h-4 w-4" />
+                                <span className="sr-only">View Details</span>
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      ) : (
+                         <TableRow>
+                          <TableCell colSpan={3} className="text-center text-muted-foreground">
+                            No results found.
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+            </Card>
+           )}
+
+        </div>
 
         <Card>
           <CardHeader>
@@ -78,4 +183,58 @@ export default function AdminPage() {
       </div>
     </div>
   )
+}
+
+function PasswordScreen({ onUnlock }: { onUnlock: () => void }) {
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // In a real application, this should be a secure check against a server.
+    if (password === "password") { 
+      onUnlock();
+    } else {
+      setError("Incorrect password. Please try again.");
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle>Admin Access</CardTitle>
+          <CardDescription>Please enter the password to access the admin dashboard.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handlePasswordSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter password"
+              />
+            </div>
+            {error && <p className="text-sm text-destructive">{error}</p>}
+            <Button type="submit" className="w-full">
+              Unlock
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+export default function AdminPage() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  if (!isAuthenticated) {
+    return <PasswordScreen onUnlock={() => setIsAuthenticated(true)} />;
+  }
+
+  return <AdminDashboard />;
 }
