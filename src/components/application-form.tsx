@@ -37,22 +37,27 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/context/language-context";
 
-const formSchema = z.object({
-  name: z.string().min(2, { message: "İsim en az 2 karakter olmalıdır." }),
-  email: z.string().email({ message: "Lütfen geçerli bir e-posta adresi girin." }),
-  phone: z.string().min(10, { message: "Lütfen geçerli bir telefon numarası girin." }),
+const createFormSchema = (translations: any) => z.object({
+  name: z.string().min(2, { message: translations.form.validation.name_min }),
+  email: z.string().email({ message: translations.form.validation.email_invalid }),
+  phone: z.string().min(10, { message: translations.form.validation.phone_min }),
   resume: z.any().optional(),
   education: z.string().optional(),
   experience: z.string().optional(),
   hobbies: z.string().optional(),
 });
 
+
 export function ApplicationForm() {
+  const { translations } = useLanguage();
   const [step, setStep] = useState(1);
   const [fileName, setFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+
+  const formSchema = createFormSchema(translations);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -66,15 +71,15 @@ export function ApplicationForm() {
     },
     mode: "onChange",
   });
-
+  
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) { // 5MB limit
         toast({
           variant: "destructive",
-          title: "Dosya çok büyük",
-          description: "Lütfen 5MB'den küçük bir CV yükleyin.",
+          title: translations.form.toast.file_too_large_title,
+          description: translations.form.toast.file_too_large_desc,
         });
         return;
       }
@@ -97,8 +102,8 @@ export function ApplicationForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     toast({
-      title: "Başvuru Gönderildi!",
-      description: "Başvurunuz için teşekkür ederiz. Kısa süre içinde sizinle iletişime geçeceğiz.",
+      title: translations.form.toast.submit_success_title,
+      description: translations.form.toast.submit_success_desc,
     });
     form.reset();
     setFileName(null);
@@ -112,9 +117,9 @@ export function ApplicationForm() {
         {step === 1 && (
            <Card>
             <CardHeader>
-              <CardTitle>Kişisel Bilgiler</CardTitle>
+              <CardTitle>{translations.form.step1_title}</CardTitle>
               <CardDescription>
-                Lütfen iletişim bilgilerinizi girin ve CV'nizi yükleyin.
+                {translations.form.step1_desc}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -123,11 +128,11 @@ export function ApplicationForm() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Tam Adı</FormLabel>
+                    <FormLabel>{translations.form.full_name}</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input placeholder="Jane Doe" {...field} className="pl-10" />
+                        <Input placeholder={translations.form.full_name_placeholder} {...field} className="pl-10" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -139,11 +144,11 @@ export function ApplicationForm() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email Adresi</FormLabel>
+                    <FormLabel>{translations.form.email}</FormLabel>
                      <FormControl>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input type="email" placeholder="jane.doe@example.com" {...field} className="pl-10" />
+                        <Input type="email" placeholder={translations.form.email_placeholder} {...field} className="pl-10" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -155,11 +160,11 @@ export function ApplicationForm() {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Telefon Numarası</FormLabel>
+                    <FormLabel>{translations.form.phone}</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input type="tel" placeholder="(123) 456-7890" {...field} className="pl-10" />
+                        <Input type="tel" placeholder={translations.form.phone_placeholder} {...field} className="pl-10" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -167,11 +172,11 @@ export function ApplicationForm() {
                 )}
               />
               <FormItem>
-                <FormLabel>CV Yükle</FormLabel>
+                <FormLabel>{translations.form.upload_resume}</FormLabel>
                  <div className="flex items-center space-x-4">
                    <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()}>
                      <UploadCloud className="mr-2 h-4 w-4" />
-                     CV Seç
+                     {translations.form.select_resume}
                    </Button>
                    <Input 
                      ref={fileInputRef}
@@ -188,13 +193,13 @@ export function ApplicationForm() {
                    )}
                 </div>
                 <FormDescription>
-                  PDF veya Word dosyası (Maks. 5MB)
+                  {translations.form.resume_desc}
                 </FormDescription>
               </FormItem>
             </CardContent>
              <CardFooter className="flex justify-end">
                 <Button type="button" onClick={handleNext}>
-                  İleri
+                  {translations.form.next_button}
                 </Button>
             </CardFooter>
           </Card>
@@ -204,8 +209,8 @@ export function ApplicationForm() {
           <>
             <Card>
               <CardHeader>
-                <CardTitle>Profesyonel Detaylar</CardTitle>
-                <CardDescription>Bize geçmişiniz ve ilgi alanlarınız hakkında daha fazla bilgi verin.</CardDescription>
+                <CardTitle>{translations.form.step2_title}</CardTitle>
+                <CardDescription>{translations.form.step2_desc}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <FormField
@@ -213,9 +218,9 @@ export function ApplicationForm() {
                   name="experience"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center"><Briefcase className="mr-2 h-4 w-4"/> İş Deneyimi</FormLabel>
+                      <FormLabel className="flex items-center"><Briefcase className="mr-2 h-4 w-4"/> {translations.form.experience}</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="İş deneyiminizi açıklayın..." {...field} rows={6} />
+                        <Textarea placeholder={translations.form.experience_placeholder} {...field} rows={6} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -226,9 +231,9 @@ export function ApplicationForm() {
                   name="education"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center"><GraduationCap className="mr-2 h-4 w-4"/> Eğitim</FormLabel>
+                      <FormLabel className="flex items-center"><GraduationCap className="mr-2 h-4 w-4"/> {translations.form.education}</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Derecelerinizi ve sertifikalarınızı listeleyin..." {...field} rows={4} />
+                        <Textarea placeholder={translations.form.education_placeholder} {...field} rows={4} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -239,12 +244,12 @@ export function ApplicationForm() {
                   name="hobbies"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center"><Heart className="mr-2 h-4 w-4"/> Hobiler & İlgi Alanları</FormLabel>
+                      <FormLabel className="flex items-center"><Heart className="mr-2 h-4 w-4"/> {translations.form.hobbies}</FormLabel>
                       <FormControl>
-                        <Input placeholder="ör., Yürüyüş, satranç, açık kaynak katkıları" {...field} />
+                        <Input placeholder={translations.form.hobbies_placeholder} {...field} />
                       </FormControl>
                        <FormDescription>
-                        Virgülle ayırın.
+                        {translations.form.hobbies_desc}
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -255,10 +260,10 @@ export function ApplicationForm() {
 
             <div className="flex justify-between">
               <Button type="button" variant="outline" onClick={handleBack}>
-                <ArrowLeft className="mr-2 h-4 w-4" /> Geri
+                <ArrowLeft className="mr-2 h-4 w-4" /> {translations.form.back_button}
               </Button>
               <Button type="submit" size="lg">
-                Başvuruyu Gönder
+                {translations.form.submit_button}
               </Button>
             </div>
           </>

@@ -1,0 +1,128 @@
+{
+  "tr": {
+    "home": {
+      "title": "Alter Kariyer",
+      "description": "Kariyerinizdeki bir sonraki adım sadece birkaç tık uzağınızda. Başlamak için aşağıdaki formu doldurun."
+    },
+    "form": {
+      "step1_title": "Kişisel Bilgiler",
+      "step1_desc": "Lütfen iletişim bilgilerinizi girin ve CV'nizi yükleyin.",
+      "full_name": "Tam Adı",
+      "full_name_placeholder": "Jane Doe",
+      "email": "Email Adresi",
+      "email_placeholder": "jane.doe@example.com",
+      "phone": "Telefon Numarası",
+      "phone_placeholder": "(123) 456-7890",
+      "upload_resume": "CV Yükle",
+      "select_resume": "CV Seç",
+      "resume_desc": "PDF veya Word dosyası (Maks. 5MB)",
+      "next_button": "İleri",
+      "step2_title": "Profesyonel Detaylar",
+      "step2_desc": "Bize geçmişiniz ve ilgi alanlarınız hakkında daha fazla bilgi verin.",
+      "experience": "İş Deneyimi",
+      "experience_placeholder": "İş deneyiminizi açıklayın...",
+      "education": "Eğitim",
+      "education_placeholder": "Derecelerinizi ve sertifikalarınızı listeleyin...",
+      "hobbies": "Hobiler & İlgi Alanları",
+      "hobbies_placeholder": "ör., Yürüyüş, satranç, açık kaynak katkıları",
+      "hobbies_desc": "Virgülle ayırın.",
+      "back_button": "Geri",
+      "submit_button": "Başvuruyu Gönder",
+      "toast": {
+        "file_too_large_title": "Dosya çok büyük",
+        "file_too_large_desc": "Lütfen 5MB'den küçük bir CV yükleyin.",
+        "submit_success_title": "Başvuru Gönderildi!",
+        "submit_success_desc": "Başvurunuz için teşekkür ederiz. Kısa süre içinde sizinle iletişime geçeceğiz."
+      },
+      "validation": {
+          "name_min": "İsim en az 2 karakter olmalıdır.",
+          "email_invalid": "Lütfen geçerli bir e-posta adresi girin.",
+          "phone_min": "Lütfen geçerli bir telefon numarası girin."
+      }
+    }
+  },
+  "en": {
+    "home": {
+      "title": "Alter Careers",
+      "description": "Your next career step is just a few clicks away. Fill out the form below to get started."
+    },
+    "form": {
+      "step1_title": "Personal Information",
+      "step1_desc": "Please enter your contact details and upload your resume.",
+      "full_name": "Full Name",
+      "full_name_placeholder": "Jane Doe",
+      "email": "Email Address",
+      "email_placeholder": "jane.doe@example.com",
+      "phone": "Phone Number",
+      "phone_placeholder": "(123) 456-7890",
+      "upload_resume": "Upload Resume",
+      "select_resume": "Select CV",
+      "resume_desc": "PDF or Word file (Max 5MB)",
+      "next_button": "Next",
+      "step2_title": "Professional Details",
+      "step2_desc": "Tell us more about your background and interests.",
+      "experience": "Work Experience",
+      "experience_placeholder": "Describe your work experience...",
+      "education": "Education",
+      "education_placeholder": "List your degrees and certificates...",
+      "hobbies": "Hobbies & Interests",
+      "hobbies_placeholder": "e.g., Hiking, chess, open-source contributions",
+      "hobbies_desc": "Separate with commas.",
+      "back_button": "Back",
+      "submit_button": "Submit Application",
+      "toast": {
+        "file_too_large_title": "File too large",
+        "file_too_large_desc": "Please upload a resume smaller than 5MB.",
+        "submit_success_title": "Application Submitted!",
+        "submit_success_desc": "Thank you for your application. We will be in touch shortly."
+      },
+      "validation": {
+          "name_min": "Name must be at least 2 characters.",
+          "email_invalid": "Please enter a valid email address.",
+          "phone_min": "Please enter a valid phone number."
+      }
+    }
+  },
+  "ru": {
+    "home": {
+      "title": "Карьера в Alter",
+      "description": "Ваш следующий шаг в карьере всего в нескольких кликах. Заполните форму ниже, чтобы начать."
+    },
+    "form": {
+      "step1_title": "Личная информация",
+      "step1_desc": "Пожалуйста, введите свои контактные данные и загрузите резюме.",
+      "full_name": "Полное имя",
+      "full_name_placeholder": "Иван Иванов",
+      "email": "Адрес электронной почты",
+      "email_placeholder": "ivan.ivanov@example.com",
+      "phone": "Номер телефона",
+      "phone_placeholder": "(123) 456-7890",
+      "upload_resume": "Загрузить резюме",
+      "select_resume": "Выбрать резюме",
+      "resume_desc": "Файл PDF или Word (макс. 5 МБ)",
+      "next_button": "Далее",
+      "step2_title": "Профессиональные данные",
+      "step2_desc": "Расскажите нам больше о своем опыте и интересах.",
+      "experience": "Опыт работы",
+      "experience_placeholder": "Опишите свой опыт работы...",
+      "education": "Образование",
+      "education_placeholder": "Перечислите свои степени и сертификаты...",
+      "hobbies": "Хобби и интересы",
+      "hobbies_placeholder": "например, походы, шахматы, вклад в открытый исходный код",
+      "hobbies_desc": "Разделяйте запятыми.",
+      "back_button": "Назад",
+      "submit_button": "Отправить заявку",
+      "toast": {
+        "file_too_large_title": "Файл слишком большой",
+        "file_too_large_desc": "Пожалуйста, загрузите резюме размером менее 5 МБ.",
+        "submit_success_title": "Заявка отправлена!",
+        "submit_success_desc": "Спасибо за вашу заявку. Мы свяжемся с вами в ближайшее время."
+      },
+      "validation": {
+          "name_min": "Имя должно содержать не менее 2 символов.",
+          "email_invalid": "Пожалуйста, введите действительный адрес электронной почты.",
+          "phone_min": "Пожалуйста, введите действительный номер телефона."
+      }
+    }
+  }
+}

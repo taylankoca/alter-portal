@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { Check, Languages } from "lucide-react";
+import { useLanguage } from "@/context/language-context";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,42 +11,40 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const languages = [
-  { code: "tr", name: "Türkçe" },
-  { code: "en", name: "English" },
-  { code: "ru", name: "Русский" },
+
+const languageOptions = [
+  { code: "tr", name: "Türkçe", flag: "🇹🇷" },
+  { code: "en", name: "English", flag: "🇬🇧" },
+  { code: "ru", name: "Русский", flag: "🇷🇺" },
 ];
 
 export default function LanguageSwitcher() {
-  const [selectedLanguage, setSelectedLanguage] = useState("tr");
+  const { language, setLanguage } = useLanguage();
 
-  // In a real app, you'd use a routing or i18n library to change the locale.
-  // For now, this just updates the state.
-  const handleLanguageChange = (langCode: string) => {
-    setSelectedLanguage(langCode);
-    console.log(`Language changed to: ${langCode}`);
-  };
+  const selectedLanguage = languageOptions.find((l) => l.code === language) || languageOptions[0];
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm">
-          <Languages className="mr-2 h-4 w-4" />
-          {languages.find((l) => l.code === selectedLanguage)?.name}
+        <Button variant="outline" size="sm" className="flex items-center gap-2">
+          <span>{selectedLanguage.flag}</span>
+          <span className="hidden sm:inline">{selectedLanguage.name}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {languages.map((lang) => (
+        {languageOptions.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
-            onClick={() => handleLanguageChange(lang.code)}
+            onClick={() => setLanguage(lang.code)}
+            className="flex items-center gap-2"
           >
+            <span>{lang.flag}</span>
+            <span>{lang.name}</span>
             <Check
-              className={`mr-2 h-4 w-4 ${
-                selectedLanguage === lang.code ? "opacity-100" : "opacity-0"
+              className={`ml-auto h-4 w-4 ${
+                language === lang.code ? "opacity-100" : "opacity-0"
               }`}
             />
-            {lang.name}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
