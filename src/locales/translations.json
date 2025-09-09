@@ -11,27 +11,13 @@
     },
     "login": {
       "welcome_back": "Portalınıza hoş geldiniz. Lütfen giriş yapın.",
-      "login_title": "Oturum Aç",
-      "login_description": "Devam etmek için bilgilerinizi girin.",
+      "login_title": "Giriş Yap",
+      "login_description": "Devam etmek için kullanıcı adı ve şifrenizi girin.",
       "username_label": "Kullanıcı Adı",
       "username_placeholder": "kullanici.adiniz",
-      "password_label": "Parola",
+      "password_label": "Şifre",
       "password_placeholder": "********",
       "login_button": "Giriş Yap"
-    },
-    "dashboard": {
-      "title": "Ana Sayfa",
-      "description": "Bugünün özeti ve size özel bildirimler.",
-      "today_events": "Bugünkü Etkinlikler",
-      "overdue_tasks": "Gecikmiş Görevler",
-      "birthdays": "Doğum Günleri",
-      "upcoming_tasks_title": "Yaklaşan Görevler",
-      "upcoming_tasks_desc": "Yaklaşan görevleriniz ve son tarihleri.",
-      "pending_approvals_title": "Onay Bekleyenler",
-      "pending_approvals_desc": "Onayınızı bekleyen form başvuruları.",
-      "recent_activity_title": "Son Hareketler",
-      "recent_activity_desc": "Sistemdeki en son gelişmeler.",
-      "view_all": "Tümünü Gör"
     },
     "user_menu": {
       "settings": "Ayarlar",
@@ -57,20 +43,6 @@
       "password_placeholder": "********",
       "login_button": "Sign In"
     },
-    "dashboard": {
-      "title": "Dashboard",
-      "description": "Today's summary and your notifications.",
-      "today_events": "Today's Events",
-      "overdue_tasks": "Overdue Tasks",
-      "birthdays": "Birthdays",
-      "upcoming_tasks_title": "Upcoming Tasks",
-      "upcoming_tasks_desc": "Your upcoming tasks and their deadlines.",
-      "pending_approvals_title": "Pending Approvals",
-      "pending_approvals_desc": "Form submissions awaiting your approval.",
-      "recent_activity_title": "Recent Activity",
-      "recent_activity_desc": "The latest events in the system.",
-      "view_all": "View All"
-    },
     "user_menu": {
       "settings": "Settings",
       "logout": "Logout"
@@ -94,20 +66,6 @@
       "password_label": "Пароль",
       "password_placeholder": "********",
       "login_button": "Войти"
-    },
-    "dashboard": {
-      "title": "Панель управления",
-      "description": "Сегодняшняя сводка и ваши уведомления.",
-      "today_events": "События на сегодня",
-      "overdue_tasks": "Просроченные задачи",
-      "birthdays": "Дни рождения",
-      "upcoming_tasks_title": "Предстоящие задачи",
-      "upcoming_tasks_desc": "Ваши предстоящие задачи и их сроки.",
-      "pending_approvals_title": "Ожидают утверждения",
-      "pending_approvals_desc": "Заявки, ожидающие вашего утверждения.",
-      "recent_activity_title": "Последние действия",
-      "recent_activity_desc": "Последние события в системе.",
-      "view_all": "Посмотреть все"
     },
     "user_menu": {
         "settings": "Настройки",
