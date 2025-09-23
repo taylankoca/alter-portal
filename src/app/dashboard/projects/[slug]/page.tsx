@@ -12,9 +12,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 export default function ProjectDetailPage({ params }: { params: { slug: string } }) {
     const { translations } = useLanguage();
     const t = translations.projects_page;
-    const { slug } = params;
 
-    const project = projects.find(p => slugify(p.title) === slug);
+    const project = projects.find(p => slugify(p.title) === params.slug);
 
     if (!project) {
         notFound();
