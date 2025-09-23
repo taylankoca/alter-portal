@@ -7,6 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Button } from "@/components/ui/button";
 import { MoreVertical } from "lucide-react";
 import { useLanguage } from '@/context/language-context';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface Project {
   id: string;
@@ -28,6 +29,7 @@ interface ProjectCardProps {
 export default function ProjectCard({ project }: ProjectCardProps) {
   const { translations } = useLanguage();
   const t = translations.projects_page;
+  const ownerInitials = project.owner.split(' ').map(n => n[0]).join('');
 
   return (
     <Card className="flex flex-col overflow-hidden">
@@ -53,17 +55,22 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           </DropdownMenu>
         </div>
       </CardHeader>
-      <CardContent className="flex-grow p-4">
-        <CardTitle className="text-lg font-semibold hover:underline cursor-pointer">
+      <CardContent className="flex-grow p-4 pt-8 relative">
+        <Avatar className="absolute -top-6 left-1/2 -translate-x-1/2 h-12 w-12 border-4 border-card">
+            <AvatarImage src={`https://i.pravatar.cc/150?u=${project.owner}`} />
+            <AvatarFallback>{ownerInitials}</AvatarFallback>
+        </Avatar>
+
+        <CardTitle className="text-lg font-semibold hover:underline cursor-pointer text-center">
           {project.title}
         </CardTitle>
-        <CardDescription className="mt-1 text-sm text-muted-foreground line-clamp-2">
+        <CardDescription className="mt-1 text-sm text-muted-foreground line-clamp-2 text-center">
           {project.description}
         </CardDescription>
+         <div className="text-center mt-3">
+            <p className="text-xs text-muted-foreground">{t.created_by} {project.owner}</p>
+        </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0">
-        <p className="text-xs text-muted-foreground">{t.created_by} {project.owner}</p>
-      </CardFooter>
     </Card>
   );
 }
