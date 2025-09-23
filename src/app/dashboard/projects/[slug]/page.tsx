@@ -1,6 +1,6 @@
-
 "use client";
 
+import { useMemo } from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { projects } from '@/lib/project-data';
@@ -13,7 +13,9 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
     const { translations } = useLanguage();
     const t = translations.projects_page;
 
-    const project = projects.find(p => slugify(p.title) === params.slug);
+    const project = useMemo(() => {
+        return projects.find(p => slugify(p.title) === params.slug);
+    }, [params.slug]);
 
     if (!project) {
         notFound();
@@ -37,13 +39,13 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
             <div className="container mx-auto px-4 md:px-0 max-w-4xl">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="md:col-span-2 space-y-4">
-                         <h2 className="text-2xl font-semibold text-foreground border-b pb-2">Proje Açıklaması</h2>
+                         <h2 className="text-2xl font-semibold text-foreground border-b pb-2">{t.project_description}</h2>
                         <p className="text-muted-foreground leading-relaxed">
                             {project.description}
                         </p>
                     </div>
                     <div className="space-y-4">
-                        <h2 className="text-2xl font-semibold text-foreground border-b pb-2">Proje Ekibi</h2>
+                        <h2 className="text-2xl font-semibold text-foreground border-b pb-2">{t.project_team}</h2>
                         <TooltipProvider>
                             <div className="flex flex-wrap gap-4">
                                 {project.members.map((member, index) => {

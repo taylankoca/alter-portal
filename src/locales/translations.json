@@ -13,7 +13,9 @@
       "description": "Tüm aktif ve arşivlenmiş projelerinizi buradan yönetin.",
       "created_by": "Oluşturan",
       "edit": "Düzenle",
-      "delete": "Sil"
+      "delete": "Sil",
+      "project_team": "Proje Ekibi",
+      "project_description": "Proje Açıklaması"
     },
     "login": {
       "welcome_back": "Portalınıza hoş geldiniz. Lütfen giriş yapın.",
@@ -43,7 +45,9 @@
       "description": "Manage all your active and archived projects from here.",
       "created_by": "Created by",
       "edit": "Edit",
-      "delete": "Delete"
+      "delete": "Delete",
+      "project_team": "Project Team",
+      "project_description": "Project Description"
     },
      "login": {
       "welcome_back": "Welcome to your portal. Please sign in.",
@@ -73,7 +77,9 @@
       "description": "Управляйте всеми своими активными и архивными проектами здесь.",
       "created_by": "Создано",
       "edit": "Редактировать",
-      "delete": "Удалить"
+      "delete": "Удалить",
+      "project_team": "Команда проекта",
+      "project_description": "Описание проекта"
     },
     "login": {
       "welcome_back": "Добро пожаловать в ваш портал. Пожалуйста, войдите.",
