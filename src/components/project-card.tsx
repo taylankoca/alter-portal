@@ -2,6 +2,7 @@
 "use client";
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import { MoreVertical } from "lucide-react";
 import { useLanguage } from '@/context/language-context';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { slugify } from '@/lib/utils';
 
 interface Project {
   id: string;
@@ -30,17 +32,20 @@ interface ProjectCardProps {
 export default function ProjectCard({ project }: ProjectCardProps) {
   const { translations } = useLanguage();
   const t = translations.projects_page;
+  const projectUrl = `/dashboard/projects/${slugify(project.title)}`;
 
   return (
     <Card className="flex flex-col overflow-hidden group">
        <CardHeader className="p-0 relative h-36">
-        <Image
-          src={project.image.src}
-          alt={project.title}
-          fill
-          className="object-cover"
-          data-ai-hint={project.image['data-ai-hint']}
-        />
+        <Link href={projectUrl}>
+          <Image
+            src={project.image.src}
+            alt={project.title}
+            fill
+            className="object-cover"
+            data-ai-hint={project.image['data-ai-hint']}
+          />
+        </Link>
         <div className="absolute top-2 right-2">
            <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -79,9 +84,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </TooltipProvider>
         </div>
 
-        <CardTitle className="text-lg font-semibold hover:underline cursor-pointer">
-          {project.title}
-        </CardTitle>
+        <Link href={projectUrl}>
+            <CardTitle className="text-lg font-semibold hover:underline cursor-pointer">
+              {project.title}
+            </CardTitle>
+        </Link>
         <CardDescription className="mt-1 text-sm text-muted-foreground line-clamp-2">
           {project.description}
         </CardDescription>
