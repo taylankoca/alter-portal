@@ -15,7 +15,7 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
 
     const project = useMemo(() => {
         return projects.find(p => slugify(p.title) === params.slug);
-    }, [params.slug]);
+    }, [params]);
 
     if (!project) {
         notFound();
