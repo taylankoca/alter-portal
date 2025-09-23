@@ -9,6 +9,12 @@
       "calendar": "Takvim",
       "settings": "Ayarlar"
     },
+    "projects_page": {
+      "description": "Tüm aktif ve arşivlenmiş projelerinizi buradan yönetin.",
+      "created_by": "Oluşturan",
+      "edit": "Düzenle",
+      "delete": "Sil"
+    },
     "login": {
       "welcome_back": "Portalınıza hoş geldiniz. Lütfen giriş yapın.",
       "login_title": "Giriş Yap",
@@ -33,6 +39,12 @@
       "calendar": "Calendar",
       "settings": "Settings"
     },
+    "projects_page": {
+      "description": "Manage all your active and archived projects from here.",
+      "created_by": "Created by",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
      "login": {
       "welcome_back": "Welcome to your portal. Please sign in.",
       "login_title": "Sign In",
@@ -56,6 +68,12 @@
       "forms": "Формы",
       "calendar": "Календарь",
       "settings": "Настройки"
+    },
+    "projects_page": {
+      "description": "Управляйте всеми своими активными и архивными проектами здесь.",
+      "created_by": "Создано",
+      "edit": "Редактировать",
+      "delete": "Удалить"
     },
     "login": {
       "welcome_back": "Добро пожаловать в ваш портал. Пожалуйста, войдите.",

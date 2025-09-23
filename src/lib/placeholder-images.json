@@ -1,0 +1,41 @@
+
+{
+  "placeholderImages": {
+    "project1": {
+      "src": "https://picsum.photos/seed/1/600/400",
+      "width": 600,
+      "height": 400,
+      "data-ai-hint": "website design"
+    },
+    "project2": {
+      "src": "https://picsum.photos/seed/2/600/400",
+      "width": 600,
+      "height": 400,
+      "data-ai-hint": "mobile application"
+    },
+    "project3": {
+      "src": "https://picsum.photos/seed/3/600/400",
+      "width": 600,
+      "height": 400,
+      "data-ai-hint": "marketing campaign"
+    },
+    "project4": {
+      "src": "https://picsum.photos/seed/4/600/400",
+      "width": 600,
+      "height": 400,
+      "data-ai-hint": "crm system"
+    },
+    "project5": {
+      "src": "https://picsum.photos/seed/5/600/400",
+      "width": 600,
+      "height": 400,
+      "data-ai-hint": "api integration"
+    },
+    "project6": {
+      "src": "https://picsum.photos/seed/6/600/400",
+      "width": 600,
+      "height": 400,
+      "data-ai-hint": "data center"
+    }
+  }
+}
