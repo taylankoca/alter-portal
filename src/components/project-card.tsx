@@ -2,18 +2,19 @@
 "use client";
 
 import Image from 'next/image';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreVertical } from "lucide-react";
 import { useLanguage } from '@/context/language-context';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface Project {
   id: string;
   title: string;
   description: string;
-  owner: string;
+  members: string[];
   image: {
     src: string;
     width: number;
@@ -29,11 +30,10 @@ interface ProjectCardProps {
 export default function ProjectCard({ project }: ProjectCardProps) {
   const { translations } = useLanguage();
   const t = translations.projects_page;
-  const ownerInitials = project.owner.split(' ').map(n => n[0]).join('');
 
   return (
-    <Card className="flex flex-col overflow-hidden">
-      <CardHeader className="p-0 relative h-36">
+    <Card className="flex flex-col overflow-hidden group">
+       <CardHeader className="p-0 relative h-36">
         <Image
           src={project.image.src}
           alt={project.title}
@@ -55,21 +55,36 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           </DropdownMenu>
         </div>
       </CardHeader>
-      <CardContent className="flex-grow p-4 pt-8 relative">
-        <Avatar className="absolute -top-6 left-1/2 -translate-x-1/2 h-12 w-12 border-4 border-card">
-            <AvatarImage src={`https://i.pravatar.cc/150?u=${project.owner}`} />
-            <AvatarFallback>{ownerInitials}</AvatarFallback>
-        </Avatar>
+      <CardContent className="flex-grow p-4 pt-2 relative">
+         <div className="flex justify-end -mt-10 mb-2 relative z-10">
+            <TooltipProvider>
+                <div className="flex -space-x-3">
+                    {project.members.map((member, index) => {
+                        const initials = member.split(' ').map(n => n[0]).join('');
+                        return (
+                            <Tooltip key={index}>
+                                <TooltipTrigger asChild>
+                                    <Avatar className="h-14 w-14 border-4 border-card transition-transform transform hover:scale-110 hover:z-20">
+                                        <AvatarImage src={`https://i.pravatar.cc/150?u=${member}`} />
+                                        <AvatarFallback>{initials}</AvatarFallback>
+                                    </Avatar>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>{member}</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        );
+                    })}
+                </div>
+            </TooltipProvider>
+        </div>
 
-        <CardTitle className="text-lg font-semibold hover:underline cursor-pointer text-center">
+        <CardTitle className="text-lg font-semibold hover:underline cursor-pointer">
           {project.title}
         </CardTitle>
-        <CardDescription className="mt-1 text-sm text-muted-foreground line-clamp-2 text-center">
+        <CardDescription className="mt-1 text-sm text-muted-foreground line-clamp-2">
           {project.description}
         </CardDescription>
-         <div className="text-center mt-3">
-            <p className="text-xs text-muted-foreground">{t.created_by} {project.owner}</p>
-        </div>
       </CardContent>
     </Card>
   );
