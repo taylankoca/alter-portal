@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Check, Languages } from "lucide-react";
@@ -13,9 +14,9 @@ import {
 
 
 const languageOptions = [
-  { code: "tr", name: "Türkçe", flag: "🇹🇷" },
-  { code: "en", name: "English", flag: "🇬🇧" },
-  { code: "ru", name: "Русский", flag: "🇷🇺" },
+  { code: "tr", name: "Türkçe", flag: "TR" },
+  { code: "en", name: "English", flag: "EN" },
+  { code: "ru", name: "Русский", flag: "RU" },
 ];
 
 export default function LanguageSwitcher() {
@@ -27,7 +28,7 @@ export default function LanguageSwitcher() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm" className="flex items-center gap-2">
-          <span>{selectedLanguage.flag}</span>
+          <span className="font-bold">{selectedLanguage.flag}</span>
           <span className="hidden sm:inline">{selectedLanguage.name}</span>
         </Button>
       </DropdownMenuTrigger>
@@ -38,7 +39,7 @@ export default function LanguageSwitcher() {
             onClick={() => setLanguage(lang.code)}
             className="flex items-center gap-2"
           >
-            <span>{lang.flag}</span>
+            <span className="font-bold w-6">{lang.flag}</span>
             <span>{lang.name}</span>
             <Check
               className={`ml-auto h-4 w-4 ${
