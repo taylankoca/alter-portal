@@ -1,8 +1,9 @@
 
 "use client";
 
-import { Check, Languages } from "lucide-react";
+import { Check } from "lucide-react";
 import { useLanguage } from "@/context/language-context";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "./ui/skeleton";
 
 
 const languageOptions = [
@@ -21,6 +23,15 @@ const languageOptions = [
 
 export default function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <Skeleton className="h-9 w-28" />;
+  }
 
   const selectedLanguage = languageOptions.find((l) => l.code === language) || languageOptions[0];
 
