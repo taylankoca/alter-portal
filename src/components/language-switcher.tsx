@@ -14,9 +14,9 @@ import {
 
 
 const languageOptions = [
-  { code: "tr", name: "Türkçe", flag: "TR" },
-  { code: "en", name: "English", flag: "EN" },
-  { code: "ru", name: "Русский", flag: "RU" },
+  { code: "tr", name: "Türkçe", flag: "🇹🇷" },
+  { code: "en", name: "English", flag: "🇬🇧" },
+  { code: "ru", name: "Русский", flag: "🇷🇺" },
 ];
 
 export default function LanguageSwitcher() {
