@@ -13,6 +13,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useRouter } from 'next/navigation';
+import { Input } from './ui/input';
+import { Search } from 'lucide-react';
 
 interface PeopleDirectoryProps {
   users: ApiUser[];
@@ -22,8 +24,22 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
   const { translations } = useLanguage();
   const router = useRouter();
   const t = translations.people_page;
+  const [searchTerm, setSearchTerm] = React.useState('');
 
-  const groupedUsers = users.reduce((acc, user) => {
+  const filteredUsers = React.useMemo(() => {
+    if (!searchTerm) return users;
+    const lowercasedFilter = searchTerm.toLowerCase();
+    return users.filter(user => {
+      return (
+        user.first_name.toLowerCase().includes(lowercasedFilter) ||
+        user.last_name.toLowerCase().includes(lowercasedFilter) ||
+        (user.email && user.email.toLowerCase().includes(lowercasedFilter)) ||
+        (user.title && user.title.toLowerCase().includes(lowercasedFilter))
+      );
+    });
+  }, [searchTerm, users]);
+
+  const groupedUsers = filteredUsers.reduce((acc, user) => {
     const firstLetter = user.last_name[0]?.toUpperCase() || '#';
     if (!acc[firstLetter]) {
       acc[firstLetter] = [];
@@ -46,7 +62,16 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
   };
 
   return (
-    <div>
+    <div className="space-y-6">
+        <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input 
+                placeholder={t.search_placeholder}
+                className="pl-9"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+        </div>
         <div className="flex justify-center gap-1 md:gap-2 mb-6 flex-wrap">
             {alphabet.map(letter => (
                 <button

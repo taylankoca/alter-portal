@@ -1,3 +1,4 @@
+
 import { fetchData } from '@/lib/data-service';
 import ProjectView from '@/components/project-view';
 import translationsData from '@/locales/translations.json';

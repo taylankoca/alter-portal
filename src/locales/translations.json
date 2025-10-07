@@ -19,7 +19,8 @@
       "project_description": "Proje Açıklaması",
       "admin_role": "Yönetici",
       "correspondence": "Yazışmalar",
-      "files": "Dosyalar"
+      "files": "Dosyalar",
+      "search_placeholder": "Proje adı, no, işveren veya konum ile ara..."
     },
     "people_page": {
       "title": "Kişiler",
@@ -27,7 +28,8 @@
       "first_name": "Ad",
       "last_name": "Soyad",
       "email": "E-posta",
-      "title_label": "Unvan"
+      "title_label": "Unvan",
+      "search_placeholder": "İsim, soyisim, e-posta veya unvan ile ara..."
     },
     "login": {
       "welcome_back": "Portalınıza hoş geldiniz. Lütfen giriş yapın.",
@@ -63,7 +65,8 @@
       "project_description": "Project Description",
       "admin_role": "Admin",
       "correspondence": "Correspondence",
-      "files": "Files"
+      "files": "Files",
+      "search_placeholder": "Search by project name, no, employer or location..."
     },
     "people_page": {
       "title": "People",
@@ -71,7 +74,8 @@
       "first_name": "First Name",
       "last_name": "Last Name",
       "email": "Email",
-      "title_label": "Title"
+      "title_label": "Title",
+      "search_placeholder": "Search by name, surname, email or title..."
     },
      "login": {
       "welcome_back": "Welcome to your portal. Please sign in.",
@@ -107,7 +111,8 @@
       "project_description": "Описание проекта",
       "admin_role": "Администратор",
       "correspondence": "Переписка",
-      "files": "Файлы"
+      "files": "Файлы",
+      "search_placeholder": "Поиск по названию проекта, номеру, работодателю или местоположению..."
     },
     "people_page": {
       "title": "Люди",
@@ -115,7 +120,8 @@
       "first_name": "Имя",
       "last_name": "Фамилия",
       "email": "Эл. почта",
-      "title_label": "Должность"
+      "title_label": "Должность",
+      "search_placeholder": "Поиск по имени, фамилии, электронной почте или должности..."
     },
     "login": {
       "welcome_back": "Добро пожаловать в ваш портал. Пожалуйста, войдите.",
