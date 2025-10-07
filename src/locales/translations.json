@@ -57,6 +57,10 @@
       "download_not_available_title": "Dosya İndirme",
       "download_not_available_description": "Bu özellik yakında aktif olacaktır."
     },
+    "schema_page": {
+      "title": "Organizasyon Şeması",
+      "description": "Şirket ve proje hiyerarşisini buradan görüntüleyin."
+    },
     "login": {
       "welcome_back": "Portalınıza hoş geldiniz. Lütfen giriş yapın.",
       "login_title": "Giriş Yap",
@@ -129,6 +133,10 @@
       "download_not_available_title": "File Download",
       "download_not_available_description": "This feature will be available soon."
     },
+    "schema_page": {
+        "title": "Organization Chart",
+        "description": "View the company and project hierarchy from here."
+    },
      "login": {
       "welcome_back": "Welcome to your portal. Please sign in.",
       "login_title": "Sign In",
@@ -200,6 +208,10 @@
       "download_file": "Скачать файл",
       "download_not_available_title": "Загрузка файла",
       "download_not_available_description": "Эта функция скоро будет доступна."
+    },
+     "schema_page": {
+        "title": "Организационная схема",
+        "description": "Просматривайте иерархию компании и проектов здесь."
     },
     "login": {
       "welcome_back": "Добро пожаловать в ваш портал. Пожалуйста, войдите.",
