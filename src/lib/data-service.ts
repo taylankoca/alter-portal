@@ -73,6 +73,7 @@ export interface ApiUnit {
     created_at: string;
     updated_at: string;
     deleted_at: string | null;
+    users: ApiUser[];
 }
 
 function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
@@ -140,9 +141,9 @@ export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
             console.error(`Failed to fetch units data with status: ${response.status}`);
             return { units: [] };
         }
-        const apiData: { livstag_usermanager_units: ApiUnit[] } = await response.json();
+        const apiData: { units: ApiUnit[] } = await response.json();
         return {
-            units: apiData.livstag_usermanager_units || []
+            units: apiData.units || []
         };
     } catch (error) {
         console.error("A network or parsing error occurred while fetching units data:", error);

@@ -4,7 +4,9 @@
 import { Tree, TreeNode } from 'react-organizational-chart';
 import styled from 'styled-components';
 import { Card } from './ui/card';
-import type { ApiUnit } from '@/lib/data-service';
+import type { ApiUnit, ApiUser } from '@/lib/data-service';
+import { useRouter } from 'next/navigation';
+import { Avatar, AvatarFallback } from './ui/avatar';
 
 const StyledNode = styled(Card)`
   padding: 1rem;
@@ -18,7 +20,7 @@ const StyledNode = styled(Card)`
   min-width: 180px;
   max-width: 220px;
   text-align: center;
-  cursor: default;
+  cursor: pointer;
   transition: background-color 0.2s, box-shadow 0.2s;
 
   &:hover {
@@ -33,6 +35,17 @@ const UnitName = styled.div`
   color: hsl(var(--foreground));
 `;
 
+const UserName = styled.div`
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: hsl(var(--foreground));
+`;
+
+const UserTitle = styled.div`
+    font-size: 0.7rem;
+    color: hsl(var(--muted-foreground));
+`;
+
 interface OrgChartViewProps {
     units: ApiUnit[];
 }
@@ -42,6 +55,11 @@ interface TreeNodeData extends ApiUnit {
 }
 
 export default function OrgChartView({ units }: OrgChartViewProps) {
+    const router = useRouter();
+
+    const handleNodeClick = (userId: number) => {
+        router.push(`/dashboard/people/${userId}`);
+    };
 
     const buildTree = (items: ApiUnit[]): TreeNodeData[] => {
         const itemMap: { [key: number]: TreeNodeData } = {};
@@ -60,10 +78,28 @@ export default function OrgChartView({ units }: OrgChartViewProps) {
         return tree;
     };
 
+    const renderUserNode = (user: ApiUser) => {
+        const initials = `${user.first_name?.[0] || ''}${user.last_name?.[0] || ''}`.toUpperCase();
+        return (
+            <TreeNode key={`user-${user.id}`} label={
+                <StyledNode onClick={() => handleNodeClick(user.id)}>
+                    <Avatar className="h-12 w-12 text-lg">
+                        <AvatarFallback>{initials}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                        <UserName className="text-center">{user.first_name} {user.last_name}</UserName>
+                        {user.title && <UserTitle>{user.title}</UserTitle>}
+                    </div>
+                </StyledNode>
+            }/>
+        );
+    };
+
     const renderTreeNodes = (nodes: TreeNodeData[]) => {
         return nodes.map(node => (
             <TreeNode key={node.id} label={<StyledNode><UnitName>{node.name}</UnitName></StyledNode>}>
                 {node.children.length > 0 && renderTreeNodes(node.children)}
+                {node.users && node.users.map(user => renderUserNode(user))}
             </TreeNode>
         ));
     };
