@@ -41,6 +41,12 @@
       "location_label": "Konum",
       "search_placeholder": "İsim, soyisim, e-posta, unvan veya konum ile ara..."
     },
+    "correspondence_page": {
+      "description": "Tüm projelerdeki yazışmaları görüntüleyin ve arayın.",
+      "search_placeholder": "Başlık, proje adı, kurum veya kod ile ara...",
+      "project_name": "Proje Adı",
+      "no_communication_found": "Arama kriterlerinize uygun yazışma bulunamadı."
+    },
     "login": {
       "welcome_back": "Portalınıza hoş geldiniz. Lütfen giriş yapın.",
       "login_title": "Giriş Yap",
@@ -97,6 +103,12 @@
       "location_label": "Location",
       "search_placeholder": "Search by name, surname, email, title or location..."
     },
+     "correspondence_page": {
+      "description": "View and search correspondence across all projects.",
+      "search_placeholder": "Search by title, project name, institution or code...",
+      "project_name": "Project Name",
+      "no_communication_found": "No correspondence found matching your criteria."
+    },
      "login": {
       "welcome_back": "Welcome to your portal. Please sign in.",
       "login_title": "Sign In",
@@ -152,6 +164,12 @@
       "title_label": "Должность",
       "location_label": "Местоположение",
       "search_placeholder": "Поиск по имени, фамилии, электронной почте, должности или местоположению..."
+    },
+     "correspondence_page": {
+      "description": "Просмотр и поиск корреспонденции по всем проектам.",
+      "search_placeholder": "Поиск по заголовку, названию проекта, учреждению или коду...",
+      "project_name": "Название проекта",
+      "no_communication_found": "Корреспонденция, соответствующая вашим критериям, не найдена."
     },
     "login": {
       "welcome_back": "Добро пожаловать в ваш портал. Пожалуйста, войдите.",
