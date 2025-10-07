@@ -1,13 +1,15 @@
-
 import { fetchData } from '@/lib/data-service';
-import PeopleListView from '@/components/people-list-view';
+import PeopleDirectory from '@/components/people-directory';
 import translationsData from '@/locales/translations.json';
 
 // This is a Server Component
 export default async function PeoplePage() {
   // Data is fetched on the server
-  const { users } = await fetchData();
+  let { users } = await fetchData();
   
+  // Sort users alphabetically by last name on the server
+  users = users.sort((a, b) => a.last_name.localeCompare(b.last_name, 'tr', { sensitivity: 'base' }));
+
   // We assume 'tr' as default language for server-side rendering,
   // the client-side context will handle language changes.
   const t = translationsData.tr.people_page;
@@ -20,8 +22,8 @@ export default async function PeoplePage() {
           <p className="text-muted-foreground">{t.description}</p>
         </div>
       </header>
-      {/* Pass the server-fetched data to the client component */}
-      <PeopleListView users={users} />
+      {/* Pass the server-fetched and sorted data to the client component */}
+      <PeopleDirectory users={users} />
     </div>
   );
 }
