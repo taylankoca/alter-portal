@@ -1,14 +1,12 @@
-
-"use client";
-
-import { useLanguage } from '@/context/language-context';
 import ProjectCard from '@/components/project-card';
-import { projects } from '@/lib/project-data';
+import { fetchData } from '@/lib/data-service';
+import translationsData from '@/locales/translations.json';
 
-export default function ProjectsPage() {
-  const { translations } = useLanguage();
-  const t = translations.navigation;
-  const projectT = translations.projects_page;
+export default async function ProjectsPage() {
+  // We can't use the hook here anymore, so we'll just use the default 'tr' translations.
+  const t = translationsData.tr.navigation;
+  const projectT = translationsData.tr.projects_page;
+  const { projects } = await fetchData();
 
   return (
     <div className="space-y-6">

@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from 'next/image';
@@ -7,10 +6,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreVertical } from "lucide-react";
-import { useLanguage } from '@/context/language-context';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { slugify } from '@/lib/utils';
+import { useLanguage } from '@/context/language-context';
 
 interface Project {
   id: string;
