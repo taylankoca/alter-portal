@@ -7,6 +7,7 @@ import { Card } from './ui/card';
 import type { ApiUnit, ApiUser } from '@/lib/data-service';
 import { useRouter } from 'next/navigation';
 import { Avatar, AvatarFallback } from './ui/avatar';
+import { Separator } from './ui/separator';
 
 const StyledNode = styled(Card)`
   padding: 1rem;
@@ -17,22 +18,35 @@ const StyledNode = styled(Card)`
   gap: 0.5rem;
   border: 1px solid hsl(var(--border));
   background-color: hsl(var(--card));
-  min-width: 180px;
-  max-width: 220px;
+  min-width: 220px;
   text-align: center;
-  cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.2s;
-
-  &:hover {
-    background-color: hsl(var(--accent));
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  }
 `;
 
 const UnitName = styled.div`
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: hsl(var(--foreground));
+`;
+
+const UserRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: hsl(var(--accent));
+  }
+`;
+
+const UserInfo = styled.div`
+    display: flex;
+    flex-direction: column;
 `;
 
 const UserName = styled.div`
@@ -45,6 +59,15 @@ const UserTitle = styled.div`
     font-size: 0.7rem;
     color: hsl(var(--muted-foreground));
 `;
+
+const UsersContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+    margin-top: 0.75rem;
+`;
+
 
 interface OrgChartViewProps {
     units: ApiUnit[];
@@ -78,28 +101,37 @@ export default function OrgChartView({ units }: OrgChartViewProps) {
         return tree;
     };
 
-    const renderUserNode = (user: ApiUser) => {
+    const renderUser = (user: ApiUser) => {
         const initials = `${user.first_name?.[0] || ''}${user.last_name?.[0] || ''}`.toUpperCase();
         return (
-            <TreeNode key={`user-${user.id}`} label={
-                <StyledNode onClick={() => handleNodeClick(user.id)}>
-                    <Avatar className="h-12 w-12 text-lg">
-                        <AvatarFallback>{initials}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                        <UserName className="text-center">{user.first_name} {user.last_name}</UserName>
-                        {user.title && <UserTitle>{user.title}</UserTitle>}
-                    </div>
-                </StyledNode>
-            }/>
+            <UserRow key={user.id} onClick={() => handleNodeClick(user.id)}>
+                <Avatar className="h-9 w-9 text-xs">
+                    <AvatarFallback>{initials}</AvatarFallback>
+                </Avatar>
+                <UserInfo>
+                    <UserName>{user.first_name} {user.last_name}</UserName>
+                    {user.title && <UserTitle>{user.title}</UserTitle>}
+                </UserInfo>
+            </UserRow>
         );
-    };
+    }
 
     const renderTreeNodes = (nodes: TreeNodeData[]) => {
         return nodes.map(node => (
-            <TreeNode key={node.id} label={<StyledNode><UnitName>{node.name}</UnitName></StyledNode>}>
+            <TreeNode key={node.id} label={
+                <StyledNode>
+                    <UnitName>{node.name}</UnitName>
+                    {node.users && node.users.length > 0 && (
+                        <>
+                            <Separator className="my-1" />
+                            <UsersContainer>
+                                {node.users.map(user => renderUser(user))}
+                            </UsersContainer>
+                        </>
+                    )}
+                </StyledNode>
+            }>
                 {node.children.length > 0 && renderTreeNodes(node.children)}
-                {node.users && node.users.map(user => renderUserNode(user))}
             </TreeNode>
         ));
     };
