@@ -1,6 +1,4 @@
 
-import { placeholderImages as imagePlaceholders } from '@/lib/placeholder-images.json';
-
 interface ApiUser {
     id: number;
     first_name: string;
@@ -17,6 +15,7 @@ interface ApiProject {
     id: number;
     name: string;
     short_name: string;
+    short_name_slug: string;
     members: ApiProjectMember[];
     alter_project_no: string;
     employer: string;
@@ -24,7 +23,7 @@ interface ApiProject {
     country: string;
 }
 
-interface AppProjectMember {
+export interface AppProjectMember {
     name: string;
     role: 'admin' | 'member';
 }
@@ -33,6 +32,7 @@ export interface AppProject {
     id: string;
     title: string;
     description: string;
+    short_name_slug: string;
     members: AppProjectMember[];
     alterProjectNo: string;
     employer: string;
@@ -50,6 +50,7 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
         id: apiProject.id.toString(),
         title: apiProject.short_name,
         description: apiProject.name,
+        short_name_slug: apiProject.short_name_slug,
         members: projectMembers,
         alterProjectNo: apiProject.alter_project_no,
         employer: apiProject.employer,
