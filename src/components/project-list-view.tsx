@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { AppProject } from '@/lib/data-service';
 import { useLanguage } from '@/context/language-context';
-import { slugify } from '@/lib/utils';
 import ProjectTeamPopover from './project-team-popover';
 
 interface ProjectListViewProps {
@@ -48,7 +47,7 @@ export default function ProjectListView({ projects }: ProjectListViewProps) {
           {projects.map((project) => (
             <TableRow key={project.id}>
               <TableCell>
-                 <Link href={`/dashboard/projects/${slugify(project.title)}`}>
+                 <Link href={`/dashboard/projects/${project.short_name_slug}`}>
                     <div className="font-medium hover:underline cursor-pointer">{project.title}</div>
                     <div className="text-sm text-muted-foreground line-clamp-1">{project.description}</div>
                 </Link>

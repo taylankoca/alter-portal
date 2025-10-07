@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreVertical } from "lucide-react";
-import { slugify } from '@/lib/utils';
 import { useLanguage } from '@/context/language-context';
 import type { AppProject } from '@/lib/data-service';
 
@@ -17,7 +16,7 @@ interface ProjectCardProps {
 export default function ProjectCard({ project }: ProjectCardProps) {
   const { translations } = useLanguage();
   const t = translations.projects_page;
-  const projectUrl = `/dashboard/projects/${slugify(project.title)}`;
+  const projectUrl = `/dashboard/projects/${project.short_name_slug}`;
 
   return (
     <Card className="flex flex-col overflow-hidden group">
