@@ -21,6 +21,7 @@ import {
 import type { AppProject } from '@/lib/data-service';
 import { useLanguage } from '@/context/language-context';
 import { slugify } from '@/lib/utils';
+import ProjectTeamPopover from './project-team-popover';
 
 interface ProjectListViewProps {
   projects: AppProject[];
@@ -55,7 +56,9 @@ export default function ProjectListView({ projects }: ProjectListViewProps) {
               <TableCell>{project.alterProjectNo}</TableCell>
               <TableCell>{project.employer}</TableCell>
               <TableCell>{project.location}</TableCell>
-              <TableCell>{project.members.length} Üye</TableCell>
+              <TableCell>
+                <ProjectTeamPopover members={project.members} />
+              </TableCell>
               <TableCell className="text-right">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>

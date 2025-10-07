@@ -27,6 +27,7 @@ interface ApiProject {
 }
 
 export interface AppProjectMember {
+    id: number;
     name: string;
     role: 'admin' | 'member';
 }
@@ -45,6 +46,7 @@ export interface AppProject {
 
 function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
     const projectMembers = apiProject.members.map(member => ({
+        id: member.user.id,
         name: `${member.user.first_name} ${member.user.last_name}`,
         role: member.role,
     }));
