@@ -9,7 +9,8 @@
       "forms": "Formlar",
       "calendar": "Takvim",
       "settings": "Ayarlar",
-      "correspondence": "Yazışmalar"
+      "correspondence": "Yazışmalar",
+      "schema": "Şema"
     },
     "projects_page": {
       "description": "Tüm aktif ve arşivlenmiş projelerinizi buradan yönetin.",
@@ -80,7 +81,8 @@
       "forms": "Forms",
       "calendar": "Calendar",
       "settings": "Settings",
-      "correspondence": "Correspondence"
+      "correspondence": "Correspondence",
+      "schema": "Org Chart"
     },
     "projects_page": {
       "description": "Manage all your active and archived projects from here.",
@@ -151,7 +153,8 @@
       "forms": "Формы",
       "calendar": "Календарь",
       "settings": "Настройки",
-      "correspondence": "Переписка"
+      "correspondence": "Переписка",
+      "schema": "Орг. схема"
     },
     "projects_page": {
       "description": "Управляйте всеми своими активными и архивными проектами здесь.",
