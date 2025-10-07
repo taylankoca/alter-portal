@@ -1,8 +1,13 @@
 
 import { fetchData } from '@/lib/data-service';
-import OrgChartView from '@/components/org-chart-view';
 import translationsData from '@/locales/translations.json';
-import type { ApiUser } from '@/lib/data-service';
+import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const OrgChartView = dynamic(() => import('@/components/org-chart-view'), {
+  ssr: false,
+  loading: () => <Skeleton className="w-full h-[500px]" />,
+});
 
 export default async function SchemaPage() {
   const { users } = await fetchData();
