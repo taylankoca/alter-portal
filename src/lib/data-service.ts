@@ -5,6 +5,8 @@ export interface ApiUser {
     last_name: string;
     email: string;
     title?: string;
+    phone?: string;
+    location?: string;
 }
 
 interface ApiProjectMember {
@@ -64,18 +66,15 @@ export async function fetchData(): Promise<{ projects: AppProject[]; users: ApiU
     try {
         const response = await fetch('https://portal.alter.com.tr/api/data');
         if (!response.ok) {
-            // You can also add more specific error handling based on status code
             if (response.status === 404) {
                 console.error("Data not found at the specified URL.");
             } else {
                 console.error(`Failed to fetch data with status: ${response.status}`);
             }
-            // Return empty arrays as a fallback
             return { projects: [], users: [] };
         }
         const apiData: { projects: ApiProject[]; users: ApiUser[] } = await response.json();
 
-        // Check if projects array exists and is an array
         if (!apiData || !Array.isArray(apiData.projects)) {
             console.error("Fetched data is not in the expected format (missing or invalid 'projects' array).");
             return { projects: [], users: apiData.users || [] };
@@ -88,7 +87,6 @@ export async function fetchData(): Promise<{ projects: AppProject[]; users: ApiU
             users: apiData.users || []
         };
     } catch (error) {
-        // This will catch network errors (e.g., DNS resolution failure, no internet connection)
         console.error("A network or parsing error occurred while fetching data:", error);
         return { projects: [], users: [] };
     }

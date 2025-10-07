@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Separator } from './ui/separator';
+import { useRouter } from 'next/navigation';
 
 interface PeopleDirectoryProps {
   users: ApiUser[];
@@ -20,6 +20,7 @@ interface PeopleDirectoryProps {
 
 export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
   const { translations } = useLanguage();
+  const router = useRouter();
   const t = translations.people_page;
 
   const groupedUsers = users.reduce((acc, user) => {
@@ -38,6 +39,10 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleRowClick = (userId: number) => {
+    router.push(`/dashboard/people/${userId}`);
   };
 
   return (
@@ -69,7 +74,11 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
                             </TableHeader>
                              <TableBody>
                                 {groupedUsers[letter].map(user => (
-                                    <TableRow key={user.id}>
+                                    <TableRow 
+                                        key={user.id} 
+                                        onClick={() => handleRowClick(user.id)}
+                                        className="cursor-pointer"
+                                    >
                                         <TableCell className="font-medium">{user.first_name}</TableCell>
                                         <TableCell>{user.last_name}</TableCell>
                                         <TableCell>{user.email || '-'}</TableCell>
