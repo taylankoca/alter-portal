@@ -8,7 +8,8 @@
       "tasks": "Görevler",
       "forms": "Formlar",
       "calendar": "Takvim",
-      "settings": "Ayarlar"
+      "settings": "Ayarlar",
+      "correspondence": "Yazışmalar"
     },
     "projects_page": {
       "description": "Tüm aktif ve arşivlenmiş projelerinizi buradan yönetin.",
@@ -55,7 +56,8 @@
       "tasks": "Tasks",
       "forms": "Forms",
       "calendar": "Calendar",
-      "settings": "Settings"
+      "settings": "Settings",
+      "correspondence": "Correspondence"
     },
     "projects_page": {
       "description": "Manage all your active and archived projects from here.",
@@ -102,7 +104,8 @@
       "tasks": "Задачи",
       "forms": "Формы",
       "calendar": "Календарь",
-      "settings": "Настройки"
+      "settings": "Настройки",
+      "correspondence": "Переписка"
     },
     "projects_page": {
       "description": "Управляйте всеми своими активными и архивными проектами здесь.",
