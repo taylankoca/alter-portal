@@ -51,17 +51,21 @@ export default function OrgChartView({ users }: OrgChartViewProps) {
         router.push(`/dashboard/people/${userId}`);
     };
 
-    const renderUserNode = (user: ApiUser) => (
-        <StyledNode onClick={() => handleNodeClick(user.id)}>
-            <Avatar className="h-12 w-12 text-lg">
-                <AvatarFallback>{user.first_name[0]}{user.last_name[0]}</AvatarFallback>
-            </Avatar>
-            <div>
-                <UserName className="text-center">{user.first_name} {user.last_name}</UserName>
-                {user.title && <UserTitle className="text-center">{user.title}</UserTitle>}
-            </div>
-        </StyledNode>
-    );
+    const renderUserNode = (user: ApiUser) => {
+        const initials = `${user.first_name?.[0] || ''}${user.last_name?.[0] || ''}`;
+        return (
+            <StyledNode onClick={() => handleNodeClick(user.id)}>
+                <Avatar className="h-12 w-12 text-lg">
+                    <AvatarFallback>{initials}</AvatarFallback>
+                </Avatar>
+                <div>
+                    <UserName className="text-center">{user.first_name} {user.last_name}</UserName>
+                    {user.title && <UserTitle className="text-center">{user.title}</UserTitle>}
+                </div>
+            </StyledNode>
+        );
+    };
+
 
     // Placeholder hierarchy - will be replaced with real data structure
     const rootUser = {
