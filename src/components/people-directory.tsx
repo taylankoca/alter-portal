@@ -41,7 +41,7 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
   }, [searchTerm, users]);
 
   const groupedUsers = filteredUsers.reduce((acc, user) => {
-    const firstLetter = user.last_name[0]?.toUpperCase() || '#';
+    const firstLetter = user.last_name[0]?.toLocaleUpperCase('tr') || '#';
     if (!acc[firstLetter]) {
       acc[firstLetter] = [];
     }
@@ -49,7 +49,7 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
     return acc;
   }, {} as Record<string, ApiUser[]>);
 
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+  const alphabet = "ABCÇDEFGHIİJKLMNOÖPRSŞTUÜVYZ".split('');
 
   const handleLetterClick = (letter: string) => {
     const element = document.getElementById(`letter-header-${letter}`);
@@ -96,7 +96,7 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {Object.keys(groupedUsers).sort().map(letter => (
+                    {Object.keys(groupedUsers).sort((a, b) => a.localeCompare(b, 'tr')).map(letter => (
                         <React.Fragment key={letter}>
                             <TableRow id={`letter-header-${letter}`}>
                                 <TableCell colSpan={5} className="bg-muted/50">
