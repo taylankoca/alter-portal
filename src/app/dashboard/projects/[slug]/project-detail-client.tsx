@@ -6,17 +6,12 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { AppProject } from '@/lib/data-service';
 
 // Define the types for the props
 interface ProjectMember {
   name: string;
   role: 'admin' | 'member';
-}
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  members: ProjectMember[];
 }
 
 interface Translations {
@@ -28,7 +23,7 @@ interface Translations {
 }
 
 interface ProjectDetailClientProps {
-  project: Project;
+  project: AppProject;
   t: Translations;
 }
 
@@ -59,7 +54,9 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
         <div className="space-y-8">
              <div className="p-6 md:p-8">
                 <h1 className="text-3xl md:text-5xl font-bold text-foreground">{project.description}</h1>
-                 <p className="text-lg text-muted-foreground mt-2">{project.title}</p>
+                 <p className="text-lg text-muted-foreground mt-2">
+                    {project.title} (Alter Proje No: {project.alterProjectNo})
+                 </p>
             </div>
 
             <div className="container mx-auto px-4 md:px-0 max-w-4xl">
@@ -71,8 +68,19 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                         <TabsTrigger value="files">{t.files}</TabsTrigger>
                     </TabsList>
                     <TabsContent value="description" className="mt-6">
-                        <div className="space-y-4">
-                            <p className="text-muted-foreground leading-relaxed">
+                        <div className="space-y-6 text-sm text-muted-foreground">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="space-y-1">
+                                    <p className="font-medium text-foreground">İşveren</p>
+                                    <p>{project.employer || '-'}</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="font-medium text-foreground">Konum</p>
+                                    <p>{project.location}, {project.country}</p>
+                                </div>
+                            </div>
+                            <Separator/>
+                            <p className="leading-relaxed pt-4">
                                 {project.description}
                             </p>
                         </div>

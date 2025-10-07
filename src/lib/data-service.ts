@@ -18,6 +18,10 @@ interface ApiProject {
     name: string;
     short_name: string;
     members: ApiProjectMember[];
+    alter_project_no: string;
+    employer: string;
+    location: string;
+    country: string;
 }
 
 interface AppProjectMember {
@@ -25,11 +29,15 @@ interface AppProjectMember {
     role: 'admin' | 'member';
 }
 
-interface AppProject {
+export interface AppProject {
     id: string;
     title: string;
     description: string;
     members: AppProjectMember[];
+    alterProjectNo: string;
+    employer: string;
+    location: string;
+    country: string;
 }
 
 function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
@@ -43,6 +51,10 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
         title: apiProject.short_name,
         description: apiProject.name,
         members: projectMembers,
+        alterProjectNo: apiProject.alter_project_no,
+        employer: apiProject.employer,
+        location: apiProject.location,
+        country: apiProject.country,
     };
 }
 
@@ -50,18 +62,32 @@ export async function fetchData(): Promise<{ projects: AppProject[]; users: ApiU
     try {
         const response = await fetch('https://portal.alter.com.tr/api/data');
         if (!response.ok) {
-            throw new Error('Failed to fetch data');
+            // You can also add more specific error handling based on status code
+            if (response.status === 404) {
+                console.error("Data not found at the specified URL.");
+            } else {
+                console.error(`Failed to fetch data with status: ${response.status}`);
+            }
+            // Return empty arrays as a fallback
+            return { projects: [], users: [] };
         }
         const apiData: { projects: ApiProject[]; users: ApiUser[] } = await response.json();
 
+        // Check if projects array exists and is an array
+        if (!apiData || !Array.isArray(apiData.projects)) {
+            console.error("Fetched data is not in the expected format (missing or invalid 'projects' array).");
+            return { projects: [], users: apiData.users || [] };
+        }
+        
         const mappedProjects = apiData.projects.map(mapApiProjectToAppProject);
 
         return {
             projects: mappedProjects,
-            users: apiData.users
+            users: apiData.users || []
         };
     } catch (error) {
-        console.error("Error fetching or mapping data:", error);
+        // This will catch network errors (e.g., DNS resolution failure, no internet connection)
+        console.error("A network or parsing error occurred while fetching data:", error);
         return { projects: [], users: [] };
     }
 }

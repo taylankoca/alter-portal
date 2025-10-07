@@ -8,16 +8,10 @@ import { Button } from "@/components/ui/button";
 import { MoreVertical } from "lucide-react";
 import { slugify } from '@/lib/utils';
 import { useLanguage } from '@/context/language-context';
-
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  members: string[];
-}
+import type { AppProject } from '@/lib/data-service';
 
 interface ProjectCardProps {
-  project: Project;
+  project: AppProject;
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
@@ -34,6 +28,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                   {project.title}
                 </CardTitle>
             </Link>
+             <p className="text-sm text-muted-foreground mt-1">
+                Alter Proje No: {project.alterProjectNo}
+            </p>
         </div>
         <div className="relative -top-2 -right-2">
            <DropdownMenu>
