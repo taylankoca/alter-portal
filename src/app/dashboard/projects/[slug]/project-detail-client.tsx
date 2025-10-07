@@ -22,6 +22,8 @@ interface Translations {
     project_description: string;
     project_team: string;
     admin_role: string;
+    correspondence: string;
+    files: string;
 }
 
 interface ProjectDetailClientProps {
@@ -39,9 +41,11 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
 
             <div className="container mx-auto px-4 md:px-0 max-w-4xl">
                 <Tabs defaultValue="description" className="w-full">
-                    <TabsList className="grid w-full grid-cols-2">
+                    <TabsList className="grid w-full grid-cols-4">
                         <TabsTrigger value="description">{t.project_description}</TabsTrigger>
                         <TabsTrigger value="team">{t.project_team}</TabsTrigger>
+                        <TabsTrigger value="correspondence">{t.correspondence}</TabsTrigger>
+                        <TabsTrigger value="files">{t.files}</TabsTrigger>
                     </TabsList>
                     <TabsContent value="description" className="mt-6">
                         <div className="space-y-4">
@@ -77,6 +81,16 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                                     </Card>
                                 );
                             })}
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="correspondence" className="mt-6">
+                        <div className="space-y-4 text-center text-muted-foreground py-16">
+                            <p>Henüz yazışma bulunmamaktadır.</p>
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="files" className="mt-6">
+                         <div className="space-y-4 text-center text-muted-foreground py-16">
+                            <p>Henüz dosya bulunmamaktadır.</p>
                         </div>
                     </TabsContent>
                 </Tabs>
