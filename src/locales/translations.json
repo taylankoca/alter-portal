@@ -29,7 +29,8 @@
       "last_name": "Soyad",
       "email": "E-posta",
       "title_label": "Unvan",
-      "search_placeholder": "İsim, soyisim, e-posta veya unvan ile ara..."
+      "location_label": "Konum",
+      "search_placeholder": "İsim, soyisim, e-posta, unvan veya konum ile ara..."
     },
     "login": {
       "welcome_back": "Portalınıza hoş geldiniz. Lütfen giriş yapın.",
@@ -75,7 +76,8 @@
       "last_name": "Last Name",
       "email": "Email",
       "title_label": "Title",
-      "search_placeholder": "Search by name, surname, email or title..."
+      "location_label": "Location",
+      "search_placeholder": "Search by name, surname, email, title or location..."
     },
      "login": {
       "welcome_back": "Welcome to your portal. Please sign in.",
@@ -121,7 +123,8 @@
       "last_name": "Фамилия",
       "email": "Эл. почта",
       "title_label": "Должность",
-      "search_placeholder": "Поиск по имени, фамилии, электронной почте или должности..."
+      "location_label": "Местоположение",
+      "search_placeholder": "Поиск по имени, фамилии, электронной почте, должности или местоположению..."
     },
     "login": {
       "welcome_back": "Добро пожаловать в ваш портал. Пожалуйста, войдите.",

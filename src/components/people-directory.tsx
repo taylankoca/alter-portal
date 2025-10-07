@@ -34,7 +34,8 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
         user.first_name.toLowerCase().includes(lowercasedFilter) ||
         user.last_name.toLowerCase().includes(lowercasedFilter) ||
         (user.email && user.email.toLowerCase().includes(lowercasedFilter)) ||
-        (user.title && user.title.toLowerCase().includes(lowercasedFilter))
+        (user.title && user.title.toLowerCase().includes(lowercasedFilter)) ||
+        (user.location && user.location.toLowerCase().includes(lowercasedFilter))
       );
     });
   }, [searchTerm, users]);
@@ -91,13 +92,14 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
                         <TableHead>{t.last_name}</TableHead>
                         <TableHead>{t.email}</TableHead>
                         <TableHead>{t.title_label}</TableHead>
+                        <TableHead>{t.location_label}</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {Object.keys(groupedUsers).sort().map(letter => (
                         <React.Fragment key={letter}>
                             <TableRow id={`letter-header-${letter}`}>
-                                <TableCell colSpan={4} className="bg-muted/50">
+                                <TableCell colSpan={5} className="bg-muted/50">
                                     <h2 className="text-xl font-bold text-primary">{letter}</h2>
                                 </TableCell>
                             </TableRow>
@@ -111,6 +113,7 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
                                     <TableCell>{user.last_name}</TableCell>
                                     <TableCell>{user.email || '-'}</TableCell>
                                     <TableCell>{user.title || '-'}</TableCell>
+                                    <TableCell>{user.location || '-'}</TableCell>
                                 </TableRow>
                             ))}
                         </React.Fragment>
