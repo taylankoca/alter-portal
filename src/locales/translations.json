@@ -15,7 +15,8 @@
       "edit": "Düzenle",
       "delete": "Sil",
       "project_team": "Proje Ekibi",
-      "project_description": "Proje Açıklaması"
+      "project_description": "Proje Açıklaması",
+      "admin_role": "Yönetici"
     },
     "login": {
       "welcome_back": "Portalınıza hoş geldiniz. Lütfen giriş yapın.",
@@ -47,7 +48,8 @@
       "edit": "Edit",
       "delete": "Delete",
       "project_team": "Project Team",
-      "project_description": "Project Description"
+      "project_description": "Project Description",
+      "admin_role": "Admin"
     },
      "login": {
       "welcome_back": "Welcome to your portal. Please sign in.",
@@ -79,7 +81,8 @@
       "edit": "Редактировать",
       "delete": "Удалить",
       "project_team": "Команда проекта",
-      "project_description": "Описание проекта"
+      "project_description": "Описание проекта",
+      "admin_role": "Администратор"
     },
     "login": {
       "welcome_back": "Добро пожаловать в ваш портал. Пожалуйста, войдите.",

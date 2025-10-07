@@ -21,6 +21,7 @@ interface Project {
 interface Translations {
     project_description: string;
     project_team: string;
+    admin_role: string;
 }
 
 interface ProjectDetailClientProps {
@@ -51,7 +52,13 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                     </TabsContent>
                     <TabsContent value="team" className="mt-6">
                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                            {project.members.map((member, index) => {
+                            {project.members
+                                .sort((a, b) => {
+                                    if (a.role === 'admin' && b.role !== 'admin') return -1;
+                                    if (a.role !== 'admin' && b.role === 'admin') return 1;
+                                    return a.name.localeCompare(b.name);
+                                })
+                                .map((member, index) => {
                                 const initials = member.name.split(' ').map(n => n[0]).join('');
                                 const isAdmin = member.role === 'admin';
                                 return (
@@ -62,7 +69,7 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                                             </Avatar>
                                             {isAdmin && (
                                                 <Badge variant="default" className="absolute -bottom-2 left-1/2 -translate-x-1/2">
-                                                    Admin
+                                                    {t.admin_role}
                                                 </Badge>
                                             )}
                                         </div>
