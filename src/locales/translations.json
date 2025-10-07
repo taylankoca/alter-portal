@@ -4,6 +4,7 @@
     "navigation": {
       "dashboard": "Ana Sayfa",
       "projects": "Projeler",
+      "people": "Kişiler",
       "tasks": "Görevler",
       "forms": "Formlar",
       "calendar": "Takvim",
@@ -19,6 +20,14 @@
       "admin_role": "Yönetici",
       "correspondence": "Yazışmalar",
       "files": "Dosyalar"
+    },
+    "people_page": {
+      "title": "Kişiler",
+      "description": "Sistemdeki tüm kullanıcıları görüntüleyin ve yönetin.",
+      "first_name": "Ad",
+      "last_name": "Soyad",
+      "email": "E-posta",
+      "title_label": "Unvan"
     },
     "login": {
       "welcome_back": "Portalınıza hoş geldiniz. Lütfen giriş yapın.",
@@ -39,6 +48,7 @@
     "navigation": {
       "dashboard": "Dashboard",
       "projects": "Projects",
+      "people": "People",
       "tasks": "Tasks",
       "forms": "Forms",
       "calendar": "Calendar",
@@ -54,6 +64,14 @@
       "admin_role": "Admin",
       "correspondence": "Correspondence",
       "files": "Files"
+    },
+    "people_page": {
+      "title": "People",
+      "description": "View and manage all users in the system.",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "email": "Email",
+      "title_label": "Title"
     },
      "login": {
       "welcome_back": "Welcome to your portal. Please sign in.",
@@ -74,6 +92,7 @@
     "navigation": {
       "dashboard": "Главная",
       "projects": "Проекты",
+      "people": "Люди",
       "tasks": "Задачи",
       "forms": "Формы",
       "calendar": "Календарь",
@@ -89,6 +108,14 @@
       "admin_role": "Администратор",
       "correspondence": "Переписка",
       "files": "Файлы"
+    },
+    "people_page": {
+      "title": "Люди",
+      "description": "Просмотр и управление всеми пользователями в системе.",
+      "first_name": "Имя",
+      "last_name": "Фамилия",
+      "email": "Эл. почта",
+      "title_label": "Должность"
     },
     "login": {
       "welcome_back": "Добро пожаловать в ваш портал. Пожалуйста, войдите.",

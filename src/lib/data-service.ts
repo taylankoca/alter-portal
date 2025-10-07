@@ -1,9 +1,10 @@
 
-interface ApiUser {
+export interface ApiUser {
     id: number;
     first_name: string;
     last_name: string;
     email: string;
+    title?: string;
 }
 
 interface ApiProjectMember {
