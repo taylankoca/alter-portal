@@ -1,8 +1,9 @@
 
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Define the types for the props
 interface Project {
@@ -31,16 +32,20 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
             </div>
 
             <div className="container mx-auto px-4 md:px-0 max-w-4xl">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="md:col-span-2 space-y-4">
-                         <h2 className="text-2xl font-semibold text-foreground border-b pb-2">{t.project_description}</h2>
-                        <p className="text-muted-foreground leading-relaxed">
-                            {project.description}
-                        </p>
-                    </div>
-                    <div className="space-y-4">
-                        <h2 className="text-2xl font-semibold text-foreground border-b pb-2">{t.project_team}</h2>
-                        <TooltipProvider>
+                <Tabs defaultValue="description" className="w-full">
+                    <TabsList className="grid w-full grid-cols-2">
+                        <TabsTrigger value="description">{t.project_description}</TabsTrigger>
+                        <TabsTrigger value="team">{t.project_team}</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="description" className="mt-6">
+                        <div className="space-y-4">
+                            <p className="text-muted-foreground leading-relaxed">
+                                {project.description}
+                            </p>
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="team" className="mt-6">
+                         <TooltipProvider>
                             <div className="flex flex-wrap gap-4">
                                 {project.members.map((member, index) => {
                                     const initials = member.split(' ').map(n => n[0]).join('');
@@ -62,8 +67,8 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                                 })}
                             </div>
                         </TooltipProvider>
-                    </div>
-                </div>
+                    </TabsContent>
+                </Tabs>
             </div>
         </div>
     );
