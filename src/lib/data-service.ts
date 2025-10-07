@@ -1,3 +1,4 @@
+
 import { placeholderImages } from '@/lib/placeholder-images.json';
 
 interface ApiUser {
@@ -31,18 +32,18 @@ interface AppProject {
     };
 }
 
-const imageKeys = Object.keys(placeholderImages);
+const imageKeys = Object.keys(placeholderImages.placeholderImages);
 
 function mapApiProjectToAppProject(apiProject: ApiProject, index: number): AppProject {
-    const imageKey = imageKeys[index % imageKeys.length] as keyof typeof placeholderImages;
+    const imageKey = imageKeys[index % imageKeys.length] as keyof typeof placeholderImages.placeholderImages;
     const memberNames = apiProject.members.map(member => `${member.user.first_name} ${member.user.last_name}`);
 
     return {
         id: apiProject.id.toString(),
-        title: apiProject.name,
-        description: apiProject.short_name, // Using short_name for description as per original structure
+        title: apiProject.short_name,
+        description: apiProject.name,
         members: memberNames,
-        image: placeholderImages[imageKey],
+        image: placeholderImages.placeholderImages[imageKey],
     };
 }
 

@@ -1,7 +1,6 @@
 
 "use client";
 
-import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -32,17 +31,8 @@ interface ProjectDetailClientProps {
 export default function ProjectDetailClient({ project, t }: ProjectDetailClientProps) {
     return (
         <div className="space-y-8">
-            <div className="relative h-64 md:h-80 w-full rounded-lg overflow-hidden">
-                <Image
-                    src={project.image.src}
-                    alt={project.title}
-                    fill
-                    className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-0 left-0 p-6 md:p-8">
-                    <h1 className="text-3xl md:text-5xl font-bold text-white shadow-lg">{project.title}</h1>
-                </div>
+             <div className="p-6 md:p-8">
+                <h1 className="text-3xl md:text-5xl font-bold text-foreground">{project.title}</h1>
             </div>
 
             <div className="container mx-auto px-4 md:px-0 max-w-4xl">
@@ -64,7 +54,6 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                                             <TooltipTrigger>
                                                 <div className="flex flex-col items-center gap-2">
                                                     <Avatar className="h-20 w-20 border-4 border-card transition-transform transform hover:scale-110">
-                                                        <AvatarImage src={`https://i.pravatar.cc/150?u=${member}`} />
                                                         <AvatarFallback>{initials}</AvatarFallback>
                                                     </Avatar>
                                                     <span className="text-sm text-center font-medium">{member}</span>
