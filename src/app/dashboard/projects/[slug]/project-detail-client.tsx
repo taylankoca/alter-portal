@@ -59,7 +59,7 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                  </p>
             </div>
 
-            <div className="container mx-auto px-4 md:px-0 max-w-4xl">
+            <div>
                 <Tabs defaultValue="description" className="w-full">
                     <TabsList className="grid w-full grid-cols-4">
                         <TabsTrigger value="description">{t.project_description}</TabsTrigger>
@@ -94,7 +94,7 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                             )}
 
                             {admins.length > 0 && members.length > 0 && (
-                                <Separator />
+                                <Separator className="my-6" />
                             )}
 
                             {members.length > 0 && (
