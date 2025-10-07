@@ -35,7 +35,8 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
         user.last_name.toLowerCase().includes(lowercasedFilter) ||
         (user.email && user.email.toLowerCase().includes(lowercasedFilter)) ||
         (user.title && user.title.toLowerCase().includes(lowercasedFilter)) ||
-        (user.location && user.location.toLowerCase().includes(lowercasedFilter))
+        (user.location && user.location.toLowerCase().includes(lowercasedFilter)) ||
+        (user.phone && user.phone.toLowerCase().includes(lowercasedFilter))
       );
     });
   }, [searchTerm, users]);
@@ -93,13 +94,14 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
                         <TableHead>{t.email}</TableHead>
                         <TableHead>{t.title_label}</TableHead>
                         <TableHead>{t.location_label}</TableHead>
+                        <TableHead>Telefon</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {Object.keys(groupedUsers).sort((a, b) => a.localeCompare(b, 'tr')).map(letter => (
                         <React.Fragment key={letter}>
                             <TableRow id={`letter-header-${letter}`}>
-                                <TableCell colSpan={5} className="bg-muted/50">
+                                <TableCell colSpan={6} className="bg-muted/50">
                                     <h2 className="text-xl font-bold text-primary">{letter}</h2>
                                 </TableCell>
                             </TableRow>
@@ -114,6 +116,7 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
                                     <TableCell>{user.email || '-'}</TableCell>
                                     <TableCell>{user.title || '-'}</TableCell>
                                     <TableCell>{user.location || '-'}</TableCell>
+                                    <TableCell>{user.phone || '-'}</TableCell>
                                 </TableRow>
                             ))}
                         </React.Fragment>
