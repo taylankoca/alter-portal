@@ -21,7 +21,15 @@
       "admin_role": "Yönetici",
       "correspondence": "Yazışmalar",
       "files": "Dosyalar",
-      "search_placeholder": "Proje adı, no, işveren veya konum ile ara..."
+      "search_placeholder": "Proje adı, no, işveren veya konum ile ara...",
+      "communication_direction": "Yön",
+      "communication_code": "Kod",
+      "communication_title": "Başlık",
+      "communication_institution": "Kurum",
+      "communication_date": "Tarih",
+      "communication_incoming": "Gelen",
+      "communication_outgoing": "Giden",
+      "no_communication_found": "Henüz yazışma bulunmamaktadır."
     },
     "people_page": {
       "title": "Kişiler",
@@ -69,7 +77,15 @@
       "admin_role": "Admin",
       "correspondence": "Correspondence",
       "files": "Files",
-      "search_placeholder": "Search by project name, no, employer or location..."
+      "search_placeholder": "Search by project name, no, employer or location...",
+      "communication_direction": "Direction",
+      "communication_code": "Code",
+      "communication_title": "Title",
+      "communication_institution": "Institution",
+      "communication_date": "Date",
+      "communication_incoming": "Incoming",
+      "communication_outgoing": "Outgoing",
+      "no_communication_found": "No correspondence found yet."
     },
     "people_page": {
       "title": "People",
@@ -117,7 +133,15 @@
       "admin_role": "Администратор",
       "correspondence": "Переписка",
       "files": "Файлы",
-      "search_placeholder": "Поиск по названию проекта, номеру, работодателю или местоположению..."
+      "search_placeholder": "Поиск по названию проекта, номеру, работодателю или местоположению...",
+      "communication_direction": "Направление",
+      "communication_code": "Код",
+      "communication_title": "Заголовок",
+      "communication_institution": "Учреждение",
+      "communication_date": "Дата",
+      "communication_incoming": "Входящее",
+      "communication_outgoing": "Исходящее",
+      "no_communication_found": "Корреспонденция еще не найдена."
     },
     "people_page": {
       "title": "Люди",

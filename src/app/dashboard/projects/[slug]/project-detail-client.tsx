@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -6,13 +7,11 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { AppProject } from '@/lib/data-service';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ArrowDown, ArrowUp } from "lucide-react";
+import type { AppProject, AppProjectMember } from '@/lib/data-service';
 
 // Define the types for the props
-interface ProjectMember {
-  name: string;
-  role: 'admin' | 'member';
-}
 
 interface Translations {
     project_description: string;
@@ -20,6 +19,14 @@ interface Translations {
     admin_role: string;
     correspondence: string;
     files: string;
+    communication_direction: string;
+    communication_code: string;
+    communication_title: string;
+    communication_institution: string;
+    communication_date: string;
+    communication_incoming: string;
+    communication_outgoing: string;
+    no_communication_found: string;
 }
 
 interface ProjectDetailClientProps {
@@ -30,8 +37,10 @@ interface ProjectDetailClientProps {
 export default function ProjectDetailClient({ project, t }: ProjectDetailClientProps) {
     const admins = project.members.filter(m => m.role === 'admin').sort((a, b) => a.name.localeCompare(b.name));
     const members = project.members.filter(m => m.role !== 'admin').sort((a, b) => a.name.localeCompare(b.name));
+    
+    const sortedCommunications = project.communications.sort((a, b) => new Date(b.communicated_at).getTime() - new Date(a.communicated_at).getTime());
 
-    const renderMemberCard = (member: ProjectMember, isAdmin: boolean) => {
+    const renderMemberCard = (member: AppProjectMember, isAdmin: boolean) => {
         const initials = member.name.split(' ').map(n => n[0]).join('');
         return (
             <Card key={member.name} className={`flex flex-col items-center justify-center p-4 text-center aspect-square transition-colors ${isAdmin ? 'bg-primary/10' : 'bg-card'}`}>
@@ -105,9 +114,47 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                         </div>
                     </TabsContent>
                     <TabsContent value="correspondence" className="mt-6">
-                        <div className="space-y-4 text-center text-muted-foreground py-16">
-                            <p>Henüz yazışma bulunmamaktadır.</p>
-                        </div>
+                        {sortedCommunications.length > 0 ? (
+                           <div className="border rounded-lg">
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead className="w-[80px] text-center">{t.communication_direction}</TableHead>
+                                            <TableHead>{t.communication_code}</TableHead>
+                                            <TableHead>{t.communication_title}</TableHead>
+                                            <TableHead>{t.communication_institution}</TableHead>
+                                            <TableHead className="text-right">{t.communication_date}</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {sortedCommunications.map((comm) => (
+                                            <TableRow key={comm.id}>
+                                                <TableCell className="text-center">
+                                                    {comm.direction === 'incoming' ? 
+                                                        <span className="inline-flex items-center gap-1.5 text-blue-600">
+                                                            <ArrowDown size={16}/> 
+                                                            {/* {t.communication_incoming} */}
+                                                        </span> : 
+                                                        <span className="inline-flex items-center gap-1.5 text-green-600">
+                                                            <ArrowUp size={16}/> 
+                                                            {/* {t.communication_outgoing} */}
+                                                        </span>
+                                                    }
+                                                </TableCell>
+                                                <TableCell className="font-mono text-xs">{comm.code}</TableCell>
+                                                <TableCell className="font-medium">{comm.title}</TableCell>
+                                                <TableCell>{comm.institution}</TableCell>
+                                                <TableCell className="text-right">{new Date(comm.communicated_at).toLocaleDateString('tr-TR')}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                           </div>
+                        ) : (
+                            <div className="space-y-4 text-center text-muted-foreground py-16">
+                                <p>{t.no_communication_found}</p>
+                            </div>
+                        )}
                     </TabsContent>
                     <TabsContent value="files" className="mt-6">
                          <div className="space-y-4 text-center text-muted-foreground py-16">

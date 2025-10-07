@@ -1,4 +1,5 @@
 
+
 export interface ApiUser {
     id: number;
     first_name: string;
@@ -14,6 +15,24 @@ interface ApiProjectMember {
     role: 'admin' | 'member';
 }
 
+export interface AppCommunication {
+    id: number;
+    title: string;
+    institution: string;
+    direction: 'incoming' | 'outgoing';
+    code: string;
+    communicated_at: string;
+}
+
+interface ApiCommunication {
+    id: number;
+    title: string;
+    institution: string;
+    direction: 'incoming' | 'outgoing';
+    code: string;
+    communicated_at: string;
+}
+
 interface ApiProject {
     id: number;
     name: string;
@@ -24,6 +43,7 @@ interface ApiProject {
     employer: string;
     location: string;
     country: string;
+    communications: ApiCommunication[];
 }
 
 export interface AppProjectMember {
@@ -42,6 +62,7 @@ export interface AppProject {
     employer: string;
     location: string;
     country: string;
+    communications: AppCommunication[];
 }
 
 function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
@@ -61,6 +82,14 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
         employer: apiProject.employer,
         location: apiProject.location,
         country: apiProject.country,
+        communications: (apiProject.communications || []).map(comm => ({
+            id: comm.id,
+            title: comm.title,
+            institution: comm.institution,
+            direction: comm.direction,
+            code: comm.code,
+            communicated_at: comm.communicated_at,
+        })),
     };
 }
 
