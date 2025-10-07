@@ -13,6 +13,7 @@ import { ArrowDown, ArrowUp, ArrowUpDown, Search } from "lucide-react";
 import type { AppProject, AppProjectMember, AppCommunication } from '@/lib/data-service';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 // Define the types for the props
 
@@ -45,6 +46,7 @@ type SortDirection = 'ascending' | 'descending';
 export default function ProjectDetailClient({ project, t }: ProjectDetailClientProps) {
     const [searchTerm, setSearchTerm] = React.useState('');
     const [sortConfig, setSortConfig] = React.useState<{ key: SortKey; direction: SortDirection } | null>({ key: 'communicated_at', direction: 'descending' });
+    const router = useRouter();
     
     const admins = project.members.filter(m => m.role === 'admin').sort((a, b) => a.name.localeCompare(b.name));
     const members = project.members.filter(m => m.role !== 'admin').sort((a, b) => a.name.localeCompare(b.name));
@@ -56,6 +58,10 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
             direction = 'descending';
         }
         setSortConfig({ key, direction });
+    };
+
+    const handleRowClick = (id: number) => {
+        router.push(`/dashboard/correspondence/${id}`);
     };
 
     const sortedAndFilteredCommunications = React.useMemo(() => {
@@ -232,7 +238,7 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                                     </TableHeader>
                                     <TableBody>
                                         {sortedAndFilteredCommunications.map((comm) => (
-                                            <TableRow key={comm.id}>
+                                            <TableRow key={comm.id} onClick={() => handleRowClick(comm.id)} className="cursor-pointer">
                                                 <TableCell className="text-center">
                                                     {comm.direction === 'incoming' ? 
                                                         <span className="inline-flex items-center gap-1.5 text-blue-600">
@@ -268,3 +274,4 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
         </div>
     );
 }
+

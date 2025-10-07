@@ -17,6 +17,7 @@ import { Input } from './ui/input';
 import { Search, ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import type { AppCommunication } from '@/lib/data-service';
 import { Button } from './ui/button';
+import { useRouter } from 'next/navigation';
 
 interface EnrichedCommunication extends AppCommunication {
     projectName: string;
@@ -32,6 +33,7 @@ type SortDirection = 'ascending' | 'descending';
 
 export default function CorrespondenceView({ communications }: CorrespondenceViewProps) {
   const { translations } = useLanguage();
+  const router = useRouter();
   const t_projects = translations.projects_page;
   const t_corr = translations.correspondence_page;
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -43,6 +45,10 @@ export default function CorrespondenceView({ communications }: CorrespondenceVie
         direction = 'descending';
     }
     setSortConfig({ key, direction });
+  };
+  
+  const handleRowClick = (id: number) => {
+    router.push(`/dashboard/correspondence/${id}`);
   };
 
   const filteredAndSortedCommunications = React.useMemo(() => {
@@ -153,7 +159,7 @@ export default function CorrespondenceView({ communications }: CorrespondenceVie
                     </TableHeader>
                     <TableBody>
                         {filteredAndSortedCommunications.map((comm) => (
-                            <TableRow key={comm.id}>
+                            <TableRow key={comm.id} onClick={() => handleRowClick(comm.id)} className="cursor-pointer">
                                 <TableCell className="text-center">
                                     {comm.direction === 'incoming' ? 
                                         <span className="inline-flex items-center gap-1.5 text-blue-600" title={t_projects.communication_incoming}>

@@ -45,7 +45,16 @@
       "description": "Tüm projelerdeki yazışmaları görüntüleyin ve arayın.",
       "search_placeholder": "Başlık, proje adı, kurum veya kod ile ara...",
       "project_name": "Proje Adı",
-      "no_communication_found": "Arama kriterlerinize uygun yazışma bulunamadı."
+      "no_communication_found": "Arama kriterlerinize uygun yazışma bulunamadı.",
+      "title": "Yazışma Detayı",
+      "project": "Proje",
+      "direction": "Yön",
+      "code": "Kod",
+      "institution": "Kurum",
+      "date": "Tarih",
+      "download_file": "Dosyayı İndir",
+      "download_not_available_title": "Dosya İndirme",
+      "download_not_available_description": "Bu özellik yakında aktif olacaktır."
     },
     "login": {
       "welcome_back": "Portalınıza hoş geldiniz. Lütfen giriş yapın.",
@@ -107,7 +116,16 @@
       "description": "View and search correspondence across all projects.",
       "search_placeholder": "Search by title, project name, institution or code...",
       "project_name": "Project Name",
-      "no_communication_found": "No correspondence found matching your criteria."
+      "no_communication_found": "No correspondence found matching your criteria.",
+      "title": "Correspondence Detail",
+      "project": "Project",
+      "direction": "Direction",
+      "code": "Code",
+      "institution": "Institution",
+      "date": "Date",
+      "download_file": "Download File",
+      "download_not_available_title": "File Download",
+      "download_not_available_description": "This feature will be available soon."
     },
      "login": {
       "welcome_back": "Welcome to your portal. Please sign in.",
@@ -169,7 +187,16 @@
       "description": "Просмотр и поиск корреспонденции по всем проектам.",
       "search_placeholder": "Поиск по заголовку, названию проекта, учреждению или коду...",
       "project_name": "Название проекта",
-      "no_communication_found": "Корреспонденция, соответствующая вашим критериям, не найдена."
+      "no_communication_found": "Корреспонденция, соответствующая вашим критериям, не найдена.",
+      "title": "Детали корреспонденции",
+      "project": "Проект",
+      "direction": "Направление",
+      "code": "Код",
+      "institution": "Учреждение",
+      "date": "Дата",
+      "download_file": "Скачать файл",
+      "download_not_available_title": "Загрузка файла",
+      "download_not_available_description": "Эта функция скоро будет доступна."
     },
     "login": {
       "welcome_back": "Добро пожаловать в ваш портал. Пожалуйста, войдите.",
