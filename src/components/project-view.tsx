@@ -15,7 +15,7 @@ interface ProjectViewProps {
 
 export default function ProjectView({ projects }: ProjectViewProps) {
   const { language } = useLanguage();
-  const [view, setView] = useState('grid');
+  const [view, setView] = useState('list');
 
   return (
     <div>
