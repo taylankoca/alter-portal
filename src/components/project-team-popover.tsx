@@ -3,11 +3,12 @@
 
 import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { Users, Search } from 'lucide-react';
+import { Search, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
 import { AppProjectMember } from '@/lib/data-service';
+import { Separator } from './ui/separator';
 
 interface ProjectTeamPopoverProps {
   members: AppProjectMember[];
@@ -18,16 +19,36 @@ export default function ProjectTeamPopover({ members }: ProjectTeamPopoverProps)
   const [searchTerm, setSearchTerm] = useState('');
   const [open, setOpen] = useState(false);
 
-  const filteredMembers = useMemo(() => {
-    if (!searchTerm) return members;
+  const { admins, otherMembers } = useMemo(() => {
     const lowercasedFilter = searchTerm.toLowerCase();
-    return members.filter(member => member.name.toLowerCase().includes(lowercasedFilter));
+    
+    const filtered = members.filter(member => 
+      member.name.toLowerCase().includes(lowercasedFilter)
+    );
+
+    const admins = filtered.filter(member => member.role === 'admin').sort((a,b) => a.name.localeCompare(b.name));
+    const otherMembers = filtered.filter(member => member.role !== 'admin').sort((a,b) => a.name.localeCompare(b.name));
+
+    return { admins, otherMembers };
   }, [members, searchTerm]);
+
 
   const handleMemberClick = (memberId: number) => {
     router.push(`/dashboard/people/${memberId}`);
     setOpen(false); // Close the popover after navigation
   };
+
+  const renderMemberButton = (member: AppProjectMember) => (
+    <Button
+      key={member.id}
+      variant="ghost"
+      className="w-full justify-start text-sm h-9"
+      onClick={() => handleMemberClick(member.id)}
+    >
+      {member.role === 'admin' && <Shield className="h-4 w-4 mr-2 text-primary" />}
+      <span className={member.role === 'admin' ? 'font-semibold' : ''}>{member.name}</span>
+    </Button>
+  );
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -47,20 +68,15 @@ export default function ProjectTeamPopover({ members }: ProjectTeamPopoverProps)
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </div>
-            <div className="max-h-60 overflow-y-auto">
-                {filteredMembers.length > 0 ? (
-                    filteredMembers.map(member => (
-                    <Button
-                        key={member.id}
-                        variant="ghost"
-                        className="w-full justify-start text-sm"
-                        onClick={() => handleMemberClick(member.id)}
-                    >
-                        {member.name}
-                    </Button>
-                    ))
-                ) : (
+            <div className="max-h-60 overflow-y-auto space-y-1">
+                {admins.length === 0 && otherMembers.length === 0 ? (
                     <p className="text-center text-sm text-muted-foreground p-4">Üye bulunamadı.</p>
+                ) : (
+                  <>
+                    {admins.map(renderMemberButton)}
+                    {admins.length > 0 && otherMembers.length > 0 && <Separator className="my-2" />}
+                    {otherMembers.map(renderMemberButton)}
+                  </>
                 )}
             </div>
         </div>
