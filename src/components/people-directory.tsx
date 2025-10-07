@@ -51,9 +51,9 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
 
   const handleLetterClick = (letter: string) => {
-    const element = document.getElementById(`letter-${letter}`);
+    const element = document.getElementById(`letter-header-${letter}`);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -83,38 +83,40 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
                 </button>
             ))}
         </div>
-        <div className="space-y-8">
-            {Object.keys(groupedUsers).sort().map(letter => (
-                <div key={letter} id={`letter-${letter}`}>
-                    <h2 className="text-2xl font-bold text-primary mb-4 pb-2 border-b">{letter}</h2>
-                    <div className="border rounded-lg">
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>{t.first_name}</TableHead>
-                                    <TableHead>{t.last_name}</TableHead>
-                                    <TableHead>{t.email}</TableHead>
-                                    <TableHead>{t.title_label}</TableHead>
+        <div className="border rounded-lg">
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>{t.first_name}</TableHead>
+                        <TableHead>{t.last_name}</TableHead>
+                        <TableHead>{t.email}</TableHead>
+                        <TableHead>{t.title_label}</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {Object.keys(groupedUsers).sort().map(letter => (
+                        <React.Fragment key={letter}>
+                            <TableRow id={`letter-header-${letter}`}>
+                                <TableCell colSpan={4} className="bg-muted/50">
+                                    <h2 className="text-xl font-bold text-primary">{letter}</h2>
+                                </TableCell>
+                            </TableRow>
+                            {groupedUsers[letter].map(user => (
+                                <TableRow 
+                                    key={user.id} 
+                                    onClick={() => handleRowClick(user.id)}
+                                    className="cursor-pointer"
+                                >
+                                    <TableCell className="font-medium">{user.first_name}</TableCell>
+                                    <TableCell>{user.last_name}</TableCell>
+                                    <TableCell>{user.email || '-'}</TableCell>
+                                    <TableCell>{user.title || '-'}</TableCell>
                                 </TableRow>
-                            </TableHeader>
-                             <TableBody>
-                                {groupedUsers[letter].map(user => (
-                                    <TableRow 
-                                        key={user.id} 
-                                        onClick={() => handleRowClick(user.id)}
-                                        className="cursor-pointer"
-                                    >
-                                        <TableCell className="font-medium">{user.first_name}</TableCell>
-                                        <TableCell>{user.last_name}</TableCell>
-                                        <TableCell>{user.email || '-'}</TableCell>
-                                        <TableCell>{user.title || '-'}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </div>
-                </div>
-            ))}
+                            ))}
+                        </React.Fragment>
+                    ))}
+                </TableBody>
+            </Table>
         </div>
     </div>
   );
