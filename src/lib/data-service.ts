@@ -10,6 +10,7 @@ interface ApiUser {
 
 interface ApiProjectMember {
     user: ApiUser;
+    role: 'admin' | 'member';
 }
 
 interface ApiProject {
@@ -19,23 +20,29 @@ interface ApiProject {
     members: ApiProjectMember[];
 }
 
+interface AppProjectMember {
+    name: string;
+    role: 'admin' | 'member';
+}
+
 interface AppProject {
     id: string;
     title: string;
     description: string;
-    members: string[];
+    members: AppProjectMember[];
 }
 
-const imageKeys = Object.keys(imagePlaceholders);
-
-function mapApiProjectToAppProject(apiProject: ApiProject, index: number): AppProject {
-    const memberNames = apiProject.members.map(member => `${member.user.first_name} ${member.user.last_name}`);
+function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
+    const projectMembers = apiProject.members.map(member => ({
+        name: `${member.user.first_name} ${member.user.last_name}`,
+        role: member.role,
+    }));
 
     return {
         id: apiProject.id.toString(),
         title: apiProject.short_name,
         description: apiProject.name,
-        members: memberNames,
+        members: projectMembers,
     };
 }
 

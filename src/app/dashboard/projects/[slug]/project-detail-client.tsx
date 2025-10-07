@@ -2,15 +2,20 @@
 "use client";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Define the types for the props
+interface ProjectMember {
+  name: string;
+  role: 'admin' | 'member';
+}
 interface Project {
   id: string;
   title: string;
   description: string;
-  members: string[];
+  members: ProjectMember[];
 }
 
 interface Translations {
@@ -45,28 +50,27 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                         </div>
                     </TabsContent>
                     <TabsContent value="team" className="mt-6">
-                         <TooltipProvider>
-                            <div className="flex flex-wrap gap-4">
-                                {project.members.map((member, index) => {
-                                    const initials = member.split(' ').map(n => n[0]).join('');
-                                    return (
-                                        <Tooltip key={index}>
-                                            <TooltipTrigger>
-                                                <div className="flex flex-col items-center gap-2">
-                                                    <Avatar className="h-20 w-20 border-4 border-card transition-transform transform hover:scale-110">
-                                                        <AvatarFallback>{initials}</AvatarFallback>
-                                                    </Avatar>
-                                                    <span className="text-sm text-center font-medium">{member}</span>
-                                                </div>
-                                            </TooltipTrigger>
-                                            <TooltipContent>
-                                                <p>{member}</p>
-                                            </TooltipContent>
-                                        </Tooltip>
-                                    );
-                                })}
-                            </div>
-                        </TooltipProvider>
+                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            {project.members.map((member, index) => {
+                                const initials = member.name.split(' ').map(n => n[0]).join('');
+                                const isAdmin = member.role === 'admin';
+                                return (
+                                    <Card key={index} className={`flex flex-col items-center justify-center p-4 text-center aspect-square transition-colors ${isAdmin ? 'bg-primary/10' : 'bg-card'}`}>
+                                        <div className="relative">
+                                            <Avatar className="h-16 w-16 border-4 border-background">
+                                                <AvatarFallback className={`${isAdmin ? 'bg-primary/20' : ''}`}>{initials}</AvatarFallback>
+                                            </Avatar>
+                                            {isAdmin && (
+                                                <Badge variant="default" className="absolute -bottom-2 left-1/2 -translate-x-1/2">
+                                                    Admin
+                                                </Badge>
+                                            )}
+                                        </div>
+                                        <span className="text-sm font-medium mt-4 pt-1 truncate w-full" title={member.name}>{member.name}</span>
+                                    </Card>
+                                );
+                            })}
+                        </div>
                     </TabsContent>
                 </Tabs>
             </div>
