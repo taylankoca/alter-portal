@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Home, PanelLeft, Settings, FolderKanban, CheckSquare, FileText, Calendar, Users, MessageSquare, Sitemap } from "lucide-react";
+import { Home, PanelLeft, Settings, FolderKanban, CheckSquare, FileText, Calendar, Users, MessageSquare, Network } from "lucide-react";
 import Image from "next/image";
 import {
   Sidebar,
@@ -34,7 +34,7 @@ export default function DashboardLayout({
     { href: "/dashboard/projects", label: t.projects, icon: FolderKanban },
     { href: "/dashboard/people", label: t.people, icon: Users },
     { href: "/dashboard/correspondence", label: t.correspondence, icon: MessageSquare },
-    { href: "/dashboard/schema", label: t.schema, icon: Sitemap },
+    { href: "/dashboard/schema", label: t.schema, icon: Network },
     { href: "/dashboard/tasks", label: t.tasks, icon: CheckSquare },
     { href: "/dashboard/forms", label: t.forms, icon: FileText },
     { href: "/dashboard/calendar", label: t.calendar, icon: Calendar },
