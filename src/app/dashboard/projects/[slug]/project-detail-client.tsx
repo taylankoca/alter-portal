@@ -2,14 +2,17 @@
 
 "use client";
 
+import * as React from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowDown, ArrowUp } from "lucide-react";
-import type { AppProject, AppProjectMember } from '@/lib/data-service';
+import { ArrowDown, ArrowUp, ArrowUpDown, Search } from "lucide-react";
+import type { AppProject, AppProjectMember, AppCommunication } from '@/lib/data-service';
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 // Define the types for the props
 
@@ -27,6 +30,7 @@ interface Translations {
     communication_incoming: string;
     communication_outgoing: string;
     no_communication_found: string;
+    search_placeholder: string;
 }
 
 interface ProjectDetailClientProps {
@@ -34,11 +38,65 @@ interface ProjectDetailClientProps {
   t: Translations;
 }
 
+type SortKey = keyof AppCommunication | 'projectName';
+type SortDirection = 'ascending' | 'descending';
+
+
 export default function ProjectDetailClient({ project, t }: ProjectDetailClientProps) {
+    const [searchTerm, setSearchTerm] = React.useState('');
+    const [sortConfig, setSortConfig] = React.useState<{ key: SortKey; direction: SortDirection } | null>({ key: 'communicated_at', direction: 'descending' });
+    
     const admins = project.members.filter(m => m.role === 'admin').sort((a, b) => a.name.localeCompare(b.name));
     const members = project.members.filter(m => m.role !== 'admin').sort((a, b) => a.name.localeCompare(b.name));
     
-    const sortedCommunications = project.communications.sort((a, b) => new Date(b.communicated_at).getTime() - new Date(a.communicated_at).getTime());
+
+    const handleSort = (key: SortKey) => {
+        let direction: SortDirection = 'ascending';
+        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+            direction = 'descending';
+        }
+        setSortConfig({ key, direction });
+    };
+
+    const sortedAndFilteredCommunications = React.useMemo(() => {
+        let filteredComms = [...project.communications];
+
+        if (searchTerm) {
+            const lowercasedFilter = searchTerm.toLowerCase();
+            filteredComms = filteredComms.filter(comm =>
+                comm.title.toLowerCase().includes(lowercasedFilter) ||
+                comm.code.toLowerCase().includes(lowercasedFilter) ||
+                comm.institution.toLowerCase().includes(lowercasedFilter)
+            );
+        }
+
+        if (sortConfig !== null) {
+            filteredComms.sort((a, b) => {
+                const aValue = a[sortConfig.key as keyof AppCommunication];
+                const bValue = b[sortConfig.key as keyof AppCommunication];
+
+                if (aValue === undefined || bValue === undefined) return 0;
+                
+                if (sortConfig.key === 'communicated_at') {
+                    const dateA = new Date(aValue as string).getTime();
+                    const dateB = new Date(bValue as string).getTime();
+                    if (dateA < dateB) return sortConfig.direction === 'ascending' ? -1 : 1;
+                    if (dateA > dateB) return sortConfig.direction === 'ascending' ? 1 : -1;
+                    return 0;
+                }
+
+                if (typeof aValue === 'string' && typeof bValue === 'string') {
+                    if (aValue.localeCompare(bValue, 'tr') < 0) return sortConfig.direction === 'ascending' ? -1 : 1;
+                    if (aValue.localeCompare(bValue, 'tr') > 0) return sortConfig.direction === 'ascending' ? 1 : -1;
+                }
+                
+                return 0;
+            });
+        }
+
+        return filteredComms;
+    }, [project.communications, searchTerm, sortConfig]);
+
 
     const renderMemberCard = (member: AppProjectMember, isAdmin: boolean) => {
         const initials = member.name.split(' ').map(n => n[0]).join('');
@@ -56,6 +114,17 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                 </div>
                 <span className="text-sm font-medium mt-4 pt-1 truncate w-full" title={member.name}>{member.name}</span>
             </Card>
+        );
+    };
+    
+    const renderSortArrow = (key: SortKey) => {
+        if (sortConfig?.key !== key) {
+            return <ArrowUpDown className="ml-2 h-4 w-4 text-muted-foreground/50" />;
+        }
+        return sortConfig.direction === 'ascending' ? (
+            <ArrowUp className="ml-2 h-4 w-4" />
+        ) : (
+            <ArrowDown className="ml-2 h-4 w-4" />
         );
     };
 
@@ -113,31 +182,64 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                             )}
                         </div>
                     </TabsContent>
-                    <TabsContent value="correspondence" className="mt-6">
-                        {sortedCommunications.length > 0 ? (
+                    <TabsContent value="correspondence" className="mt-6 space-y-4">
+                        <div className="relative w-full">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                placeholder={t.search_placeholder}
+                                className="pl-9 w-full"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
+
+                        {sortedAndFilteredCommunications.length > 0 ? (
                            <div className="border rounded-lg">
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead className="w-[80px] text-center">{t.communication_direction}</TableHead>
-                                            <TableHead>{t.communication_code}</TableHead>
-                                            <TableHead>{t.communication_title}</TableHead>
-                                            <TableHead>{t.communication_institution}</TableHead>
-                                            <TableHead className="text-right">{t.communication_date}</TableHead>
+                                            <TableHead className="w-[80px]">
+                                                <Button variant="ghost" onClick={() => handleSort('direction')} className="p-0 hover:bg-transparent">
+                                                    {t.communication_direction}
+                                                    {renderSortArrow('direction')}
+                                                </Button>
+                                            </TableHead>
+                                            <TableHead>
+                                                <Button variant="ghost" onClick={() => handleSort('code')} className="p-0 hover:bg-transparent">
+                                                    {t.communication_code}
+                                                    {renderSortArrow('code')}
+                                                </Button>
+                                            </TableHead>
+                                            <TableHead>
+                                                 <Button variant="ghost" onClick={() => handleSort('title')} className="p-0 hover:bg-transparent">
+                                                    {t.communication_title}
+                                                    {renderSortArrow('title')}
+                                                </Button>
+                                            </TableHead>
+                                            <TableHead>
+                                                 <Button variant="ghost" onClick={() => handleSort('institution')} className="p-0 hover:bg-transparent">
+                                                    {t.communication_institution}
+                                                    {renderSortArrow('institution')}
+                                                </Button>
+                                            </TableHead>
+                                            <TableHead className="text-right">
+                                                 <Button variant="ghost" onClick={() => handleSort('communicated_at')} className="p-0 hover:bg-transparent">
+                                                    {t.communication_date}
+                                                    {renderSortArrow('communicated_at')}
+                                                </Button>
+                                            </TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {sortedCommunications.map((comm) => (
+                                        {sortedAndFilteredCommunications.map((comm) => (
                                             <TableRow key={comm.id}>
                                                 <TableCell className="text-center">
                                                     {comm.direction === 'incoming' ? 
                                                         <span className="inline-flex items-center gap-1.5 text-blue-600">
                                                             <ArrowDown size={16}/> 
-                                                            {/* {t.communication_incoming} */}
                                                         </span> : 
                                                         <span className="inline-flex items-center gap-1.5 text-green-600">
                                                             <ArrowUp size={16}/> 
-                                                            {/* {t.communication_outgoing} */}
                                                         </span>
                                                     }
                                                 </TableCell>

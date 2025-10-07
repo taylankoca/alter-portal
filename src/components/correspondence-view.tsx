@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import * as React from 'react';
@@ -13,8 +14,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Input } from './ui/input';
-import { Search, ArrowDown, ArrowUp } from 'lucide-react';
+import { Search, ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import type { AppCommunication } from '@/lib/data-service';
+import { Button } from './ui/button';
 
 interface EnrichedCommunication extends AppCommunication {
     projectName: string;
@@ -25,24 +27,75 @@ interface CorrespondenceViewProps {
   communications: EnrichedCommunication[];
 }
 
+type SortKey = keyof EnrichedCommunication;
+type SortDirection = 'ascending' | 'descending';
+
 export default function CorrespondenceView({ communications }: CorrespondenceViewProps) {
   const { translations } = useLanguage();
   const t_projects = translations.projects_page;
   const t_corr = translations.correspondence_page;
   const [searchTerm, setSearchTerm] = React.useState('');
+  const [sortConfig, setSortConfig] = React.useState<{ key: SortKey; direction: SortDirection } | null>({ key: 'communicated_at', direction: 'descending' });
 
-  const filteredCommunications = React.useMemo(() => {
-    if (!searchTerm) return communications;
-    const lowercasedFilter = searchTerm.toLowerCase();
-    return communications.filter(comm => {
-      return (
+  const handleSort = (key: SortKey) => {
+    let direction: SortDirection = 'ascending';
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+        direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const filteredAndSortedCommunications = React.useMemo(() => {
+    let filteredComms = [...communications];
+
+    if (searchTerm) {
+      const lowercasedFilter = searchTerm.toLowerCase();
+      filteredComms = filteredComms.filter(comm => 
         comm.title.toLowerCase().includes(lowercasedFilter) ||
         comm.projectName.toLowerCase().includes(lowercasedFilter) ||
         comm.institution.toLowerCase().includes(lowercasedFilter) ||
         comm.code.toLowerCase().includes(lowercasedFilter)
       );
-    });
-  }, [searchTerm, communications]);
+    }
+    
+    if (sortConfig !== null) {
+      filteredComms.sort((a, b) => {
+        const aValue = a[sortConfig.key];
+        const bValue = b[sortConfig.key];
+
+        if (aValue === undefined || bValue === undefined) return 0;
+
+        if (sortConfig.key === 'communicated_at') {
+            const dateA = new Date(aValue as string).getTime();
+            const dateB = new Date(bValue as string).getTime();
+            if (dateA < dateB) return sortConfig.direction === 'ascending' ? -1 : 1;
+            if (dateA > dateB) return sortConfig.direction === 'ascending' ? 1 : -1;
+            return 0;
+        }
+        
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          if (aValue.localeCompare(bValue, 'tr') < 0) return sortConfig.direction === 'ascending' ? -1 : 1;
+          if (aValue.localeCompare(bValue, 'tr') > 0) return sortConfig.direction === 'ascending' ? 1 : -1;
+        }
+
+        return 0;
+      });
+    }
+
+    return filteredComms;
+  }, [searchTerm, communications, sortConfig]);
+
+  const renderSortArrow = (key: SortKey) => {
+    if (sortConfig?.key !== key) {
+        return <ArrowUpDown className="ml-2 h-4 w-4 text-muted-foreground/50" />;
+    }
+    return sortConfig.direction === 'ascending' ? (
+        <ArrowUp className="ml-2 h-4 w-4" />
+    ) : (
+        <ArrowDown className="ml-2 h-4 w-4" />
+    );
+  };
+
 
   return (
     <div className="space-y-6">
@@ -56,20 +109,50 @@ export default function CorrespondenceView({ communications }: CorrespondenceVie
             />
         </div>
         <div className="border rounded-lg">
-             {filteredCommunications.length > 0 ? (
+             {filteredAndSortedCommunications.length > 0 ? (
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[80px] text-center">{t_projects.communication_direction}</TableHead>
-                            <TableHead>{t_corr.project_name}</TableHead>
-                            <TableHead>{t_projects.communication_code}</TableHead>
-                            <TableHead>{t_projects.communication_title}</TableHead>
-                            <TableHead>{t_projects.communication_institution}</TableHead>
-                            <TableHead className="text-right">{t_projects.communication_date}</TableHead>
+                            <TableHead className="w-[80px]">
+                                 <Button variant="ghost" onClick={() => handleSort('direction')} className="p-0 hover:bg-transparent">
+                                    {t_projects.communication_direction}
+                                    {renderSortArrow('direction')}
+                                </Button>
+                            </TableHead>
+                            <TableHead>
+                                <Button variant="ghost" onClick={() => handleSort('projectName')} className="p-0 hover:bg-transparent">
+                                    {t_corr.project_name}
+                                    {renderSortArrow('projectName')}
+                                </Button>
+                            </TableHead>
+                            <TableHead>
+                                <Button variant="ghost" onClick={() => handleSort('code')} className="p-0 hover:bg-transparent">
+                                    {t_projects.communication_code}
+                                    {renderSortArrow('code')}
+                                </Button>
+                            </TableHead>
+                            <TableHead>
+                                <Button variant="ghost" onClick={() => handleSort('title')} className="p-0 hover:bg-transparent">
+                                    {t_projects.communication_title}
+                                    {renderSortArrow('title')}
+                                </Button>
+                            </TableHead>
+                            <TableHead>
+                                <Button variant="ghost" onClick={() => handleSort('institution')} className="p-0 hover:bg-transparent">
+                                    {t_projects.communication_institution}
+                                    {renderSortArrow('institution')}
+                                </Button>
+                            </TableHead>
+                            <TableHead className="text-right">
+                                <Button variant="ghost" onClick={() => handleSort('communicated_at')} className="p-0 hover:bg-transparent">
+                                    {t_projects.communication_date}
+                                    {renderSortArrow('communicated_at')}
+                                </Button>
+                            </TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {filteredCommunications.map((comm) => (
+                        {filteredAndSortedCommunications.map((comm) => (
                             <TableRow key={comm.id}>
                                 <TableCell className="text-center">
                                     {comm.direction === 'incoming' ? 
