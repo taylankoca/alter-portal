@@ -4,6 +4,7 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Define the types for the props
@@ -32,6 +33,28 @@ interface ProjectDetailClientProps {
 }
 
 export default function ProjectDetailClient({ project, t }: ProjectDetailClientProps) {
+    const admins = project.members.filter(m => m.role === 'admin').sort((a, b) => a.name.localeCompare(b.name));
+    const members = project.members.filter(m => m.role !== 'admin').sort((a, b) => a.name.localeCompare(b.name));
+
+    const renderMemberCard = (member: ProjectMember, isAdmin: boolean) => {
+        const initials = member.name.split(' ').map(n => n[0]).join('');
+        return (
+            <Card key={member.name} className={`flex flex-col items-center justify-center p-4 text-center aspect-square transition-colors ${isAdmin ? 'bg-primary/10' : 'bg-card'}`}>
+                <div className="relative">
+                    <Avatar className="h-16 w-16 border-4 border-background">
+                        <AvatarFallback className={`${isAdmin ? 'bg-primary/20' : ''}`}>{initials}</AvatarFallback>
+                    </Avatar>
+                    {isAdmin && (
+                        <Badge variant="default" className="absolute -bottom-2 left-1/2 -translate-x-1/2">
+                            {t.admin_role}
+                        </Badge>
+                    )}
+                </div>
+                <span className="text-sm font-medium mt-4 pt-1 truncate w-full" title={member.name}>{member.name}</span>
+            </Card>
+        );
+    };
+
     return (
         <div className="space-y-8">
              <div className="p-6 md:p-8">
@@ -55,32 +78,22 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                         </div>
                     </TabsContent>
                     <TabsContent value="team" className="mt-6">
-                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                            {project.members
-                                .sort((a, b) => {
-                                    if (a.role === 'admin' && b.role !== 'admin') return -1;
-                                    if (a.role !== 'admin' && b.role === 'admin') return 1;
-                                    return a.name.localeCompare(b.name);
-                                })
-                                .map((member, index) => {
-                                const initials = member.name.split(' ').map(n => n[0]).join('');
-                                const isAdmin = member.role === 'admin';
-                                return (
-                                    <Card key={index} className={`flex flex-col items-center justify-center p-4 text-center aspect-square transition-colors ${isAdmin ? 'bg-primary/10' : 'bg-card'}`}>
-                                        <div className="relative">
-                                            <Avatar className="h-16 w-16 border-4 border-background">
-                                                <AvatarFallback className={`${isAdmin ? 'bg-primary/20' : ''}`}>{initials}</AvatarFallback>
-                                            </Avatar>
-                                            {isAdmin && (
-                                                <Badge variant="default" className="absolute -bottom-2 left-1/2 -translate-x-1/2">
-                                                    {t.admin_role}
-                                                </Badge>
-                                            )}
-                                        </div>
-                                        <span className="text-sm font-medium mt-4 pt-1 truncate w-full" title={member.name}>{member.name}</span>
-                                    </Card>
-                                );
-                            })}
+                        <div className="space-y-6">
+                            {admins.length > 0 && (
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                                    {admins.map(member => renderMemberCard(member, true))}
+                                </div>
+                            )}
+
+                            {admins.length > 0 && members.length > 0 && (
+                                <Separator />
+                            )}
+
+                            {members.length > 0 && (
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                                    {members.map(member => renderMemberCard(member, false))}
+                                </div>
+                            )}
                         </div>
                     </TabsContent>
                     <TabsContent value="correspondence" className="mt-6">
