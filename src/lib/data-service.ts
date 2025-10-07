@@ -65,6 +65,16 @@ export interface AppProject {
     communications: AppCommunication[];
 }
 
+export interface ApiUnit {
+    id: number;
+    name: string;
+    slug: string;
+    parent_id: number | null;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+}
+
 function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
     const projectMembers = apiProject.members.map(member => ({
         id: member.user.id,
@@ -120,5 +130,22 @@ export async function fetchData(): Promise<{ projects: AppProject[]; users: ApiU
     } catch (error) {
         console.error("A network or parsing error occurred while fetching data:", error);
         return { projects: [], users: [] };
+    }
+}
+
+export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
+    try {
+        const response = await fetch('https://portal.alter.com.tr/api/units');
+        if (!response.ok) {
+            console.error(`Failed to fetch units data with status: ${response.status}`);
+            return { units: [] };
+        }
+        const apiData: { livstag_usermanager_units: ApiUnit[] } = await response.json();
+        return {
+            units: apiData.livstag_usermanager_units || []
+        };
+    } catch (error) {
+        console.error("A network or parsing error occurred while fetching units data:", error);
+        return { units: [] };
     }
 }

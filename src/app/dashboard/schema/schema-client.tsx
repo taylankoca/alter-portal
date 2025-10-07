@@ -3,13 +3,13 @@
 
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
-import type { ApiUser } from '@/lib/data-service';
+import type { ApiUnit } from '@/lib/data-service';
 
 const OrgChartView = dynamic(() => import('@/components/org-chart-view'), {
   ssr: false,
   loading: () => <Skeleton className="w-full h-[500px]" />,
 });
 
-export default function SchemaClient({ users }: { users: ApiUser[] }) {
-    return <OrgChartView users={users} />;
+export default function SchemaClient({ units }: { units: ApiUnit[] }) {
+    return <OrgChartView units={units} />;
 }

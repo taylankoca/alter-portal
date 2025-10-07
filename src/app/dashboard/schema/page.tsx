@@ -1,10 +1,10 @@
 
-import { fetchData } from '@/lib/data-service';
+import { fetchUnitsData } from '@/lib/data-service';
 import translationsData from '@/locales/translations.json';
 import SchemaClient from './schema-client';
 
 export default async function SchemaPage() {
-  const { users } = await fetchData();
+  const { units } = await fetchUnitsData();
   const t = translationsData.tr.schema_page;
 
   return (
@@ -15,7 +15,7 @@ export default async function SchemaPage() {
           <p className="text-muted-foreground">{t.description}</p>
         </div>
       </header>
-      <SchemaClient users={users} />
+      <SchemaClient units={units} />
     </div>
   );
 }
