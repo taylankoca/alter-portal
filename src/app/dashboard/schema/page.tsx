@@ -1,13 +1,7 @@
 
 import { fetchData } from '@/lib/data-service';
 import translationsData from '@/locales/translations.json';
-import dynamic from 'next/dynamic';
-import { Skeleton } from '@/components/ui/skeleton';
-
-const OrgChartView = dynamic(() => import('@/components/org-chart-view'), {
-  ssr: false,
-  loading: () => <Skeleton className="w-full h-[500px]" />,
-});
+import SchemaClient from './schema-client';
 
 export default async function SchemaPage() {
   const { users } = await fetchData();
@@ -21,7 +15,7 @@ export default async function SchemaPage() {
           <p className="text-muted-foreground">{t.description}</p>
         </div>
       </header>
-      <OrgChartView users={users} />
+      <SchemaClient users={users} />
     </div>
   );
 }
