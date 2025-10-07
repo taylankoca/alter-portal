@@ -10,12 +10,6 @@ interface Project {
   title: string;
   description: string;
   members: string[];
-  image: {
-    src: string;
-    width: number;
-    height: number;
-    "data-ai-hint": string;
-  };
 }
 
 interface Translations {
@@ -32,7 +26,8 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
     return (
         <div className="space-y-8">
              <div className="p-6 md:p-8">
-                <h1 className="text-3xl md:text-5xl font-bold text-foreground">{project.title}</h1>
+                <h1 className="text-3xl md:text-5xl font-bold text-foreground">{project.description}</h1>
+                 <p className="text-lg text-muted-foreground mt-2">{project.title}</p>
             </div>
 
             <div className="container mx-auto px-4 md:px-0 max-w-4xl">

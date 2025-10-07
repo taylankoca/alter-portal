@@ -1,5 +1,5 @@
 
-import { placeholderImages } from '@/lib/placeholder-images.json';
+import { placeholderImages as imagePlaceholders } from '@/lib/placeholder-images.json';
 
 interface ApiUser {
     id: number;
@@ -24,18 +24,11 @@ interface AppProject {
     title: string;
     description: string;
     members: string[];
-    image: {
-        src: string;
-        width: number;
-        height: number;
-        "data-ai-hint": string;
-    };
 }
 
-const imageKeys = Object.keys(placeholderImages.placeholderImages);
+const imageKeys = Object.keys(imagePlaceholders);
 
 function mapApiProjectToAppProject(apiProject: ApiProject, index: number): AppProject {
-    const imageKey = imageKeys[index % imageKeys.length] as keyof typeof placeholderImages.placeholderImages;
     const memberNames = apiProject.members.map(member => `${member.user.first_name} ${member.user.last_name}`);
 
     return {
@@ -43,7 +36,6 @@ function mapApiProjectToAppProject(apiProject: ApiProject, index: number): AppPr
         title: apiProject.short_name,
         description: apiProject.name,
         members: memberNames,
-        image: placeholderImages.placeholderImages[imageKey],
     };
 }
 

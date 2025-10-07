@@ -14,12 +14,6 @@ interface Project {
   title: string;
   description: string;
   members: string[];
-  image: {
-    src: string;
-    width: number;
-    height: number;
-    "data-ai-hint": string;
-  };
 }
 
 interface ProjectCardProps {
