@@ -21,7 +21,6 @@ import {
 import type { AppProject } from '@/lib/data-service';
 import { useLanguage } from '@/context/language-context';
 import ProjectTeamPopover from './project-team-popover';
-import { Badge } from './ui/badge';
 
 interface ProjectListViewProps {
   projects: AppProject[];
@@ -36,7 +35,7 @@ export default function ProjectListView({ projects }: ProjectListViewProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Alter Proje No</TableHead>
+            <TableHead className="text-center">Alter Proje No</TableHead>
             <TableHead>Konum</TableHead>
             <TableHead>Proje Adı</TableHead>
             <TableHead>İşveren</TableHead>
@@ -47,10 +46,8 @@ export default function ProjectListView({ projects }: ProjectListViewProps) {
         <TableBody>
           {projects.map((project) => (
             <TableRow key={project.id}>
-               <TableCell>
-                <Badge variant="default" className="whitespace-nowrap">
+               <TableCell className="bg-primary text-primary-foreground font-medium text-center">
                   {project.alterProjectNo}
-                </Badge>
               </TableCell>
                <TableCell>{project.location}</TableCell>
               <TableCell>
