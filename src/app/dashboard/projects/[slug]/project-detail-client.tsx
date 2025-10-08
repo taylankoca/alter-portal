@@ -206,14 +206,14 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                                         <TableRow>
                                             <TableHead className="w-[80px]">
                                                 <Button variant="ghost" onClick={() => handleSort('direction')} className="p-0 hover:bg-transparent">
-                                                    {t.communication_direction}
+                                                    Gelen / Giden
                                                     {renderSortArrow('direction')}
                                                 </Button>
                                             </TableHead>
-                                            <TableHead>
-                                                <Button variant="ghost" onClick={() => handleSort('code')} className="p-0 hover:bg-transparent">
-                                                    {t.communication_code}
-                                                    {renderSortArrow('code')}
+                                             <TableHead>
+                                                 <Button variant="ghost" onClick={() => handleSort('communicated_at')} className="p-0 hover:bg-transparent">
+                                                    {t.communication_date}
+                                                    {renderSortArrow('communicated_at')}
                                                 </Button>
                                             </TableHead>
                                             <TableHead>
@@ -228,10 +228,10 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                                                     {renderSortArrow('institution')}
                                                 </Button>
                                             </TableHead>
-                                            <TableHead className="text-right">
-                                                 <Button variant="ghost" onClick={() => handleSort('communicated_at')} className="p-0 hover:bg-transparent">
-                                                    {t.communication_date}
-                                                    {renderSortArrow('communicated_at')}
+                                            <TableHead>
+                                                <Button variant="ghost" onClick={() => handleSort('code')} className="p-0 hover:bg-transparent">
+                                                    {t.communication_code}
+                                                    {renderSortArrow('code')}
                                                 </Button>
                                             </TableHead>
                                         </TableRow>
@@ -249,10 +249,10 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                                                         </span>
                                                     }
                                                 </TableCell>
-                                                <TableCell className="font-mono text-xs">{comm.code}</TableCell>
+                                                <TableCell>{new Date(comm.communicated_at).toLocaleDateString('tr-TR')}</TableCell>
                                                 <TableCell className="font-medium">{comm.title}</TableCell>
                                                 <TableCell>{comm.institution}</TableCell>
-                                                <TableCell className="text-right">{new Date(comm.communicated_at).toLocaleDateString('tr-TR')}</TableCell>
+                                                <TableCell className="font-mono text-xs">{comm.code}</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
@@ -274,4 +274,3 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
         </div>
     );
 }
-

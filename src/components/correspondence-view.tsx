@@ -121,20 +121,20 @@ export default function CorrespondenceView({ communications }: CorrespondenceVie
                         <TableRow>
                             <TableHead className="w-[80px]">
                                  <Button variant="ghost" onClick={() => handleSort('direction')} className="p-0 hover:bg-transparent">
-                                    {t_projects.communication_direction}
+                                    Gelen / Giden
                                     {renderSortArrow('direction')}
+                                </Button>
+                            </TableHead>
+                             <TableHead>
+                                <Button variant="ghost" onClick={() => handleSort('communicated_at')} className="p-0 hover:bg-transparent">
+                                    {t_projects.communication_date}
+                                    {renderSortArrow('communicated_at')}
                                 </Button>
                             </TableHead>
                             <TableHead>
                                 <Button variant="ghost" onClick={() => handleSort('projectName')} className="p-0 hover:bg-transparent">
                                     {t_corr.project_name}
                                     {renderSortArrow('projectName')}
-                                </Button>
-                            </TableHead>
-                            <TableHead>
-                                <Button variant="ghost" onClick={() => handleSort('code')} className="p-0 hover:bg-transparent">
-                                    {t_projects.communication_code}
-                                    {renderSortArrow('code')}
                                 </Button>
                             </TableHead>
                             <TableHead>
@@ -149,10 +149,10 @@ export default function CorrespondenceView({ communications }: CorrespondenceVie
                                     {renderSortArrow('institution')}
                                 </Button>
                             </TableHead>
-                            <TableHead className="text-right">
-                                <Button variant="ghost" onClick={() => handleSort('communicated_at')} className="p-0 hover:bg-transparent">
-                                    {t_projects.communication_date}
-                                    {renderSortArrow('communicated_at')}
+                            <TableHead>
+                                <Button variant="ghost" onClick={() => handleSort('code')} className="p-0 hover:bg-transparent">
+                                    {t_projects.communication_code}
+                                    {renderSortArrow('code')}
                                 </Button>
                             </TableHead>
                         </TableRow>
@@ -170,15 +170,15 @@ export default function CorrespondenceView({ communications }: CorrespondenceVie
                                         </span>
                                     }
                                 </TableCell>
+                                <TableCell>{new Date(comm.communicated_at).toLocaleDateString('tr-TR')}</TableCell>
                                 <TableCell>
                                     <Link href={`/dashboard/projects/${comm.projectSlug}`}>
                                         <span className="font-medium hover:underline cursor-pointer">{comm.projectName}</span>
                                     </Link>
                                 </TableCell>
-                                <TableCell className="font-mono text-xs">{comm.code}</TableCell>
                                 <TableCell className="font-medium">{comm.title}</TableCell>
                                 <TableCell>{comm.institution}</TableCell>
-                                <TableCell className="text-right">{new Date(comm.communicated_at).toLocaleDateString('tr-TR')}</TableCell>
+                                <TableCell className="font-mono text-xs">{comm.code}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
