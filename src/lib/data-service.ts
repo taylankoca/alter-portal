@@ -86,8 +86,7 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
 
     return {
         id: apiProject.id.toString(),
-        title: apiProject.name, // Use the full name as title
-        description: apiProject.description,
+        title: apiProject.name,
         short_name_slug: apiProject.short_name_slug,
         members: projectMembers,
         alterProjectNo: apiProject.alter_project_no,
@@ -102,6 +101,7 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
             code: comm.code,
             communicated_at: comm.communicated_at,
         })),
+        description: apiProject.description,
     };
 }
 
