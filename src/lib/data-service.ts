@@ -106,7 +106,7 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
 
 export async function fetchData(): Promise<{ projects: AppProject[]; users: ApiUser[] }> {
     try {
-        const response = await fetch('https://portal.alter.com.tr/api/data');
+        const response = await fetch('https://portal.alter.com.tr/api/projects');
         if (!response.ok) {
             if (response.status === 404) {
                 console.error("Data not found at the specified URL.");
@@ -115,18 +115,37 @@ export async function fetchData(): Promise<{ projects: AppProject[]; users: ApiU
             }
             return { projects: [], users: [] };
         }
-        const apiData: { projects: ApiProject[]; users: ApiUser[] } = await response.json();
+        const apiData: { projects: ApiProject[] } = await response.json();
 
         if (!apiData || !Array.isArray(apiData.projects)) {
             console.error("Fetched data is not in the expected format (missing or invalid 'projects' array).");
-            return { projects: [], users: apiData.users || [] };
+            return { projects: [], users: [] };
         }
         
         const mappedProjects = apiData.projects.map(mapApiProjectToAppProject);
+        
+        // Extract all unique users from all projects
+        const allUsers = new Map<number, ApiUser>();
+        apiData.projects.forEach(project => {
+            project.members.forEach(member => {
+                if (member.user && !allUsers.has(member.user.id)) {
+                    allUsers.set(member.user.id, {
+                        id: member.user.id,
+                        first_name: member.user.first_name,
+                        last_name: member.user.last_name,
+                        email: member.user.email,
+                        title: member.user.title,
+                        phone: member.user.phone,
+                        location: member.user.location,
+                    });
+                }
+            });
+        });
+
 
         return {
             projects: mappedProjects,
-            users: apiData.users || []
+            users: Array.from(allUsers.values())
         };
     } catch (error) {
         console.error("A network or parsing error occurred while fetching data:", error);
