@@ -55,7 +55,6 @@ export interface AppProjectMember {
 export interface AppProject {
     id: string;
     title: string;
-    description: string;
     short_name_slug: string;
     members: AppProjectMember[];
     alterProjectNo: string;
@@ -77,7 +76,7 @@ export interface ApiUnit {
 }
 
 function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
-    const projectMembers = apiProject.members.map(member => ({
+    const projectMembers = (apiProject.members || []).map(member => ({
         id: member.user.id,
         name: `${member.user.first_name} ${member.user.last_name}`,
         role: member.role,
@@ -85,8 +84,7 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
 
     return {
         id: apiProject.id.toString(),
-        title: apiProject.short_name,
-        description: apiProject.name,
+        title: apiProject.name, // Use the full name as title
         short_name_slug: apiProject.short_name_slug,
         members: projectMembers,
         alterProjectNo: apiProject.alter_project_no,
@@ -127,7 +125,7 @@ export async function fetchData(): Promise<{ projects: AppProject[]; users: ApiU
         // Extract all unique users from all projects
         const allUsers = new Map<number, ApiUser>();
         apiData.projects.forEach(project => {
-            project.members.forEach(member => {
+            (project.members || []).forEach(member => {
                 if (member.user && !allUsers.has(member.user.id)) {
                     allUsers.set(member.user.id, {
                         id: member.user.id,
