@@ -35,7 +35,7 @@ export default function ProjectListView({ projects }: ProjectListViewProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-center">Alter Proje No</TableHead>
+            <TableHead className="text-center bg-primary text-primary-foreground">Alter Proje No</TableHead>
             <TableHead>Konum</TableHead>
             <TableHead>Proje Adı</TableHead>
             <TableHead>İşveren</TableHead>
