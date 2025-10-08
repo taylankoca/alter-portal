@@ -15,6 +15,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { Input } from './ui/input';
 import { Search } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 interface PeopleDirectoryProps {
   users: ApiUser[];
@@ -89,8 +90,10 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>{t.first_name}</TableHead>
-                        <TableHead>{t.last_name}</TableHead>
+                        <TableHead className="w-[120px]">Üye</TableHead>
+                        <TableHead className="w-[50px]">No</TableHead>
+                        <TableHead className="bg-primary text-primary-foreground">{t.first_name}</TableHead>
+                        <TableHead className="bg-primary text-primary-foreground">{t.last_name}</TableHead>
                         <TableHead>{t.email}</TableHead>
                         <TableHead>{t.title_label}</TableHead>
                         <TableHead>{t.location_label}</TableHead>
@@ -100,25 +103,37 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
                 <TableBody>
                     {Object.keys(groupedUsers).sort((a, b) => a.localeCompare(b, 'tr')).map(letter => (
                         <React.Fragment key={letter}>
-                            <TableRow id={`letter-header-${letter}`}>
-                                <TableCell colSpan={6} className="bg-muted/50">
-                                    <h2 className="text-xl font-bold text-primary">{letter}</h2>
+                            <TableRow id={`letter-header-${letter}`} className="hover:bg-transparent">
+                                <TableCell colSpan={8} className="p-0">
+                                    <div className="bg-muted/50 px-4 py-2">
+                                      <h2 className="text-xl font-bold text-primary">{letter}</h2>
+                                    </div>
                                 </TableCell>
                             </TableRow>
-                            {groupedUsers[letter].map(user => (
+                            {groupedUsers[letter].map(user => {
+                              const initials = `${user.first_name?.[0] || ''}${user.last_name?.[0] || ''}`.toUpperCase();
+                              return (
                                 <TableRow 
                                     key={user.id} 
                                     onClick={() => handleRowClick(user.id)}
                                     className="cursor-pointer"
                                 >
-                                    <TableCell className="font-medium">{user.first_name}</TableCell>
-                                    <TableCell>{user.last_name}</TableCell>
+                                    <TableCell>
+                                      <Avatar className="h-9 w-9 text-xs">
+                                          {/* <AvatarImage src={...} /> */}
+                                          <AvatarFallback>{initials}</AvatarFallback>
+                                      </Avatar>
+                                    </TableCell>
+                                    <TableCell>{user.id}</TableCell>
+                                    <TableCell className="font-medium bg-primary/10">{user.first_name}</TableCell>
+                                    <TableCell className="bg-primary/10">{user.last_name}</TableCell>
                                     <TableCell>{user.email || '-'}</TableCell>
                                     <TableCell>{user.title || '-'}</TableCell>
                                     <TableCell>{user.location || '-'}</TableCell>
                                     <TableCell>{user.phone || '-'}</TableCell>
                                 </TableRow>
-                            ))}
+                              )
+                            })}
                         </React.Fragment>
                     ))}
                 </TableBody>
