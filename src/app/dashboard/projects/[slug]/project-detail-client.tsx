@@ -107,7 +107,7 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
     const renderMemberCard = (member: AppProjectMember, isAdmin: boolean) => {
         const initials = member.name.split(' ').map(n => n[0]).join('');
         return (
-            <Card key={member.name} className={`flex flex-col items-center justify-center p-4 text-center aspect-square transition-colors ${isAdmin ? 'bg-primary/10' : 'bg-card'}`}>
+            <Card key={member.id} className={`flex flex-col items-center justify-center p-4 text-center aspect-square transition-colors ${isAdmin ? 'bg-primary/10' : 'bg-card'}`}>
                 <div className="relative">
                     <Avatar className="h-16 w-16 border-4 border-background">
                         <AvatarFallback className={`${isAdmin ? 'bg-primary/20' : ''}`}>{initials}</AvatarFallback>
@@ -136,12 +136,22 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
 
     return (
         <div className="space-y-8">
-             <div className="p-6 md:p-8">
-                <h1 className="text-3xl md:text-5xl font-bold text-foreground">{project.description}</h1>
-                 <p className="text-lg text-muted-foreground mt-2">
-                    {project.title} (Alter Proje No: {project.alterProjectNo})
-                 </p>
-            </div>
+             <header className="bg-primary text-primary-foreground p-6 md:p-8 rounded-lg shadow-md">
+                <div className="flex items-start justify-between gap-6">
+                    <div className="flex-1">
+                        <h1 className="text-2xl md:text-4xl font-bold">{project.title}</h1>
+                        <p className="text-lg text-primary-foreground/80 mt-2">
+                            {project.description}
+                        </p>
+                    </div>
+                    <div className="flex flex-col items-center gap-1">
+                        <div className="flex items-center justify-center h-20 w-20 rounded-full bg-white text-primary text-2xl font-bold shadow-inner">
+                           {project.alterProjectNo}
+                        </div>
+                        <span className="text-xs font-semibold text-primary-foreground/80">Alter Proje No</span>
+                    </div>
+                </div>
+            </header>
 
             <div>
                 <Tabs defaultValue="description" className="w-full">

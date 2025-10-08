@@ -103,7 +103,8 @@ export default function ProjectOrgChart({ projects }: ProjectOrgChartProps) {
             <TreeNode key={project.id} label={
                 <StyledNode onClick={() => handleProjectClick(project.short_name_slug)} className="cursor-pointer">
                     <NodeName>{project.title}</NodeName>
-                    <p className="text-xs text-muted-foreground">{project.description}</p>
+                    <p className="text-xs font-mono text-muted-foreground">#{project.alterProjectNo}</p>
+                    <p className="text-xs text-muted-foreground line-clamp-2">{project.description}</p>
                      {project.members && project.members.length > 0 && (
                         <>
                             <Separator className="my-1" />
