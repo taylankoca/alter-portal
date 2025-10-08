@@ -21,6 +21,7 @@ import {
 import type { AppProject } from '@/lib/data-service';
 import { useLanguage } from '@/context/language-context';
 import ProjectTeamPopover from './project-team-popover';
+import { Badge } from './ui/badge';
 
 interface ProjectListViewProps {
   projects: AppProject[];
@@ -35,26 +36,30 @@ export default function ProjectListView({ projects }: ProjectListViewProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Proje Adı</TableHead>
             <TableHead>Alter Proje No</TableHead>
-            <TableHead>İşveren</TableHead>
             <TableHead>Konum</TableHead>
+            <TableHead>Proje Adı</TableHead>
+            <TableHead>İşveren</TableHead>
             <TableHead>Ekip</TableHead>
-            <TableHead className="text-right">Aksiyonlar</TableHead>
+            <TableHead className="text-right">İşlemler</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {projects.map((project) => (
             <TableRow key={project.id}>
+               <TableCell>
+                <Badge variant="default" className="whitespace-nowrap">
+                  {project.alterProjectNo}
+                </Badge>
+              </TableCell>
+               <TableCell>{project.location}</TableCell>
               <TableCell>
                  <Link href={`/dashboard/projects/${project.short_name_slug}`}>
                     <div className="font-medium hover:underline cursor-pointer">{project.title}</div>
                     <div className="text-sm text-muted-foreground line-clamp-1">{project.description}</div>
                 </Link>
               </TableCell>
-              <TableCell>{project.alterProjectNo}</TableCell>
               <TableCell>{project.employer}</TableCell>
-              <TableCell>{project.location}</TableCell>
               <TableCell>
                 <ProjectTeamPopover members={project.members} />
               </TableCell>
