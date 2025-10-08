@@ -44,6 +44,7 @@ interface ApiProject {
     location: string;
     country: string;
     communications: ApiCommunication[];
+    description: string;
 }
 
 export interface AppProjectMember {
@@ -62,6 +63,7 @@ export interface AppProject {
     location: string;
     country: string;
     communications: AppCommunication[];
+    description: string;
 }
 
 export interface ApiUnit {
@@ -85,6 +87,7 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
     return {
         id: apiProject.id.toString(),
         title: apiProject.name, // Use the full name as title
+        description: apiProject.description,
         short_name_slug: apiProject.short_name_slug,
         members: projectMembers,
         alterProjectNo: apiProject.alter_project_no,
