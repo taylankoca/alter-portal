@@ -1,10 +1,10 @@
-import { fetchData } from '@/lib/data-service';
+import { fetchUsers } from '@/lib/data-service';
 import { notFound } from 'next/navigation';
 import PersonDetail from '@/components/person-detail';
 import translationsData from '@/locales/translations.json';
 
 export default async function PersonDetailPage({ params }: { params: { id: string } }) {
-  const { users } = await fetchData();
+  const users = await fetchUsers();
   const user = users.find(u => u.id.toString() === params.id);
 
   if (!user) {

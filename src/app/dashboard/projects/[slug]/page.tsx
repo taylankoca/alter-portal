@@ -2,11 +2,11 @@ import { notFound } from 'next/navigation';
 import { slugify } from '@/lib/utils';
 import ProjectDetailClient from './project-detail-client';
 import translationsData from '@/locales/translations.json';
-import { fetchData } from '@/lib/data-service';
+import { fetchProjects } from '@/lib/data-service';
 
 // This is now a Server Component
 export default async function ProjectDetailPage({ params }: { params: { slug: string } }) {
-    const { projects } = await fetchData();
+    const projects = await fetchProjects();
     const project = projects.find(p => p.short_name_slug === params.slug);
 
     if (!project) {

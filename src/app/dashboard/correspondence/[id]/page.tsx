@@ -1,8 +1,9 @@
-import { fetchData } from '@/lib/data-service';
+import { fetchCommunications, fetchProjects } from '@/lib/data-service';
 import { notFound } from 'next/navigation';
 import CorrespondenceDetailClient from './correspondence-detail-client';
 import translationsData from '@/locales/translations.json';
 import type { AppCommunication, AppProject } from '@/lib/data-service';
+import { slugify } from '@/lib/utils';
 
 
 interface EnrichedCommunication extends AppCommunication {
@@ -11,22 +12,26 @@ interface EnrichedCommunication extends AppCommunication {
 }
 
 export default async function CorrespondenceDetailPage({ params }: { params: { id: string } }) {
-    const { projects } = await fetchData();
+    const [communications, projects] = await Promise.all([
+        fetchCommunications(),
+        fetchProjects()
+    ]);
     const t = translationsData.tr.correspondence_page;
 
-    let communication: EnrichedCommunication | undefined;
-
-    for (const project of projects) {
-        const foundComm = project.communications.find(c => c.id.toString() === params.id);
-        if (foundComm) {
-            communication = {
-                ...foundComm,
-                projectName: project.title,
-                projectSlug: project.short_name_slug,
-            };
-            break;
-        }
+    const comm = communications.find(c => c.id.toString() === params.id);
+    
+    if (!comm) {
+        notFound();
     }
+    
+    const project = comm.project_id ? projects.find(p => p.id === comm.project_id?.toString()) : undefined;
+
+    const communication: EnrichedCommunication = {
+        ...comm,
+        projectName: project?.title || comm.project_short_name || 'N/A',
+        projectSlug: project?.short_name_slug || slugify(comm.project_short_name || ''),
+    };
+
 
     if (!communication) {
         notFound();

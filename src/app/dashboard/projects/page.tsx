@@ -1,12 +1,12 @@
 
-import { fetchData } from '@/lib/data-service';
+import { fetchProjects } from '@/lib/data-service';
 import ProjectView from '@/components/project-view';
 import translationsData from '@/locales/translations.json';
 
 // This is now a Server Component
 export default async function ProjectsPage() {
   // Data is fetched on the server
-  const { projects } = await fetchData();
+  const projects = await fetchProjects();
   
   // We assume 'tr' as default language for server-side rendering,
   // the client-side context will handle language changes.

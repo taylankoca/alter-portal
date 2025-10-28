@@ -1,11 +1,11 @@
-import { fetchData } from '@/lib/data-service';
+import { fetchUsers } from '@/lib/data-service';
 import PeopleDirectory from '@/components/people-directory';
 import translationsData from '@/locales/translations.json';
 
 // This is a Server Component
 export default async function PeoplePage() {
   // Data is fetched on the server
-  let { users } = await fetchData();
+  let users = await fetchUsers();
   
   // Sort users alphabetically by last name on the server
   users = users.sort((a, b) => a.last_name.localeCompare(b.last_name, 'tr', { sensitivity: 'base' }));

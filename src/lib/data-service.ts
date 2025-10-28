@@ -1,5 +1,6 @@
 
 import { API_BASE_URL } from '@/config';
+import { slugify } from './utils';
 
 export interface ApiUser {
     id: number;
@@ -23,6 +24,8 @@ export interface AppCommunication {
     direction: 'incoming' | 'outgoing';
     code: string;
     communicated_at: string;
+    project_id?: number;
+    project_short_name?: string;
 }
 
 interface ApiCommunication {
@@ -32,6 +35,8 @@ interface ApiCommunication {
     direction: 'incoming' | 'outgoing';
     code: string;
     communicated_at: string;
+    project_id?: number;
+    project_short_name?: string;
 }
 
 interface ApiProject {
@@ -106,52 +111,62 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
     };
 }
 
-export async function fetchData(): Promise<{ projects: AppProject[]; users: ApiUser[] }> {
+export async function fetchProjects(): Promise<AppProject[]> {
     try {
         const response = await fetch(`${API_BASE_URL}/api/projects`);
         if (!response.ok) {
-            if (response.status === 404) {
-                console.error("Data not found at the specified URL.");
-            } else {
-                console.error(`Failed to fetch data with status: ${response.status}`);
-            }
-            return { projects: [], users: [] };
+            console.error(`Failed to fetch projects with status: ${response.status}`);
+            return [];
         }
         const apiData: { projects: ApiProject[] } = await response.json();
-
         if (!apiData || !Array.isArray(apiData.projects)) {
-            console.error("Fetched data is not in the expected format (missing or invalid 'projects' array).");
-            return { projects: [], users: [] };
+            console.error("Fetched project data is not in the expected format.");
+            return [];
         }
-        
-        const mappedProjects = apiData.projects.map(mapApiProjectToAppProject);
-        
-        // Extract all unique users from all projects
-        const allUsers = new Map<number, ApiUser>();
-        apiData.projects.forEach(project => {
-            (project.members || []).forEach(member => {
-                if (member.user && !allUsers.has(member.user.id)) {
-                    allUsers.set(member.user.id, {
-                        id: member.user.id,
-                        first_name: member.user.first_name,
-                        last_name: member.user.last_name,
-                        email: member.user.email,
-                        title: member.user.title,
-                        phone: member.user.phone,
-                        location: member.user.location,
-                    });
-                }
-            });
-        });
-
-
-        return {
-            projects: mappedProjects,
-            users: Array.from(allUsers.values())
-        };
+        return apiData.projects.map(mapApiProjectToAppProject);
     } catch (error) {
-        console.error("A network or parsing error occurred while fetching data:", error);
-        return { projects: [], users: [] };
+        console.error("A network or parsing error occurred while fetching projects:", error);
+        return [];
+    }
+}
+
+export async function fetchUsers(): Promise<ApiUser[]> {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/users`);
+        if (!response.ok) {
+            console.error(`Failed to fetch users with status: ${response.status}`);
+            return [];
+        }
+        const apiData: { users: ApiUser[] } = await response.json();
+        if (!apiData || !Array.isArray(apiData.users)) {
+            console.error("Fetched user data is not in the expected format.");
+            return [];
+        }
+        return apiData.users;
+    } catch (error) {
+        console.error("A network or parsing error occurred while fetching users:", error);
+        return [];
+    }
+}
+
+
+export async function fetchCommunications(): Promise<AppCommunication[]> {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/communications`);
+        if (!response.ok) {
+            console.error(`Failed to fetch communications with status: ${response.status}`);
+            return [];
+        }
+        const apiData: { communications: AppCommunication[] } = await response.json();
+
+        if (!apiData || !Array.isArray(apiData.communications)) {
+            console.error("Fetched communications data is not in the expected format.");
+            return [];
+        }
+        return apiData.communications;
+    } catch (error) {
+        console.error("A network or parsing error occurred while fetching communications:", error);
+        return [];
     }
 }
 
