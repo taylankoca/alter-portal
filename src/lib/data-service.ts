@@ -49,7 +49,6 @@ interface ApiProject {
     employer: string;
     location: string;
     country: string;
-    communications: ApiCommunication[];
     description: string;
 }
 
@@ -99,16 +98,7 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
         employer: apiProject.employer,
         location: apiProject.location,
         country: apiProject.country,
-        communications: (apiProject.communications || []).map(comm => ({
-            id: comm.id,
-            title: comm.title,
-            institution: comm.institution,
-            direction: comm.direction,
-            code: comm.code,
-            communicated_at: comm.communicated_at,
-            project_short_name: comm.project_short_name,
-            project_id: comm.project_id
-        })),
+        communications: [],
         description: apiProject.description,
     };
 }
@@ -131,6 +121,7 @@ export async function fetchProjects(): Promise<AppProject[]> {
         return [];
     }
 }
+
 
 export async function fetchUsers(): Promise<ApiUser[]> {
     try {
@@ -165,5 +156,43 @@ export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
     } catch (error) {
         console.error("A network or parsing error occurred while fetching units data:", error);
         return { units: [] };
+    }
+}
+
+export async function fetchCommunications(): Promise<AppCommunication[]> {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/comms`);
+        if (!response.ok) {
+            console.error(`Failed to fetch communications with status: ${response.status}`);
+            return [];
+        }
+        const apiData: { communications: AppCommunication[] } = await response.json();
+        if (!apiData || !Array.isArray(apiData.communications)) {
+            console.error("Fetched communication data is not in the expected format.");
+            return [];
+        }
+        return apiData.communications;
+    } catch (error) {
+        console.error("A network or parsing error occurred while fetching communications:", error);
+        return [];
+    }
+}
+
+export async function fetchCommunicationById(id: string): Promise<AppCommunication | null> {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/comms/${id}`);
+        if (!response.ok) {
+            console.error(`Failed to fetch communication with id ${id}, status: ${response.status}`);
+            return null;
+        }
+        const apiData: { communication: AppCommunication } = await response.json();
+        if (!apiData || !apiData.communication) {
+            console.error("Fetched communication data is not in the expected format.");
+            return null;
+        }
+        return apiData.communication;
+    } catch (error) {
+        console.error(`A network or parsing error occurred while fetching communication ${id}:`, error);
+        return null;
     }
 }

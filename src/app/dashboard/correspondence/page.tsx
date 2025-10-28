@@ -1,4 +1,5 @@
-import { fetchProjects } from '@/lib/data-service';
+
+import { fetchProjects, fetchCommunications } from '@/lib/data-service';
 import CorrespondenceView from '@/components/correspondence-view';
 import translationsData from '@/locales/translations.json';
 import type { AppCommunication, AppProject } from '@/lib/data-service';
@@ -11,17 +12,24 @@ interface EnrichedCommunication extends AppCommunication {
 
 export default async function CorrespondencePage() {
     const projects = await fetchProjects();
+    const communications = await fetchCommunications();
 
     const t = translationsData.tr.navigation;
     const correspondenceT = translationsData.tr.correspondence_page;
 
-    const allCommunications: EnrichedCommunication[] = projects.flatMap(p => 
-        p.communications.map(comm => ({
+    const projectMap = new Map(projects.map(p => [p.id, p]));
+
+    const allCommunications: EnrichedCommunication[] = communications.map(comm => {
+        const project = comm.project_id ? projectMap.get(comm.project_id.toString()) : undefined;
+        const projectName = project?.title || comm.project_short_name || 'N/A';
+        const projectSlug = project?.short_name_slug || slugify(comm.project_short_name || '');
+        
+        return {
             ...comm,
-            projectName: p.title || comm.project_short_name || 'N/A',
-            projectSlug: p.short_name_slug || slugify(comm.project_short_name || ''),
-        }))
-    );
+            projectName,
+            projectSlug,
+        };
+    });
 
     // Sort all communications by date, most recent first
     allCommunications.sort((a, b) => new Date(b.communicated_at).getTime() - new Date(a.communicated_at).getTime());
