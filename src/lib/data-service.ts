@@ -1,4 +1,5 @@
 
+import { API_BASE_URL } from '@/config';
 
 export interface ApiUser {
     id: number;
@@ -76,8 +77,6 @@ export interface ApiUnit {
     deleted_at: string | null;
     users: ApiUser[];
 }
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://portal.alter.com.tr';
 
 function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
     const projectMembers = (apiProject.members || []).map(member => ({
