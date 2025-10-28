@@ -1,7 +1,8 @@
-import { fetchCommunications, fetchProjects } from '@/lib/data-service';
+import { fetchProjects } from '@/lib/data-service';
 import CorrespondenceView from '@/components/correspondence-view';
 import translationsData from '@/locales/translations.json';
 import type { AppCommunication, AppProject } from '@/lib/data-service';
+import { slugify } from '@/lib/utils';
 
 interface EnrichedCommunication extends AppCommunication {
     projectName: string;
@@ -9,27 +10,18 @@ interface EnrichedCommunication extends AppCommunication {
 }
 
 export default async function CorrespondencePage() {
-    const [communications, projects] = await Promise.all([
-        fetchCommunications(),
-        fetchProjects()
-    ]);
+    const projects = await fetchProjects();
 
     const t = translationsData.tr.navigation;
     const correspondenceT = translationsData.tr.correspondence_page;
 
-    const projectMap = new Map<string, { name: string, slug: string }>();
-    projects.forEach(p => {
-        projectMap.set(p.id, { name: p.title, slug: p.short_name_slug });
-    });
-
-    const allCommunications: EnrichedCommunication[] = communications.map(comm => {
-        const projectInfo = comm.project_id ? projectMap.get(comm.project_id.toString()) : undefined;
-        return {
+    const allCommunications: EnrichedCommunication[] = projects.flatMap(p => 
+        p.communications.map(comm => ({
             ...comm,
-            projectName: projectInfo?.name || comm.project_short_name || 'N/A',
-            projectSlug: projectInfo?.slug || slugify(comm.project_short_name || ''),
-        };
-    });
+            projectName: p.title || comm.project_short_name || 'N/A',
+            projectSlug: p.short_name_slug || slugify(comm.project_short_name || ''),
+        }))
+    );
 
     // Sort all communications by date, most recent first
     allCommunications.sort((a, b) => new Date(b.communicated_at).getTime() - new Date(a.communicated_at).getTime());

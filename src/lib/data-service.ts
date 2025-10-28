@@ -106,6 +106,8 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
             direction: comm.direction,
             code: comm.code,
             communicated_at: comm.communicated_at,
+            project_short_name: comm.project_short_name,
+            project_id: comm.project_id
         })),
         description: apiProject.description,
     };
@@ -145,27 +147,6 @@ export async function fetchUsers(): Promise<ApiUser[]> {
         return apiData.users;
     } catch (error) {
         console.error("A network or parsing error occurred while fetching users:", error);
-        return [];
-    }
-}
-
-
-export async function fetchCommunications(): Promise<AppCommunication[]> {
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/communications`);
-        if (!response.ok) {
-            console.error(`Failed to fetch communications with status: ${response.status}`);
-            return [];
-        }
-        const apiData: { communications: AppCommunication[] } = await response.json();
-
-        if (!apiData || !Array.isArray(apiData.communications)) {
-            console.error("Fetched communications data is not in the expected format.");
-            return [];
-        }
-        return apiData.communications;
-    } catch (error) {
-        console.error("A network or parsing error occurred while fetching communications:", error);
         return [];
     }
 }
