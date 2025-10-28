@@ -91,7 +91,6 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
                 <TableHeader>
                     <TableRow>
                         <TableHead className="w-[120px]">Üye</TableHead>
-                        <TableHead className="w-[50px]">No</TableHead>
                         <TableHead className="bg-primary text-primary-foreground">{t.first_name}</TableHead>
                         <TableHead className="bg-primary text-primary-foreground">{t.last_name}</TableHead>
                         <TableHead>{t.email}</TableHead>
@@ -104,7 +103,7 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
                     {Object.keys(groupedUsers).sort((a, b) => a.localeCompare(b, 'tr')).map(letter => (
                         <React.Fragment key={letter}>
                             <TableRow id={`letter-header-${letter}`} className="hover:bg-transparent">
-                                <TableCell colSpan={8} className="p-0">
+                                <TableCell colSpan={7} className="p-0">
                                     <div className="bg-muted/50 px-4 py-2">
                                       <h2 className="text-xl font-bold text-primary">{letter}</h2>
                                     </div>
@@ -124,7 +123,6 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
                                           <AvatarFallback>{initials}</AvatarFallback>
                                       </Avatar>
                                     </TableCell>
-                                    <TableCell>{user.id}</TableCell>
                                     <TableCell className="font-medium bg-primary/10">{user.first_name}</TableCell>
                                     <TableCell className="bg-primary/10">{user.last_name}</TableCell>
                                     <TableCell>{user.email || '-'}</TableCell>
