@@ -77,6 +77,8 @@ export interface ApiUnit {
     users: ApiUser[];
 }
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://portal.alter.com.tr';
+
 function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
     const projectMembers = (apiProject.members || []).map(member => ({
         id: member.user.id,
@@ -107,7 +109,7 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
 
 export async function fetchData(): Promise<{ projects: AppProject[]; users: ApiUser[] }> {
     try {
-        const response = await fetch('https://portal.alter.com.tr/api/projects');
+        const response = await fetch(`${API_BASE_URL}/api/projects`);
         if (!response.ok) {
             if (response.status === 404) {
                 console.error("Data not found at the specified URL.");
@@ -156,7 +158,7 @@ export async function fetchData(): Promise<{ projects: AppProject[]; users: ApiU
 
 export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
     try {
-        const response = await fetch('https://portal.alter.com.tr/api/units');
+        const response = await fetch(`${API_BASE_URL}/api/units`);
         if (!response.ok) {
             console.error(`Failed to fetch units data with status: ${response.status}`);
             return { units: [] };
