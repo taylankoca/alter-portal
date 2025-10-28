@@ -5,7 +5,7 @@ import SchemaClient from './schema-client';
 import type { AppProject } from '@/lib/data-service';
 
 export default async function SchemaPage() {
-  const units = await fetchUnitsData();
+  const { units } = await fetchUnitsData();
   const projects = await fetchProjects();
   const t = translationsData.tr.schema_page;
 
