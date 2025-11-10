@@ -1,6 +1,8 @@
 
 import { API_BASE_URL } from '@/config';
 import { slugify } from './utils';
+import { cookies } from 'next/headers';
+
 
 // API'den gelen orijinal kullanıcı verisi yapısı
 export interface ApiUser {
@@ -77,7 +79,7 @@ export interface AppProject {
     country: string;
     description: string;
     members: AppProjectMember[];
-    communications: AppCommunication[]; // Bu alan artık fetch sırasında doldurulmayacak, sonradan birleştirilecek
+    communications: AppCommunication[];
 }
 
 // Uygulama içinde kullanılacak yazışma modeli
@@ -102,7 +104,22 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
         location: apiProject.location,
         country: apiProject.country,
         description: apiProject.description,
-        communications: [], // Başlangıçta boş
+        communications: [], // Bu alan sonradan birleştirilecek
+    };
+}
+
+
+async function getAuthHeaders() {
+    const token = cookies().get('auth_token')?.value;
+    if (!token) {
+        // Bu durumda, sunucu tarafı bileşenleri yönlendirme yapabilir veya hata gösterebilir.
+        // Şimdilik sadece hatayı loglayıp boş header dönüyoruz.
+        console.warn('Authentication token not found.');
+        return {};
+    }
+    return {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
     };
 }
 
@@ -112,7 +129,8 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
  */
 export async function fetchProjects(): Promise<AppProject[]> {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/projects`);
+        const headers = await getAuthHeaders();
+        const response = await fetch(`${API_BASE_URL}/api/projects`, { headers });
         if (!response.ok) {
             console.error(`Failed to fetch projects with status: ${response.status}`);
             return [];
@@ -134,7 +152,8 @@ export async function fetchProjects(): Promise<AppProject[]> {
  */
 export async function fetchUsers(): Promise<ApiUser[]> {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/users`);
+        const headers = await getAuthHeaders();
+        const response = await fetch(`${API_BASE_URL}/api/users`, { headers });
         if (!response.ok) {
             console.error(`Failed to fetch users with status: ${response.status}`);
             return [];
@@ -156,7 +175,8 @@ export async function fetchUsers(): Promise<ApiUser[]> {
  */
 export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/units`);
+        const headers = await getAuthHeaders();
+        const response = await fetch(`${API_BASE_URL}/api/units`, { headers });
         if (!response.ok) {
             console.error(`Failed to fetch units data with status: ${response.status}`);
             return { units: [] };
@@ -172,11 +192,12 @@ export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
 }
 
 /**
- * /api/comms (swagger'a göre /api/communications olmalı, swagger dosyasını baz alıyorum) endpoint'inden tüm yazışmaları çeker.
+ * /api/communications endpoint'inden tüm yazışmaları çeker.
  */
 export async function fetchCommunications(): Promise<AppCommunication[]> {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/communications`);
+        const headers = await getAuthHeaders();
+        const response = await fetch(`${API_BASE_URL}/api/communications`, { headers });
         if (!response.ok) {
             console.error(`Failed to fetch communications with status: ${response.status}`);
             return [];
@@ -194,19 +215,15 @@ export async function fetchCommunications(): Promise<AppCommunication[]> {
 }
 
 /**
- * /api/comms/{id} (swagger'a göre /api/communications/{id} olmalı) endpoint'inden tek bir yazışmayı çeker.
+ * /api/communications/{id} endpoint'inden tek bir yazışmayı çeker.
  */
 export async function fetchCommunicationById(id: string): Promise<AppCommunication | null> {
     try {
-        // Swagger dosyasında tekil iletişim için bir endpoint belirtilmemiş. 
-        // Şimdilik /api/communications/{id} varsayımıyla ilerliyorum.
-        // Gerçek endpoint farklıysa burası güncellenmelidir.
-        const response = await fetch(`${API_BASE_URL}/api/communications/${id}`);
+        const headers = await getAuthHeaders();
+        const response = await fetch(`${API_BASE_URL}/api/communications/${id}`, { headers });
         if (!response.ok) {
             console.error(`Failed to fetch communication with id ${id}, status: ${response.status}`);
-            // 500 hatası almamak için 404 durumunda null dönmek daha iyi olabilir.
             if (response.status === 404) return null;
-            // Diğer hatalar için boş array yerine null dönmek daha doğru.
             return null;
         }
         const apiData: { communication: AppCommunication } = await response.json();

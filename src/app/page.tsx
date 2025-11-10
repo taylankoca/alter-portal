@@ -9,16 +9,51 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useRouter } from 'next/navigation';
 import LanguageSwitcher from '@/components/language-switcher';
+import React, { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Terminal } from 'lucide-react';
 
 export default function LoginPage() {
   const { translations } = useLanguage();
   const router = useRouter();
+  const { toast } = useToast();
   const t = translations.login;
+  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Add actual authentication logic
-    router.push('/dashboard');
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
+
+      // Login successful
+      router.push('/dashboard');
+      
+    } catch (err: any) {
+      setError(err.message || 'An unexpected error occurred.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -40,16 +75,40 @@ export default function LoginPage() {
           <CardContent>
             <form onSubmit={handleLogin}>
               <div className="grid gap-4">
+                 {error && (
+                   <Alert variant="destructive">
+                      <Terminal className="h-4 w-4" />
+                      <AlertTitle>Giriş Hatası</AlertTitle>
+                      <AlertDescription>
+                        {error}
+                      </AlertDescription>
+                    </Alert>
+                )}
                 <div className="grid gap-2">
                   <Label htmlFor="username">{t.username_label}</Label>
-                  <Input id="username" placeholder={t.username_placeholder} required />
+                  <Input 
+                    id="username" 
+                    placeholder={t.username_placeholder} 
+                    required 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={isLoading}
+                  />
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="password">{t.password_label}</Label>
-                  <Input id="password" type="password" placeholder={t.password_placeholder} required />
+                  <Input 
+                    id="password" 
+                    type="password" 
+                    placeholder={t.password_placeholder} 
+                    required 
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    disabled={isLoading}
+                  />
                 </div>
-                <Button type="submit" className="w-full mt-2">
-                  {t.login_button}
+                <Button type="submit" className="w-full mt-2" disabled={isLoading}>
+                   {isLoading ? 'Giriş yapılıyor...' : t.login_button}
                 </Button>
               </div>
             </form>
