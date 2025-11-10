@@ -114,9 +114,10 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
 export async function fetchProjects(): Promise<AppProject[]> {
     try {
         const token = cookies().get('auth_token')?.value;
-        const headers: HeadersInit = { 'Accept': 'application/json' };
+        const headers = new Headers();
+        headers.append('Accept', 'application/json');
         if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
+            headers.append('Authorization', `Bearer ${token}`);
         }
 
         const response = await fetch(`${API_BASE_URL}/api/projects`, { headers });
@@ -142,9 +143,10 @@ export async function fetchProjects(): Promise<AppProject[]> {
 export async function fetchUsers(): Promise<ApiUser[]> {
     try {
         const token = cookies().get('auth_token')?.value;
-        const headers: HeadersInit = { 'Accept': 'application/json' };
+        const headers = new Headers();
+        headers.append('Accept', 'application/json');
         if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
+            headers.append('Authorization', `Bearer ${token}`);
         }
 
         const response = await fetch(`${API_BASE_URL}/api/users`, { headers });
@@ -170,9 +172,10 @@ export async function fetchUsers(): Promise<ApiUser[]> {
 export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
     try {
         const token = cookies().get('auth_token')?.value;
-        const headers: HeadersInit = { 'Accept': 'application/json' };
+        const headers = new Headers();
+        headers.append('Accept', 'application/json');
         if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
+            headers.append('Authorization', `Bearer ${token}`);
         }
 
         const response = await fetch(`${API_BASE_URL}/api/units`, { headers });
@@ -196,9 +199,10 @@ export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
 export async function fetchCommunications(): Promise<AppCommunication[]> {
     try {
         const token = cookies().get('auth_token')?.value;
-        const headers: HeadersInit = { 'Accept': 'application/json' };
+        const headers = new Headers();
+        headers.append('Accept', 'application/json');
         if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
+            headers.append('Authorization', `Bearer ${token}`);
         }
 
         const response = await fetch(`${API_BASE_URL}/api/communications`, { headers });
@@ -224,9 +228,10 @@ export async function fetchCommunications(): Promise<AppCommunication[]> {
 export async function fetchCommunicationById(id: string): Promise<AppCommunication | null> {
     try {
         const token = cookies().get('auth_token')?.value;
-        const headers: HeadersInit = { 'Accept': 'application/json' };
+        const headers = new Headers();
+        headers.append('Accept', 'application/json');
         if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
+            headers.append('Authorization', `Bearer ${token}`);
         }
 
         const response = await fetch(`${API_BASE_URL}/api/communications/${id}`, { headers });
