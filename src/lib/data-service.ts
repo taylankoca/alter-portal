@@ -2,6 +2,7 @@
 import { API_BASE_URL } from '@/config';
 import { slugify } from './utils';
 
+// API'den gelen orijinal kullanıcı verisi yapısı
 export interface ApiUser {
     id: number;
     first_name: string;
@@ -12,65 +13,40 @@ export interface ApiUser {
     location?: string;
 }
 
+// API'den gelen orijinal proje üyesi verisi yapısı
 interface ApiProjectMember {
     user: ApiUser;
     role: 'admin' | 'member';
 }
 
-export interface AppCommunication {
-    id: number;
-    title: string;
-    institution: string;
-    direction: 'incoming' | 'outgoing';
-    code: string;
-    communicated_at: string;
-    project_id?: number;
-    project_short_name?: string;
-}
-
-interface ApiCommunication {
-    id: number;
-    title: string;
-    institution: string;
-    direction: 'incoming' | 'outgoing';
-    code: string;
-    communicated_at: string;
-    project_id?: number;
-    project_short_name?: string;
-}
-
+// API'den gelen orijinal proje verisi yapısı
 interface ApiProject {
     id: number;
     name: string;
     short_name: string;
     short_name_slug: string;
-    members: ApiProjectMember[];
     alter_project_no: string;
     employer: string;
     location: string;
     country: string;
     description: string;
+    members: ApiProjectMember[];
 }
 
-export interface AppProjectMember {
+// API'den gelen orijinal yazışma verisi yapısı
+export interface ApiCommunication {
     id: number;
-    name: string;
-    role: 'admin' | 'member';
-}
-
-export interface AppProject {
-    id: string;
     title: string;
-    short_name_slug: string;
-    members: AppProjectMember[];
-    alterProjectNo: string;
-    employer: string;
-    location: string;
-    country: string;
-    communications: AppCommunication[];
-    description: string;
+    institution: string;
+    direction: 'incoming' | 'outgoing';
+    code: string;
+    communicated_at: string;
+    project_id?: number;
+    project_short_name?: string;
 }
 
+
+// API'den gelen orijinal birim verisi yapısı
 export interface ApiUnit {
     id: number;
     name: string;
@@ -82,6 +58,33 @@ export interface ApiUnit {
     users: ApiUser[];
 }
 
+
+// Uygulama içinde kullanılacak proje üyesi modeli
+export interface AppProjectMember {
+    id: number;
+    name: string;
+    role: 'admin' | 'member';
+}
+
+// Uygulama içinde kullanılacak proje modeli
+export interface AppProject {
+    id: string;
+    title: string;
+    short_name_slug: string;
+    alterProjectNo: string;
+    employer: string;
+    location: string;
+    country: string;
+    description: string;
+    members: AppProjectMember[];
+    communications: AppCommunication[]; // Bu alan artık fetch sırasında doldurulmayacak, sonradan birleştirilecek
+}
+
+// Uygulama içinde kullanılacak yazışma modeli
+export interface AppCommunication extends ApiCommunication {}
+
+
+// API'den gelen proje verisini uygulama modeline dönüştüren fonksiyon
 function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
     const projectMembers = (apiProject.members || []).map(member => ({
         id: member.user.id,
@@ -98,11 +101,15 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
         employer: apiProject.employer,
         location: apiProject.location,
         country: apiProject.country,
-        communications: [],
         description: apiProject.description,
+        communications: [], // Başlangıçta boş
     };
 }
 
+
+/**
+ * /api/projects endpoint'inden tüm projeleri çeker.
+ */
 export async function fetchProjects(): Promise<AppProject[]> {
     try {
         const response = await fetch(`${API_BASE_URL}/api/projects`);
@@ -122,7 +129,9 @@ export async function fetchProjects(): Promise<AppProject[]> {
     }
 }
 
-
+/**
+ * /api/users endpoint'inden tüm kullanıcıları çeker.
+ */
 export async function fetchUsers(): Promise<ApiUser[]> {
     try {
         const response = await fetch(`${API_BASE_URL}/api/users`);
@@ -142,6 +151,9 @@ export async function fetchUsers(): Promise<ApiUser[]> {
     }
 }
 
+/**
+ * /api/units endpoint'inden tüm birimleri çeker.
+ */
 export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
     try {
         const response = await fetch(`${API_BASE_URL}/api/units`);
@@ -159,9 +171,12 @@ export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
     }
 }
 
+/**
+ * /api/comms (swagger'a göre /api/communications olmalı, swagger dosyasını baz alıyorum) endpoint'inden tüm yazışmaları çeker.
+ */
 export async function fetchCommunications(): Promise<AppCommunication[]> {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/comms`);
+        const response = await fetch(`${API_BASE_URL}/api/communications`);
         if (!response.ok) {
             console.error(`Failed to fetch communications with status: ${response.status}`);
             return [];
@@ -178,16 +193,25 @@ export async function fetchCommunications(): Promise<AppCommunication[]> {
     }
 }
 
+/**
+ * /api/comms/{id} (swagger'a göre /api/communications/{id} olmalı) endpoint'inden tek bir yazışmayı çeker.
+ */
 export async function fetchCommunicationById(id: string): Promise<AppCommunication | null> {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/comms/${id}`);
+        // Swagger dosyasında tekil iletişim için bir endpoint belirtilmemiş. 
+        // Şimdilik /api/communications/{id} varsayımıyla ilerliyorum.
+        // Gerçek endpoint farklıysa burası güncellenmelidir.
+        const response = await fetch(`${API_BASE_URL}/api/communications/${id}`);
         if (!response.ok) {
             console.error(`Failed to fetch communication with id ${id}, status: ${response.status}`);
+            // 500 hatası almamak için 404 durumunda null dönmek daha iyi olabilir.
+            if (response.status === 404) return null;
+            // Diğer hatalar için boş array yerine null dönmek daha doğru.
             return null;
         }
         const apiData: { communication: AppCommunication } = await response.json();
         if (!apiData || !apiData.communication) {
-            console.error("Fetched communication data is not in the expected format.");
+            console.error("Fetched single communication data is not in the expected format.");
             return null;
         }
         return apiData.communication;

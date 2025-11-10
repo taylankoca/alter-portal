@@ -2,11 +2,13 @@
 import { fetchUnitsData, fetchProjects } from '@/lib/data-service';
 import translationsData from '@/locales/translations.json';
 import SchemaClient from './schema-client';
-import type { AppProject } from '@/lib/data-service';
 
 export default async function SchemaPage() {
-  const { units } = await fetchUnitsData();
-  const projects = await fetchProjects();
+  const [{ units }, projects] = await Promise.all([
+    fetchUnitsData(),
+    fetchProjects()
+  ]);
+
   const t = translationsData.tr.schema_page;
 
   return (

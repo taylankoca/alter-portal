@@ -3,7 +3,7 @@ import { fetchProjects, fetchCommunicationById } from '@/lib/data-service';
 import { notFound } from 'next/navigation';
 import CorrespondenceDetailClient from './correspondence-detail-client';
 import translationsData from '@/locales/translations.json';
-import type { AppCommunication, AppProject } from '@/lib/data-service';
+import type { AppCommunication } from '@/lib/data-service';
 import { slugify } from '@/lib/utils';
 
 
@@ -13,14 +13,17 @@ interface EnrichedCommunication extends AppCommunication {
 }
 
 export default async function CorrespondenceDetailPage({ params }: { params: { id: string } }) {
-    const projects = await fetchProjects();
+    // Önce sadece ilgili yazışmayı çekiyoruz.
     const comm = await fetchCommunicationById(params.id);
-
-    const t = translationsData.tr.correspondence_page;
     
     if (!comm) {
         notFound();
     }
+    
+    // Proje adını ve slug'ını bulmak için tüm projeleri çekiyoruz.
+    // Bu, gelecekte tek bir proje çekme endpoint'i ile optimize edilebilir.
+    const projects = await fetchProjects();
+    const t = translationsData.tr.correspondence_page;
     
     const projectForComm = comm.project_id ? projects.find(p => p.id === comm.project_id?.toString()) : undefined;
 
@@ -32,7 +35,6 @@ export default async function CorrespondenceDetailPage({ params }: { params: { i
         projectName: projectName,
         projectSlug: projectSlug,
     };
-
 
     return (
         <div className="container mx-auto p-4 md:p-6">

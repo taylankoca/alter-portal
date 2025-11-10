@@ -1,10 +1,11 @@
+
 import { fetchUsers } from '@/lib/data-service';
 import PeopleDirectory from '@/components/people-directory';
 import translationsData from '@/locales/translations.json';
 
 // This is a Server Component
 export default async function PeoplePage() {
-  // Data is fetched on the server
+  // Data is fetched on the server from /api/users
   let users = await fetchUsers();
   
   // Sort users alphabetically by last name on the server

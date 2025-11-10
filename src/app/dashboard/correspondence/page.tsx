@@ -11,14 +11,19 @@ interface EnrichedCommunication extends AppCommunication {
 }
 
 export default async function CorrespondencePage() {
-    const projects = await fetchProjects();
-    const communications = await fetchCommunications();
+    // Verileri ayrı ayrı ve paralel olarak çek
+    const [projects, communications] = await Promise.all([
+        fetchProjects(),
+        fetchCommunications()
+    ]);
 
     const t = translationsData.tr.navigation;
     const correspondenceT = translationsData.tr.correspondence_page;
 
+    // Projeleri hızlı erişim için bir haritaya dönüştür
     const projectMap = new Map(projects.map(p => [p.id, p]));
 
+    // Yazışmaları proje bilgileriyle zenginleştir
     const allCommunications: EnrichedCommunication[] = communications.map(comm => {
         const project = comm.project_id ? projectMap.get(comm.project_id.toString()) : undefined;
         const projectName = project?.title || comm.project_short_name || 'N/A';
@@ -31,7 +36,7 @@ export default async function CorrespondencePage() {
         };
     });
 
-    // Sort all communications by date, most recent first
+    // Tüm yazışmaları tarihe göre sırala, en yeni en üstte
     allCommunications.sort((a, b) => new Date(b.communicated_at).getTime() - new Date(a.communicated_at).getTime());
 
     return (

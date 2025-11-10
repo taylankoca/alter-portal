@@ -1,0 +1,479 @@
+openapi: 3.0.3
+info:
+  title: Alter Manager API
+  description: |
+    Alter Manager 2024 Theme API servisleri için dokümantasyon.
+    
+    ## Authentication
+    API endpoint'leri JWT token ile korunmaktadır. 
+    
+    ### Kullanım Adımları:
+    1. `/api/login` endpoint'ine POST isteği göndererek token alın
+    2. Aldığınız token'ı diğer endpoint'lerde `Authorization: Bearer {token}` header'ı ile gönderin
+    
+  version: 1.0.0
+  contact:
+    name: Livstag
+    url: https://manager.alter.com.tr
+  license:
+    name: MIT
+
+servers:
+  - url: https://manager.alter.com.tr
+    description: Production server
+  - url: http://localhost
+    description: Local development server
+
+tags:
+  - name: Authentication
+    description: Kimlik doğrulama işlemleri
+  - name: Users
+    description: Kullanıcı yönetimi
+  - name: Units
+    description: Birim yönetimi
+  - name: Projects
+    description: Proje yönetimi
+  - name: Communications
+    description: İletişim kayıtları
+
+paths:
+  /api/login:
+    post:
+      tags:
+        - Authentication
+      summary: Kullanıcı girişi
+      description: Email ve şifre ile giriş yaparak JWT token alın
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                  description: Kullanıcı e-posta adresi
+                password:
+                  type: string
+                  format: password
+                  example: password123
+                  minLength: 6
+                  description: Kullanıcı şifresi
+      responses:
+        '200':
+          description: Giriş başarılı
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  access_token:
+                    type: string
+                    example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
+                    description: JWT access token
+                  token_type:
+                    type: string
+                    example: Bearer
+                    description: Token tipi
+                  user:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: Geçersiz kimlik bilgileri
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Geçersiz kimlik bilgileri
+        '422':
+          description: Validation hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Email ve password gerekli
+    options:
+      tags:
+        - Authentication
+      summary: CORS preflight
+      description: CORS preflight request
+      responses:
+        '204':
+          description: No content
+
+  /api/users:
+    get:
+      tags:
+        - Users
+      summary: Kullanıcı listesi
+      description: Sistemdeki tüm kullanıcıları listeler (JWT token gerekli)
+      operationId: getUsers
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    options:
+      tags:
+        - Users
+      summary: CORS preflight
+      responses:
+        '204':
+          description: No content
+
+  /api/units:
+    get:
+      tags:
+        - Units
+      summary: Birim listesi
+      description: Sistemdeki tüm birimleri ve bağlı kullanıcıları listeler (JWT token gerekli)
+      operationId: getUnits
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  units:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Unit'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    options:
+      tags:
+        - Units
+      summary: CORS preflight
+      responses:
+        '204':
+          description: No content
+
+  /api/projects:
+    get:
+      tags:
+        - Projects
+      summary: Proje listesi
+      description: Sistemdeki tüm projeleri ve üyeleri listeler (JWT token gerekli)
+      operationId: getProjects
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  projects:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    options:
+      tags:
+        - Projects
+      summary: CORS preflight
+      responses:
+        '204':
+          description: No content
+
+  /api/communications:
+    get:
+      tags:
+        - Communications
+      summary: İletişim kayıtları
+      description: Sistemdeki tüm iletişim kayıtlarını listeler (JWT token gerekli)
+      operationId: getCommunications
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  communications:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Communication'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    options:
+      tags:
+        - Communications
+      summary: CORS preflight
+      responses:
+        '204':
+          description: No content
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        JWT token ile authentication. 
+        Önce `/api/login` endpoint'inden token alın, 
+        sonra `Authorization: Bearer {token}` header'ı ile kullanın.
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          description: Kullanıcı ID
+        email:
+          type: string
+          format: email
+          example: user@example.com
+          description: E-posta adresi
+        first_name:
+          type: string
+          example: John
+          description: Ad
+        last_name:
+          type: string
+          example: Doe
+          description: Soyad
+        name:
+          type: string
+          example: John Doe
+          description: Tam ad
+        phone:
+          type: string
+          example: "+905551234567"
+          description: Telefon numarası
+        photo:
+          type: string
+          nullable: true
+          description: Profil fotoğrafı URL
+        onboarded:
+          type: integer
+          example: 1
+          description: Onboarding durumu (0 veya 1)
+        last_signedin_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+          description: Son giriş zamanı
+        created_at:
+          type: string
+          format: date-time
+          description: Oluşturulma zamanı
+        updated_at:
+          type: string
+          format: date-time
+          description: Güncellenme zamanı
+
+    Unit:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          description: Birim ID
+        name:
+          type: string
+          example: "İnsan Kaynakları"
+          description: Birim adı
+        slug:
+          type: string
+          example: "insan-kaynaklari"
+          description: Birim slug
+        description:
+          type: string
+          nullable: true
+          description: Birim açıklaması
+        users:
+          type: array
+          description: Birime bağlı kullanıcılar
+          items:
+            $ref: '#/components/schemas/User'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          description: Proje ID
+        name:
+          type: string
+          example: "Alter Manager 2024"
+          description: Proje adı
+        slug:
+          type: string
+          example: "alter-manager-2024"
+          description: Proje slug
+        description:
+          type: string
+          nullable: true
+          description: Proje açıklaması
+        status:
+          type: string
+          enum: [active, completed, cancelled, on_hold]
+          example: "active"
+          description: Proje durumu
+        members:
+          type: array
+          description: Proje üyeleri
+          items:
+            $ref: '#/components/schemas/ProjectMember'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    ProjectMember:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        project_id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          example: 5
+        role:
+          type: string
+          enum: [admin, member]
+          example: "member"
+          description: Üye rolü
+        user:
+          $ref: '#/components/schemas/User'
+
+    Communication:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          description: İletişim ID
+        title:
+          type: string
+          example: "Proje Toplantısı"
+          description: İletişim başlığı
+        institution:
+          type: string
+          example: "Alter A.Ş."
+          description: Kurum adı
+        direction:
+          type: string
+          enum: [incoming, outgoing]
+          example: "outgoing"
+          description: İletişim yönü
+        code:
+          type: string
+          example: "ALT-2024-001"
+          description: İletişim kodu
+        communicated_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T14:30:00Z"
+          description: İletişim tarihi
+        project_id:
+          type: integer
+          nullable: true
+          example: 1
+          description: Bağlı proje ID
+        is_private:
+          type: boolean
+          example: false
+          description: Özel mi?
+        file:
+          type: string
+          nullable: true
+          description: Dosya URL
+        status:
+          type: array
+          items:
+            type: string
+          example: ["pending", "approved"]
+          description: İletişim durumları
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Hata mesajı"
+          description: Hata açıklaması
+
+  responses:
+    UnauthorizedError:
+      description: Token gerekli veya geçersiz token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            tokenMissing:
+              value:
+                message: Token gerekli
+            invalidToken:
+              value:
+                message: Geçersiz token
+            tokenExpired:
+              value:
+                message: Token doğrulanamadı
+

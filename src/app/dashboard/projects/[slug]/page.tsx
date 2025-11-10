@@ -1,22 +1,35 @@
+
 import { notFound } from 'next/navigation';
-import { slugify } from '@/lib/utils';
 import ProjectDetailClient from './project-detail-client';
 import translationsData from '@/locales/translations.json';
-import { fetchProjects } from '@/lib/data-service';
+import { fetchProjects, fetchCommunications } from '@/lib/data-service';
 
-// This is now a Server Component
 export default async function ProjectDetailPage({ params }: { params: { slug: string } }) {
-    const projects = await fetchProjects();
+    // Projeleri ve tüm yazışmaları paralel olarak çek
+    const [projects, allCommunications] = await Promise.all([
+        fetchProjects(),
+        fetchCommunications()
+    ]);
+
     const project = projects.find(p => p.short_name_slug === params.slug);
 
     if (!project) {
         notFound();
     }
 
-    // Since this is a server component, we can't use the useLanguage hook.
-    // We'll pass down the translations for the default language or determine it differently.
-    // For now, let's assume 'tr' and pass the relevant object.
+    // İlgili projenin yazışmalarını filtrele
+    const projectCommunications = allCommunications.filter(
+        comm => comm.project_id?.toString() === project.id
+    );
+
+    // Proje nesnesine filtrelenmiş yazışmaları ekle
+    const projectWithComms = {
+        ...project,
+        communications: projectCommunications,
+    };
+
+    // Çeviri verilerini al
     const t = translationsData.tr.projects_page;
 
-    return <ProjectDetailClient project={project} t={t} />;
+    return <ProjectDetailClient project={projectWithComms} t={t} />;
 }
