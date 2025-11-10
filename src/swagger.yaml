@@ -11,15 +11,27 @@ info:
     1. `/api/login` endpoint'ine POST isteği göndererek token alın
     2. Aldığınız token'ı diğer endpoint'lerde `Authorization: Bearer {token}` header'ı ile gönderin
     
-  version: 1.0.0
+    ### JWT Implementation
+    - Library: Lcobucci JWT v4.x
+    - Algorithm: HS256 (HMAC SHA-256)
+    - Token Lifetime: 60 dakika (default)
+    - Token Format: Standard JWT (Header.Payload.Signature)
+    
+    ### CORS Support
+    Tüm endpoint'ler CORS desteği ile gelir:
+    - `Access-Control-Allow-Origin: *`
+    - `Access-Control-Allow-Methods: GET, POST, OPTIONS`
+    - `Access-Control-Allow-Headers: Content-Type, Authorization`
+    
+  version: 2.0.0
   contact:
-    name: Livstag
-    url: https://manager.alter.com.tr
+    name: Livstag / Alter Digital
+    url: https://alter.com.tr
   license:
     name: MIT
 
 servers:
-  - url: https://manager.alter.com.tr
+  - url: https://api.alter.com.tr
     description: Production server
   - url: http://localhost
     description: Local development server
@@ -79,11 +91,15 @@ paths:
                   access_token:
                     type: string
                     example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
-                    description: JWT access token
+                    description: JWT access token (Lcobucci JWT v4.x)
                   token_type:
                     type: string
                     example: Bearer
                     description: Token tipi
+                  expires_in:
+                    type: integer
+                    example: 3600
+                    description: Token geçerlilik süresi (saniye cinsinden)
                   user:
                     $ref: '#/components/schemas/User'
         '401':
@@ -92,16 +108,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+              examples:
+                invalidCredentials:
+                  summary: Kullanıcı bulunamadı veya şifre hatalı
+                  value:
+                    message: Geçersiz kimlik bilgileri
+        '404':
+          description: Kullanıcı bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
               example:
-                message: Geçersiz kimlik bilgileri
+                message: Kullanıcı bulunamadı
         '422':
           description: Validation hatası
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+              examples:
+                missingFields:
+                  summary: Eksik alanlar
+                  value:
+                    message: Email ve password gerekli
+                invalidEmail:
+                  summary: Geçersiz email formatı
+                  value:
+                    message: Geçerli bir e-posta adresi giriniz
+        '405':
+          description: Yanlış HTTP metodu
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
               example:
-                message: Email ve password gerekli
+                message: Method not allowed
     options:
       tags:
         - Authentication
@@ -468,12 +510,19 @@ components:
             $ref: '#/components/schemas/Error'
           examples:
             tokenMissing:
+              summary: Authorization header eksik
               value:
                 message: Token gerekli
             invalidToken:
+              summary: Token format hatası veya geçersiz imza
               value:
                 message: Geçersiz token
             tokenExpired:
+              summary: Token süresi dolmuş veya doğrulanamıyor
               value:
                 message: Token doğrulanamadı
+            userNotFound:
+              summary: Token geçerli ama kullanıcı bulunamadı
+              value:
+                message: Kullanıcı bulunamadı
 

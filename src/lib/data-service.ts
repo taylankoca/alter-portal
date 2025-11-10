@@ -241,7 +241,8 @@ export async function fetchCommunicationById(id: string): Promise<AppCommunicati
             return null;
         }
         return apiData.communication;
-    } catch (error) {
+    } catch (error)
+ {
         console.error(`A network or parsing error occurred while fetching communication ${id}:`, error);
         return null;
     }
