@@ -46,7 +46,11 @@ export default function LoginPage() {
         throw new Error(data.message || 'Login failed');
       }
 
-      // Login successful
+      // Login successful, save user data to localStorage
+      if (data.user) {
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
+      
       router.push('/dashboard');
       
     } catch (err: any) {
@@ -85,10 +89,11 @@ export default function LoginPage() {
                     </Alert>
                 )}
                 <div className="grid gap-2">
-                  <Label htmlFor="username">{t.username_label}</Label>
+                  <Label htmlFor="email">{t.email_label}</Label>
                   <Input 
-                    id="username" 
-                    placeholder={t.username_placeholder} 
+                    id="email" 
+                    type="email"
+                    placeholder={t.email_placeholder} 
                     required 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}

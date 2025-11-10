@@ -64,9 +64,9 @@
     "login": {
       "welcome_back": "Portalınıza hoş geldiniz. Lütfen giriş yapın.",
       "login_title": "Giriş Yap",
-      "login_description": "Devam etmek için kullanıcı adı ve şifrenizi girin.",
-      "username_label": "Kullanıcı Adı",
-      "username_placeholder": "kullanici.adiniz",
+      "login_description": "Devam etmek için e-posta ve şifrenizi girin.",
+      "email_label": "E-posta Adresi",
+      "email_placeholder": "ornek@alter.com.tr",
       "password_label": "Şifre",
       "password_placeholder": "********",
       "login_button": "Giriş Yap"
@@ -141,8 +141,8 @@
       "welcome_back": "Welcome to your portal. Please sign in.",
       "login_title": "Sign In",
       "login_description": "Enter your credentials to continue.",
-      "username_label": "Username",
-      "username_placeholder": "your.username",
+      "email_label": "Email Address",
+      "email_placeholder": "example@alter.com.tr",
       "password_label": "Password",
       "password_placeholder": "********",
       "login_button": "Sign In"
@@ -217,8 +217,8 @@
       "welcome_back": "Добро пожаловать в ваш портал. Пожалуйста, войдите.",
       "login_title": "Войти",
       "login_description": "Введите свои учетные данные, чтобы продолжить.",
-      "username_label": "Имя пользователя",
-      "username_placeholder": "ваше.имя.пользователя",
+      "email_label": "Адрес электронной почты",
+      "email_placeholder": "example@alter.com.tr",
       "password_label": "Пароль",
       "password_placeholder": "********",
       "login_button": "Войти"

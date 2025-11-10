@@ -14,36 +14,65 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Skeleton } from "./ui/skeleton";
+
+interface User {
+  name: string;
+  email: string;
+  photo?: string;
+}
 
 export default function UserMenu() {
   const { translations } = useLanguage();
   const router = useRouter();
   const t = translations.user_menu;
+  
+  const [user, setUser] = useState<User | null>(null);
+  const [mounted, setMounted] = useState(false);
 
-  const handleLogout = () => {
-    // TODO: Add actual logout logic
+  useEffect(() => {
+    setMounted(true);
+    try {
+      const userData = localStorage.getItem('user');
+      if (userData) {
+        setUser(JSON.parse(userData));
+      }
+    } catch (error) {
+        console.error("Failed to parse user data from localStorage", error);
+        localStorage.removeItem('user');
+    }
+  }, []);
+
+  const handleLogout = async () => {
+    await fetch('/api/logout', { method: 'POST' });
+    localStorage.removeItem('user');
     router.push("/");
   };
 
-  const username = "Kullanıcı Adı";
+  if (!mounted) {
+    return <Skeleton className="h-9 w-28" />;
+  }
+
+  const initials = user?.name?.split(' ').map(n => n[0]).join('').toUpperCase() || 'U';
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm" className="flex items-center gap-2">
           <Avatar className="h-6 w-6">
-            <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="@user" />
-            <AvatarFallback>U</AvatarFallback>
+            {user?.photo && <AvatarImage src={user.photo} alt={user.name} />}
+            <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
-           <span className="hidden sm:inline">{username}</span>
+           <span className="hidden sm:inline">{user?.name || "Kullanıcı"}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{username}</p>
+            <p className="text-sm font-medium leading-none">{user?.name}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              kullanici@alterfinans.com
+              {user?.email}
             </p>
           </div>
         </DropdownMenuLabel>
