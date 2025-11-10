@@ -111,16 +111,17 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
 
 async function getAuthHeaders() {
     const token = cookies().get('auth_token')?.value;
-    if (!token) {
-        // Bu durumda, sunucu tarafı bileşenleri yönlendirme yapabilir veya hata gösterebilir.
-        // Şimdilik sadece hatayı loglayıp boş header dönüyoruz.
-        console.warn('Authentication token not found.');
-        return {};
-    }
-    return {
-        'Authorization': `Bearer ${token}`,
+    const headers: HeadersInit = {
         'Accept': 'application/json',
     };
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    } else {
+        console.warn('Authentication token not found.');
+    }
+    
+    return headers;
 }
 
 
