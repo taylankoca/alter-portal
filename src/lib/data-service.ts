@@ -1,4 +1,3 @@
-
 import { API_BASE_URL } from '@/config';
 import { slugify } from './utils';
 import { cookies } from 'next/headers';
@@ -109,28 +108,17 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
 }
 
 
-async function getAuthHeaders() {
-    const token = cookies().get('auth_token')?.value;
-    const headers: HeadersInit = {
-        'Accept': 'application/json',
-    };
-
-    if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-    } else {
-        console.warn('Authentication token not found.');
-    }
-    
-    return headers;
-}
-
-
 /**
  * /api/projects endpoint'inden tüm projeleri çeker.
  */
 export async function fetchProjects(): Promise<AppProject[]> {
     try {
-        const headers = await getAuthHeaders();
+        const token = cookies().get('auth_token')?.value;
+        const headers: HeadersInit = { 'Accept': 'application/json' };
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
         const response = await fetch(`${API_BASE_URL}/api/projects`, { headers });
         if (!response.ok) {
             console.error(`Failed to fetch projects with status: ${response.status}`);
@@ -153,7 +141,12 @@ export async function fetchProjects(): Promise<AppProject[]> {
  */
 export async function fetchUsers(): Promise<ApiUser[]> {
     try {
-        const headers = await getAuthHeaders();
+        const token = cookies().get('auth_token')?.value;
+        const headers: HeadersInit = { 'Accept': 'application/json' };
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
         const response = await fetch(`${API_BASE_URL}/api/users`, { headers });
         if (!response.ok) {
             console.error(`Failed to fetch users with status: ${response.status}`);
@@ -176,7 +169,12 @@ export async function fetchUsers(): Promise<ApiUser[]> {
  */
 export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
     try {
-        const headers = await getAuthHeaders();
+        const token = cookies().get('auth_token')?.value;
+        const headers: HeadersInit = { 'Accept': 'application/json' };
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
         const response = await fetch(`${API_BASE_URL}/api/units`, { headers });
         if (!response.ok) {
             console.error(`Failed to fetch units data with status: ${response.status}`);
@@ -197,7 +195,12 @@ export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
  */
 export async function fetchCommunications(): Promise<AppCommunication[]> {
     try {
-        const headers = await getAuthHeaders();
+        const token = cookies().get('auth_token')?.value;
+        const headers: HeadersInit = { 'Accept': 'application/json' };
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
         const response = await fetch(`${API_BASE_URL}/api/communications`, { headers });
         if (!response.ok) {
             console.error(`Failed to fetch communications with status: ${response.status}`);
@@ -220,7 +223,12 @@ export async function fetchCommunications(): Promise<AppCommunication[]> {
  */
 export async function fetchCommunicationById(id: string): Promise<AppCommunication | null> {
     try {
-        const headers = await getAuthHeaders();
+        const token = cookies().get('auth_token')?.value;
+        const headers: HeadersInit = { 'Accept': 'application/json' };
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
         const response = await fetch(`${API_BASE_URL}/api/communications/${id}`, { headers });
         if (!response.ok) {
             console.error(`Failed to fetch communication with id ${id}, status: ${response.status}`);
