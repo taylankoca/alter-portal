@@ -52,6 +52,7 @@ export default function LoginPage() {
       }
       
       router.push('/dashboard');
+      router.refresh(); // Refresh the page to update server-side rendered components
       
     } catch (err: any) {
       setError(err.message || 'An unexpected error occurred.');

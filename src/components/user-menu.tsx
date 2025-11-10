@@ -16,19 +16,15 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
+import type { ApiUser } from "@/lib/data-service";
 
-interface User {
-  name: string;
-  email: string;
-  photo?: string;
-}
 
 export default function UserMenu() {
   const { translations } = useLanguage();
   const router = useRouter();
   const t = translations.user_menu;
   
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<ApiUser | null>(null);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -47,32 +43,39 @@ export default function UserMenu() {
   const handleLogout = async () => {
     await fetch('/api/logout', { method: 'POST' });
     localStorage.removeItem('user');
+    setUser(null);
     router.push("/");
   };
 
   if (!mounted) {
     return <Skeleton className="h-9 w-28" />;
   }
+  
+  if (!user) {
+    return null;
+  }
 
-  const initials = user?.name?.split(' ').map(n => n[0]).join('').toUpperCase() || 'U';
+  const initials = `${user.first_name?.[0] || ''}${user.last_name?.[0] || ''}`.toUpperCase();
+  const fullName = `${user.first_name} ${user.last_name}`;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm" className="flex items-center gap-2">
           <Avatar className="h-6 w-6">
-            {user?.photo && <AvatarImage src={user.photo} alt={user.name} />}
+            {/* user.photo is not available in the API response yet */}
+            {/* {user?.photo && <AvatarImage src={user.photo} alt={fullName} />} */}
             <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
-           <span className="hidden sm:inline">{user?.name || "Kullanıcı"}</span>
+           <span className="hidden sm:inline">{fullName}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{user?.name}</p>
+            <p className="text-sm font-medium leading-none">{fullName}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              {user?.email}
+              {user.email}
             </p>
           </div>
         </DropdownMenuLabel>

@@ -1,3 +1,4 @@
+
 'use server';
 import { API_BASE_URL } from '@/config';
 import { cookies } from 'next/headers';
@@ -34,6 +35,7 @@ export async function POST(request: Request) {
         path: '/',
         maxAge: 60 * 60 * 24 * 7, // 1 week
       });
+      // Return the user object along with success
       return Response.json({ success: true, user: data.user });
     } else {
       return Response.json({ message: 'Login failed, no token received' }, { status: 401 });
