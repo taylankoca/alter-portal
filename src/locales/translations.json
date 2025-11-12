@@ -73,7 +73,13 @@
     },
     "user_menu": {
       "settings": "Ayarlar",
-      "logout": "Çıkış Yap"
+      "logout": "Çıkış Yap",
+      "token": "Token Görüntüle",
+      "auth_token_title": "Kimlik Doğrulama Anahtarı",
+      "auth_token_description": "API istekleri için kullanabileceğiniz anahtarınız aşağıdadır.",
+      "copy_token": "Kopyala",
+      "token_copied_title": "Başarılı",
+      "token_copied_description": "Token panoya kopyalandı."
     }
   },
   "en": {
@@ -149,7 +155,13 @@
     },
     "user_menu": {
       "settings": "Settings",
-      "logout": "Logout"
+      "logout": "Logout",
+      "token": "View Token",
+      "auth_token_title": "Authentication Token",
+      "auth_token_description": "Your token for API requests is below.",
+      "copy_token": "Copy",
+      "token_copied_title": "Success",
+      "token_copied_description": "Token copied to clipboard."
     }
   },
   "ru": {
@@ -225,7 +237,13 @@
     },
     "user_menu": {
         "settings": "Настройки",
-        "logout": "Выйти"
+        "logout": "Выйти",
+        "token": "Показать токен",
+        "auth_token_title": "Токен аутентификации",
+        "auth_token_description": "Ваш токен для запросов к API ниже.",
+        "copy_token": "Копировать",
+        "token_copied_title": "Успешно",
+        "token_copied_description": "Токен скопирован в буфер обмена."
     }
   }
 }

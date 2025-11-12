@@ -1,7 +1,6 @@
-
 "use client";
 
-import { LogOut } from "lucide-react";
+import { LogOut, KeyRound } from "lucide-react";
 import { useLanguage } from "@/context/language-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -17,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 import type { ApiUser } from "@/lib/data-service";
+import TokenModal from "./token-modal";
 
 
 export default function UserMenu() {
@@ -80,6 +80,12 @@ export default function UserMenu() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <TokenModal>
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                <KeyRound className="mr-2 h-4 w-4" />
+                <span>{t.token}</span>
+            </DropdownMenuItem>
+        </TokenModal>
         <DropdownMenuItem onClick={handleLogout}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>{t.logout}</span>
