@@ -1,4 +1,5 @@
 
+
 import { API_BASE_URL } from '@/config';
 import { slugify } from './utils';
 import { cookies } from 'next/headers';
@@ -88,16 +89,18 @@ export interface AppCommunication extends ApiCommunication {}
 
 // API'den gelen proje verisini uygulama modeline dönüştüren fonksiyon
 function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
-    const projectMembers = (apiProject.members || []).map(member => ({
-        id: member.user.id,
-        name: `${member.user.first_name} ${member.user.last_name}`,
-        role: member.role,
-    }));
+    const projectMembers = (apiProject.members || [])
+        .filter(member => member && member.user) // Güvenlik kontrolü: member ve member.user var mı?
+        .map(member => ({
+            id: member.user.id,
+            name: `${member.user.first_name} ${member.user.last_name}`,
+            role: member.role,
+        }));
 
     return {
         id: apiProject.id.toString(),
         title: apiProject.name,
-        short_name_slug: apiProject.short_name_slug,
+        short_name_slug: apiProject.short_name_slug || slugify(apiProject.short_name || ''),
         members: projectMembers,
         alterProjectNo: apiProject.alter_project_no,
         employer: apiProject.employer || '',
