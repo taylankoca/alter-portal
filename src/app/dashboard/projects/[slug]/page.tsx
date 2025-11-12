@@ -1,4 +1,5 @@
 
+
 import { notFound } from 'next/navigation';
 import ProjectDetailClient from './project-detail-client';
 import translationsData from '@/locales/translations.json';
@@ -11,7 +12,7 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
         fetchCommunications()
     ]);
 
-    const project = projects.find(p => p.short_name_slug === params.slug);
+    const project = projects.find(p => p.short_name_slug === params.slug || p.slug === params.slug);
 
     if (!project) {
         notFound();

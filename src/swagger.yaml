@@ -75,8 +75,7 @@ paths:
                   type: string
                   format: password
                   example: password123
-                  minLength: 6
-                  description: Kullanıcı şifresi
+                  description: Kullanıcı şifresi (minimum uzunluk kontrolü yok)
       responses:
         '200':
           description: Giriş başarılı
@@ -103,39 +102,21 @@ paths:
                   user:
                     $ref: '#/components/schemas/User'
         '401':
-          description: Geçersiz kimlik bilgileri
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-              examples:
-                invalidCredentials:
-                  summary: Kullanıcı bulunamadı veya şifre hatalı
-                  value:
-                    message: Geçersiz kimlik bilgileri
-        '404':
-          description: Kullanıcı bulunamadı
+          description: Geçersiz kimlik bilgileri (kullanıcı bulunamadı veya şifre hatalı)
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
               example:
-                message: Kullanıcı bulunamadı
+                message: Geçersiz kimlik bilgileri
         '422':
-          description: Validation hatası
+          description: Validation hatası (eksik alanlar)
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-              examples:
-                missingFields:
-                  summary: Eksik alanlar
-                  value:
-                    message: Email ve password gerekli
-                invalidEmail:
-                  summary: Geçersiz email formatı
-                  value:
-                    message: Geçerli bir e-posta adresi giriniz
+              example:
+                message: Email ve password gerekli
         '405':
           description: Yanlış HTTP metodu
           content:
@@ -315,41 +296,77 @@ components:
           description: E-posta adresi
         first_name:
           type: string
-          example: John
+          example: Taylan
           description: Ad
         last_name:
           type: string
-          example: Doe
+          example: Koca
           description: Soyad
-        name:
-          type: string
-          example: John Doe
-          description: Tam ad
         phone:
           type: string
-          example: "+905551234567"
+          example: "+905333373409"
+          nullable: true
           description: Telefon numarası
-        photo:
+        title:
+          type: string
+          example: "YAZILIM GELİŞTİRİCİ"
+          nullable: true
+          description: İş ünvanı
+        location:
+          type: string
+          example: "MERKEZ"
+          nullable: true
+          description: Çalışma lokasyonu
+        relation:
+          type: string
+          example: "TASERON"
+          nullable: true
+          description: Çalışan ilişki türü
+        tckn:
           type: string
           nullable: true
-          description: Profil fotoğrafı URL
+          example: "12345678901"
+          description: TC Kimlik No
+        new_id:
+          type: integer
+          nullable: true
+          example: 10
+          description: Yeni sıralama ID
         onboarded:
           type: integer
           example: 1
           description: Onboarding durumu (0 veya 1)
+        is_active:
+          type: integer
+          example: 1
+          description: Aktif kullanıcı mı (0 veya 1)
+        is_accessible:
+          type: boolean
+          nullable: true
+          example: null
+          description: Erişilebilirlik durumu
         last_signedin_at:
           type: string
           format: date-time
-          example: "2024-01-15T10:30:00Z"
+          example: "2025-11-10T15:04:21.839992Z"
+          nullable: true
           description: Son giriş zamanı
         created_at:
           type: string
           format: date-time
+          example: "2025-10-06 11:40:37"
           description: Oluşturulma zamanı
         updated_at:
           type: string
           format: date-time
+          example: "2025-11-10 18:04:21"
           description: Güncellenme zamanı
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+          description: Silinme zamanı (soft delete)
 
     Unit:
       type: object
@@ -370,17 +387,30 @@ components:
           type: string
           nullable: true
           description: Birim açıklaması
+        parent_id:
+          type: integer
+          nullable: true
+          example: null
+          description: Üst birim ID
         users:
           type: array
-          description: Birime bağlı kullanıcılar
+          description: Birime bağlı kullanıcılar (new_id'ye göre sıralanmış, null'lar sonda)
           items:
             $ref: '#/components/schemas/User'
         created_at:
           type: string
           format: date-time
+          example: "2025-01-15 10:00:00"
         updated_at:
           type: string
           format: date-time
+          example: "2025-11-10 12:00:00"
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+          description: Silinme zamanı (soft delete)
 
     Project:
       type: object
@@ -408,28 +438,40 @@ components:
           description: Proje durumu
         members:
           type: array
-          description: Proje üyeleri
+          description: Proje üyeleri (password ve data alanları gizlenmiş)
           items:
             $ref: '#/components/schemas/ProjectMember'
         created_at:
           type: string
           format: date-time
+          example: "2025-01-15 10:00:00"
         updated_at:
           type: string
           format: date-time
+          example: "2025-11-10 12:00:00"
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+          description: Silinme zamanı (soft delete)
 
     ProjectMember:
       type: object
+      description: Proje üyesi (data alanı gizlenmiş, user içinde password ve data alanları gizlenmiş)
       properties:
         id:
           type: integer
           example: 1
+          description: Üyelik ID
         project_id:
           type: integer
           example: 1
+          description: Proje ID
         user_id:
           type: integer
           example: 5
+          description: Kullanıcı ID
         role:
           type: string
           enum: [admin, member]
@@ -437,6 +479,17 @@ components:
           description: Üye rolü
         user:
           $ref: '#/components/schemas/User'
+          description: Kullanıcı bilgileri (password ve data alanları gizlenmiş)
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2025-01-15 10:00:00"
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2025-11-10 12:00:00"
 
     Communication:
       type: object
@@ -484,14 +537,23 @@ components:
           type: array
           items:
             type: string
+          nullable: true
           example: ["pending", "approved"]
           description: İletişim durumları
         created_at:
           type: string
           format: date-time
+          example: "2025-01-15 10:00:00"
         updated_at:
           type: string
           format: date-time
+          example: "2025-11-10 12:00:00"
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+          description: Silinme zamanı (soft delete)
 
     Error:
       type: object
@@ -507,20 +569,34 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            oneOf:
+              - $ref: '#/components/schemas/Error'
+              - type: object
+                properties:
+                  message:
+                    type: string
+                  error:
+                    type: string
+                  debug:
+                    type: object
           examples:
             tokenMissing:
               summary: Authorization header eksik
               value:
                 message: Token gerekli
-            invalidToken:
-              summary: Token format hatası veya geçersiz imza
+            invalidSignature:
+              summary: Token imzası geçersiz
               value:
-                message: Geçersiz token
+                message: Token imzası geçersiz
             tokenExpired:
-              summary: Token süresi dolmuş veya doğrulanamıyor
+              summary: Token süresi dolmuş
               value:
-                message: Token doğrulanamadı
+                message: Token süresi dolmuş
+            validationError:
+              summary: Token doğrulama hatası (detaylı)
+              value:
+                message: "Token doğrulanamadı: {error_message}"
+                error: "Detaylı hata mesajı"
             userNotFound:
               summary: Token geçerli ama kullanıcı bulunamadı
               value:

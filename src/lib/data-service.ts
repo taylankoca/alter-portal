@@ -26,6 +26,7 @@ interface ApiProjectMember {
 interface ApiProject {
     id: number;
     name: string;
+    slug: string;
     short_name: string;
     short_name_slug: string;
     alter_project_no: string;
@@ -73,6 +74,7 @@ export interface AppProjectMember {
 export interface AppProject {
     id: string;
     title: string;
+    slug: string;
     short_name_slug: string;
     alterProjectNo: string;
     employer: string;
@@ -100,6 +102,7 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
     return {
         id: apiProject.id.toString(),
         title: apiProject.name,
+        slug: apiProject.slug || slugify(apiProject.name || ''),
         short_name_slug: apiProject.short_name_slug || slugify(apiProject.short_name || ''),
         members: projectMembers,
         alterProjectNo: apiProject.alter_project_no,
