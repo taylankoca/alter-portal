@@ -29,7 +29,7 @@ export async function POST(request: Request) {
 
     if (data.access_token) {
       const cookieOptions = {
-        httpOnly: true,
+        httpOnly: false, // Make it accessible by server-side fetch
         secure: process.env.NODE_ENV !== 'development',
         sameSite: 'strict' as const,
         path: '/',
