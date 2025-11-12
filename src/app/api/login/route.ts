@@ -28,24 +28,20 @@ export async function POST(request: Request) {
     }
 
     if (data.access_token) {
-      // Set auth token cookie for server-side and client-side requests
-      cookies().set('auth_token', data.access_token, {
-        httpOnly: false, // Accessible by both server and client
+      const cookieOptions = {
+        httpOnly: false, // Make it accessible by both server and client
         secure: process.env.NODE_ENV !== 'development',
-        sameSite: 'strict',
+        sameSite: 'strict' as const,
         path: '/',
         maxAge: 60 * 60 * 24 * 7, // 1 week
-      });
+      };
+
+      // Set auth token cookie for server-side and client-side requests
+      cookies().set('auth_token', data.access_token, cookieOptions);
       
       // Set user info cookie for client-side access
       if (data.user) {
-        cookies().set('user', JSON.stringify(data.user), {
-          httpOnly: false, // Make it accessible by client-side JS
-          secure: process.env.NODE_ENV !== 'development',
-          sameSite: 'strict',
-          path: '/',
-          maxAge: 60 * 60 * 24 * 7, // 1 week
-        });
+        cookies().set('user', JSON.stringify(data.user), cookieOptions);
       }
 
       // Return the user object along with success
