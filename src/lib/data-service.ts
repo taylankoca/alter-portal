@@ -266,3 +266,4 @@ export async function fetchCommunicationById(id: string): Promise<AppCommunicati
         return null;
     }
 }
+
