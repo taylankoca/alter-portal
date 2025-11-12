@@ -28,9 +28,9 @@ export async function POST(request: Request) {
     }
 
     if (data.access_token) {
-      // Set auth token cookie for server-side requests
+      // Set auth token cookie for server-side and client-side requests
       cookies().set('auth_token', data.access_token, {
-        httpOnly: true,
+        httpOnly: false, // Accessible by both server and client
         secure: process.env.NODE_ENV !== 'development',
         sameSite: 'strict',
         path: '/',
