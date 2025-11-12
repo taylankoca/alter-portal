@@ -28,13 +28,22 @@ export async function POST(request: Request) {
     }
 
     if (data.access_token) {
-      cookies().set('auth_token', data.access_token, {
+      const cookieOptions = {
         httpOnly: true,
         secure: process.env.NODE_ENV !== 'development',
-        sameSite: 'strict',
+        sameSite: 'strict' as const,
         path: '/',
         maxAge: 60 * 60 * 24 * 7, // 1 week
-      });
+      };
+
+      // Set auth token cookie
+      cookies().set('auth_token', data.access_token, cookieOptions);
+      
+      // Set user info cookie
+      if (data.user) {
+        cookies().set('user', JSON.stringify(data.user), cookieOptions);
+      }
+
       // Return the user object along with success
       return Response.json({ success: true, user: data.user });
     } else {

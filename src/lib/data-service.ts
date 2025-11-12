@@ -1,5 +1,4 @@
 
-
 import { API_BASE_URL } from '@/config';
 import { slugify } from './utils';
 import { cookies } from 'next/headers';
@@ -127,7 +126,7 @@ export async function fetchProjects(): Promise<AppProject[]> {
             headers.append('Authorization', `Bearer ${token}`);
         }
 
-        const response = await fetch(`${API_BASE_URL}/api/projects`, { headers });
+        const response = await fetch(`${API_BASE_URL}/api/projects`, { headers, cache: 'no-store' });
         if (!response.ok) {
             const errorText = await response.text();
             console.error(`Failed to fetch projects with status: ${response.status}. Response: ${errorText}`);
@@ -157,7 +156,7 @@ export async function fetchUsers(): Promise<ApiUser[]> {
             headers.append('Authorization', `Bearer ${token}`);
         }
 
-        const response = await fetch(`${API_BASE_URL}/api/users`, { headers });
+        const response = await fetch(`${API_BASE_URL}/api/users`, { headers, cache: 'no-store' });
         if (!response.ok) {
             const errorText = await response.text();
             console.error(`Failed to fetch users with status: ${response.status}. Response: ${errorText}`);
@@ -187,7 +186,7 @@ export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
             headers.append('Authorization', `Bearer ${token}`);
         }
 
-        const response = await fetch(`${API_BASE_URL}/api/units`, { headers });
+        const response = await fetch(`${API_BASE_URL}/api/units`, { headers, cache: 'no-store' });
         if (!response.ok) {
             const errorText = await response.text();
             console.error(`Failed to fetch units data with status: ${response.status}. Response: ${errorText}`);
@@ -215,7 +214,7 @@ export async function fetchCommunications(): Promise<AppCommunication[]> {
             headers.append('Authorization', `Bearer ${token}`);
         }
 
-        const response = await fetch(`${API_BASE_URL}/api/communications`, { headers });
+        const response = await fetch(`${API_BASE_URL}/api/communications`, { headers, cache: 'no-store' });
         if (!response.ok) {
             const errorText = await response.text();
             console.error(`Failed to fetch communications with status: ${response.status}. Response: ${errorText}`);
@@ -245,7 +244,7 @@ export async function fetchCommunicationById(id: string): Promise<AppCommunicati
             headers.append('Authorization', `Bearer ${token}`);
         }
 
-        const response = await fetch(`${API_BASE_URL}/api/communications/${id}`, { headers });
+        const response = await fetch(`${API_BASE_URL}/api/communications/${id}`, { headers, cache: 'no-store' });
         if (!response.ok) {
             const errorText = await response.text();
             console.error(`Failed to fetch communication with id ${id}, status: ${response.status}. Response: ${errorText}`);
