@@ -1,3 +1,4 @@
+
 import { API_BASE_URL } from '@/config';
 import { slugify } from './utils';
 import { cookies } from 'next/headers';
@@ -30,7 +31,7 @@ interface ApiProject {
     employer: string;
     location: string;
     country: string;
-    description: string;
+    description: string | null;
     members: ApiProjectMember[];
 }
 
@@ -99,10 +100,10 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
         short_name_slug: apiProject.short_name_slug,
         members: projectMembers,
         alterProjectNo: apiProject.alter_project_no,
-        employer: apiProject.employer,
-        location: apiProject.location,
-        country: apiProject.country,
-        description: apiProject.description,
+        employer: apiProject.employer || '',
+        location: apiProject.location || '',
+        country: apiProject.country || '',
+        description: apiProject.description || '',
         communications: [], // Bu alan sonradan birleştirilecek
     };
 }
