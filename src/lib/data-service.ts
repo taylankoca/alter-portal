@@ -126,7 +126,8 @@ export async function fetchProjects(): Promise<AppProject[]> {
 
         const response = await fetch(`${API_BASE_URL}/api/projects`, { headers });
         if (!response.ok) {
-            console.error(`Failed to fetch projects with status: ${response.status}`);
+            const errorText = await response.text();
+            console.error(`Failed to fetch projects with status: ${response.status}. Response: ${errorText}`);
             return [];
         }
         const apiData: { projects: ApiProject[] } = await response.json();
@@ -155,7 +156,8 @@ export async function fetchUsers(): Promise<ApiUser[]> {
 
         const response = await fetch(`${API_BASE_URL}/api/users`, { headers });
         if (!response.ok) {
-            console.error(`Failed to fetch users with status: ${response.status}`);
+            const errorText = await response.text();
+            console.error(`Failed to fetch users with status: ${response.status}. Response: ${errorText}`);
             return [];
         }
         const apiData: { users: ApiUser[] } = await response.json();
@@ -184,7 +186,8 @@ export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
 
         const response = await fetch(`${API_BASE_URL}/api/units`, { headers });
         if (!response.ok) {
-            console.error(`Failed to fetch units data with status: ${response.status}`);
+            const errorText = await response.text();
+            console.error(`Failed to fetch units data with status: ${response.status}. Response: ${errorText}`);
             return { units: [] };
         }
         const apiData: { units: ApiUnit[] } = await response.json();
@@ -211,7 +214,8 @@ export async function fetchCommunications(): Promise<AppCommunication[]> {
 
         const response = await fetch(`${API_BASE_URL}/api/communications`, { headers });
         if (!response.ok) {
-            console.error(`Failed to fetch communications with status: ${response.status}`);
+            const errorText = await response.text();
+            console.error(`Failed to fetch communications with status: ${response.status}. Response: ${errorText}`);
             return [];
         }
         const apiData: { communications: AppCommunication[] } = await response.json();
@@ -240,7 +244,8 @@ export async function fetchCommunicationById(id: string): Promise<AppCommunicati
 
         const response = await fetch(`${API_BASE_URL}/api/communications/${id}`, { headers });
         if (!response.ok) {
-            console.error(`Failed to fetch communication with id ${id}, status: ${response.status}`);
+            const errorText = await response.text();
+            console.error(`Failed to fetch communication with id ${id}, status: ${response.status}. Response: ${errorText}`);
             if (response.status === 404) return null;
             return null;
         }
