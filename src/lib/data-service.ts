@@ -127,12 +127,15 @@ export async function fetchProjects(): Promise<AppProject[]> {
         }
 
         const response = await fetch(`${API_BASE_URL}/api/projects`, { headers, cache: 'no-store' });
+        
         if (!response.ok) {
             const errorText = await response.text();
             console.error(`Failed to fetch projects with status: ${response.status}. Response: ${errorText}`);
             return [];
         }
+        
         const apiData: { projects: ApiProject[] } = await response.json();
+        
         if (!apiData || !Array.isArray(apiData.projects)) {
             console.error("Fetched project data is not in the expected format.");
             return [];
