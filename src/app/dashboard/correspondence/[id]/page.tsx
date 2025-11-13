@@ -27,6 +27,7 @@ export default async function CorrespondenceDetailPage({ params }: { params: { i
     
     const projectForComm = comm.project_id ? projects.find(p => p.id === comm.project_id?.toString()) : undefined;
 
+    // Proje bulunamasa bile sayfanın çökmemesi için güvenli atama
     const projectName = projectForComm?.title || comm.project_short_name || 'N/A';
     const projectSlug = projectForComm?.short_name_slug || slugify(comm.project_short_name || '');
 
