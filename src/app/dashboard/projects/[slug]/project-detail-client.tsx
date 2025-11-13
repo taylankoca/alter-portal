@@ -25,6 +25,9 @@ interface Translations {
     files: string;
     tasks: string;
     project_progress: string;
+    physical_progress: string;
+    financial_progress: string;
+    progress_status: string;
     start_date: string;
     end_date: string;
     communication_direction: string;
@@ -53,7 +56,8 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
     const router = useRouter();
     
     // Placeholder progress. This should come from the project data in the future.
-    const [progress] = React.useState(Math.floor(Math.random() * (75 - 25 + 1)) + 25);
+    const [physicalProgress] = React.useState(Math.floor(Math.random() * (75 - 25 + 1)) + 25);
+    const [financialProgress] = React.useState(Math.floor(Math.random() * (physicalProgress - 10 > 0 ? physicalProgress - 10 : 0)) + 10);
     
     const admins = project.members.filter(m => m.role === 'admin').sort((a, b) => a.name.localeCompare(b.name));
     const members = project.members.filter(m => m.role !== 'admin').sort((a, b) => a.name.localeCompare(b.name));
@@ -172,13 +176,6 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                     <TabsContent value="description" className="mt-6">
                         <div className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                               <div className="space-y-4">
-                                     <p className="font-medium text-foreground">{t.project_progress}</p>
-                                     <div className="flex items-center gap-4">
-                                        <Progress value={progress} className="w-full h-3" />
-                                        <span className="font-bold text-lg text-primary">{progress}%</span>
-                                    </div>
-                               </div>
                                 <div className="flex items-start gap-4">
                                     <Calendar className="h-6 w-6 text-muted-foreground mt-1" />
                                     <div className="space-y-1">
@@ -195,6 +192,26 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                                 </div>
                             </div>
                             <Separator/>
+                            <div className="space-y-6 pt-4">
+                                 <h3 className="text-lg font-medium text-foreground">{t.progress_status}</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-muted-foreground">{t.physical_progress}</label>
+                                        <div className="flex items-center gap-4">
+                                            <Progress value={physicalProgress} className="w-full h-3" />
+                                            <span className="font-bold text-lg text-primary">{physicalProgress}%</span>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-muted-foreground">{t.financial_progress}</label>
+                                        <div className="flex items-center gap-4">
+                                            <Progress value={financialProgress} className="w-full h-3" />
+                                            <span className="font-bold text-lg text-primary">{financialProgress}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <Separator/>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
                                 <div className="space-y-1">
                                     <p className="font-medium text-foreground">İşveren</p>
