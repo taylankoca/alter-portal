@@ -26,7 +26,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Card className="flex flex-col overflow-hidden group">
       {/* Header with blue background */}
-      <CardHeader className="bg-primary text-primary-foreground p-4 flex flex-col justify-between !space-y-0 min-h-[120px] relative">
+      <CardHeader className="bg-primary text-primary-foreground p-4 flex flex-col justify-between !space-y-0 min-h-[160px] relative">
         <Image
           src={project.image.src}
           alt={`Image for project ${project.title}`}
@@ -37,7 +37,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <div className="absolute inset-0 bg-primary/80" />
         <div className="relative z-10 flex items-start justify-between">
             <Link href={projectUrl} className="flex-1">
-                <CardTitle className="text-lg font-semibold text-primary-foreground hover:underline cursor-pointer leading-tight line-clamp-2 h-[56px]">
+                <CardTitle className="text-lg font-semibold text-primary-foreground hover:underline cursor-pointer leading-tight">
                     {project.title}
                 </CardTitle>
             </Link>
