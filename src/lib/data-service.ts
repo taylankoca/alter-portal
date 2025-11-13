@@ -1,4 +1,5 @@
 
+
 import { API_BASE_URL } from '@/config';
 import { slugify } from './utils';
 import { cookies } from 'next/headers';
@@ -112,6 +113,7 @@ export interface FormStaticField {
     default: string | null;
     required: boolean;
     read_only: boolean;
+    sort_order?: number;
 }
 
 export interface FormDynamicField {
