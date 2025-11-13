@@ -1,6 +1,7 @@
+
 "use client";
 
-import { LogOut, KeyRound } from "lucide-react";
+import { LogOut, KeyRound, Settings } from "lucide-react";
 import { useLanguage } from "@/context/language-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -46,6 +47,10 @@ export default function UserMenu() {
     setUser(null);
     router.push("/");
   };
+  
+  const handleSettings = () => {
+    router.push("/dashboard/settings");
+  }
 
   if (!mounted) {
     return <Skeleton className="h-9 w-28" />;
@@ -80,12 +85,17 @@ export default function UserMenu() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+         <DropdownMenuItem onClick={handleSettings}>
+            <Settings className="mr-2 h-4 w-4" />
+            <span>{t.settings}</span>
+        </DropdownMenuItem>
         <TokenModal>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                 <KeyRound className="mr-2 h-4 w-4" />
                 <span>{t.token}</span>
             </DropdownMenuItem>
         </TokenModal>
+         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>{t.logout}</span>
