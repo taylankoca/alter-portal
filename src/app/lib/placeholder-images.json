@@ -1,0 +1,38 @@
+
+{
+    "images": [
+      {
+        "src": "https://picsum.photos/seed/1/600/400",
+        "hint": "construction silhouette"
+      },
+      {
+        "src": "https://picsum.photos/seed/2/600/400",
+        "hint": "engineering blueprint"
+      },
+      {
+        "src": "https://picsum.photos/seed/3/600/400",
+        "hint": "crane silhouette"
+      },
+      {
+        "src": "https://picsum.photos/seed/4/600/400",
+        "hint": "bridge construction"
+      },
+      {
+        "src": "https://picsum.photos/seed/5/600/400",
+        "hint": "building structure"
+      },
+      {
+        "src": "https://picsum.photos/seed/6/600/400",
+        "hint": "highway silhouette"
+      },
+      {
+        "src": "https://picsum.photos/seed/7/600/400",
+        "hint": "dam construction"
+      },
+      {
+        "src": "https://picsum.photos/seed/8/600/400",
+        "hint": "tunnel silhouette"
+      }
+    ]
+  }
+  

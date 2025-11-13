@@ -2,6 +2,7 @@
 import { API_BASE_URL } from '@/config';
 import { slugify } from './utils';
 import { cookies } from 'next/headers';
+import projectCardImages from '@/app/lib/placeholder-images.json';
 
 
 // API'den gelen orijinal kullanıcı verisi yapısı
@@ -82,6 +83,10 @@ export interface AppProject {
     description: string;
     members: AppProjectMember[];
     communications: AppCommunication[];
+    image: {
+        src: string;
+        hint: string;
+    };
 }
 
 // Uygulama içinde kullanılacak yazışma modeli
@@ -89,7 +94,7 @@ export interface AppCommunication extends ApiCommunication {}
 
 
 // API'den gelen proje verisini uygulama modeline dönüştüren fonksiyon
-function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
+function mapApiProjectToAppProject(apiProject: ApiProject, index: number): AppProject {
     const projectMembers = (apiProject.members || [])
         .filter(member => member && member.user) // Güvenlik kontrolü: member ve member.user var mı?
         .map(member => ({
@@ -97,6 +102,8 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
             name: `${member.user.first_name} ${member.user.last_name}`,
             role: member.role,
         }));
+    
+    const image = projectCardImages.images[index % projectCardImages.images.length];
 
     return {
         id: apiProject.id.toString(),
@@ -110,6 +117,10 @@ function mapApiProjectToAppProject(apiProject: ApiProject): AppProject {
         country: apiProject.country || '',
         description: apiProject.description || '',
         communications: [], // Bu alan sonradan birleştirilecek
+        image: {
+            src: image.src,
+            hint: image.hint,
+        },
     };
 }
 
@@ -140,7 +151,7 @@ export async function fetchProjects(): Promise<AppProject[]> {
             console.error("Fetched project data is not in the expected format.");
             return [];
         }
-        return apiData.projects.map(mapApiProjectToAppProject);
+        return apiData.projects.map((project, index) => mapApiProjectToAppProject(project, index));
     } catch (error) {
         console.error("A network or parsing error occurred while fetching projects:", error);
         return [];
