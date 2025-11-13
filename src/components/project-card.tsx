@@ -34,7 +34,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           className="object-cover"
           data-ai-hint={project.image.hint}
         />
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-primary/80" />
         <div className="relative z-10 flex items-start justify-between">
             <Link href={projectUrl} className="flex-1">
                 <CardTitle className="text-lg font-semibold text-primary-foreground hover:underline cursor-pointer leading-tight">
@@ -67,7 +67,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     <Tooltip key={admin.id}>
                         <TooltipTrigger asChild>
                             <Avatar className={cn("h-8 w-8 border-2 border-primary/80", `z-${(admins.length - index) * 10}`)}>
-                                <AvatarFallback>{admin.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                                <AvatarFallback className="bg-muted text-foreground">{admin.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                             </Avatar>
                         </TooltipTrigger>
                         <TooltipContent>
