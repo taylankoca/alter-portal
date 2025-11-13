@@ -4,9 +4,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { MoreVertical } from "lucide-react";
 import { useLanguage } from '@/context/language-context';
 import type { AppProject } from '@/lib/data-service';
 import { Avatar, AvatarFallback } from './ui/avatar';
@@ -41,19 +38,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     {project.title}
                 </CardTitle>
             </Link>
-            <div className="relative -top-2 -right-2">
-                <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-primary-foreground/80 hover:bg-white/20 hover:text-primary-foreground">
-                    <MoreVertical size={18} />
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                    <DropdownMenuItem>{t.edit}</DropdownMenuItem>
-                    <DropdownMenuItem className="text-destructive">{t.delete}</DropdownMenuItem>
-                </DropdownMenuContent>
-                </DropdownMenu>
-            </div>
         </div>
         
         <div className="relative z-10 flex justify-between items-end mt-2">
