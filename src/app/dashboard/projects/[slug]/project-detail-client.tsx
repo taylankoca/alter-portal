@@ -9,13 +9,13 @@ import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowDown, ArrowUp, ArrowUpDown, Search } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown, Search, Calendar, Flag } from "lucide-react";
 import type { AppProject, AppProjectMember, AppCommunication } from '@/lib/data-service';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { Progress } from "@/components/ui/progress";
 
-// Define the types for the props
 
 interface Translations {
     project_description: string;
@@ -23,6 +23,10 @@ interface Translations {
     admin_role: string;
     correspondence: string;
     files: string;
+    tasks: string;
+    project_progress: string;
+    start_date: string;
+    end_date: string;
     communication_direction: string;
     communication_code: string;
     communication_title: string;
@@ -47,6 +51,9 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
     const [searchTerm, setSearchTerm] = React.useState('');
     const [sortConfig, setSortConfig] = React.useState<{ key: SortKey; direction: SortDirection } | null>({ key: 'communicated_at', direction: 'descending' });
     const router = useRouter();
+    
+    // Placeholder progress. This should come from the project data in the future.
+    const [progress] = React.useState(Math.floor(Math.random() * (75 - 25 + 1)) + 25);
     
     const admins = project.members.filter(m => m.role === 'admin').sort((a, b) => a.name.localeCompare(b.name));
     const members = project.members.filter(m => m.role !== 'admin').sort((a, b) => a.name.localeCompare(b.name));
@@ -155,28 +162,56 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
 
             <div>
                 <Tabs defaultValue="description" className="w-full">
-                    <TabsList className="grid w-full grid-cols-4">
+                    <TabsList className="grid w-full grid-cols-5">
                         <TabsTrigger value="description">{t.project_description}</TabsTrigger>
                         <TabsTrigger value="team">{t.project_team}</TabsTrigger>
                         <TabsTrigger value="correspondence">{t.correspondence}</TabsTrigger>
+                         <TabsTrigger value="tasks">{t.tasks}</TabsTrigger>
                         <TabsTrigger value="files">{t.files}</TabsTrigger>
                     </TabsList>
                     <TabsContent value="description" className="mt-6">
-                        <div className="space-y-6 text-sm text-muted-foreground">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-1">
-                                    <p className="font-medium text-foreground">İşveren</p>
-                                    <p>{project.employer || '-'}</p>
+                        <div className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                               <div className="space-y-4">
+                                     <p className="font-medium text-foreground">{t.project_progress}</p>
+                                     <div className="flex items-center gap-4">
+                                        <Progress value={progress} className="w-full h-3" />
+                                        <span className="font-bold text-lg text-primary">{progress}%</span>
+                                    </div>
+                               </div>
+                                <div className="flex items-start gap-4">
+                                    <Calendar className="h-6 w-6 text-muted-foreground mt-1" />
+                                    <div className="space-y-1">
+                                        <p className="font-medium text-foreground">{t.start_date}</p>
+                                        <p className="text-sm text-muted-foreground">15 Ocak 2024</p>
+                                    </div>
                                 </div>
-                                <div className="space-y-1">
-                                    <p className="font-medium text-foreground">Konum</p>
-                                    <p>{project.location}, {project.country}</p>
+                                <div className="flex items-start gap-4">
+                                    <Flag className="h-6 w-6 text-muted-foreground mt-1" />
+                                    <div className="space-y-1">
+                                        <p className="font-medium text-foreground">{t.end_date}</p>
+                                        <p className="text-sm text-muted-foreground">22 Aralık 2025</p>
+                                    </div>
                                 </div>
                             </div>
                             <Separator/>
-                            <p className="leading-relaxed pt-4">
-                                {project.description}
-                            </p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                                <div className="space-y-1">
+                                    <p className="font-medium text-foreground">İşveren</p>
+                                    <p className="text-sm text-muted-foreground">{project.employer || '-'}</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="font-medium text-foreground">Konum</p>
+                                    <p className="text-sm text-muted-foreground">{project.location}, {project.country}</p>
+                                </div>
+                            </div>
+                             <Separator/>
+                            <div className="pt-4">
+                                <p className="font-medium text-foreground mb-2">Detaylı Açıklama</p>
+                                <p className="leading-relaxed text-sm text-muted-foreground">
+                                    {project.description}
+                                </p>
+                            </div>
                         </div>
                     </TabsContent>
                     <TabsContent value="team" className="mt-6">
@@ -273,6 +308,11 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                                 <p>{t.no_communication_found}</p>
                             </div>
                         )}
+                    </TabsContent>
+                     <TabsContent value="tasks" className="mt-6">
+                         <div className="space-y-4 text-center text-muted-foreground py-16">
+                            <p>Henüz görev bulunmamaktadır.</p>
+                        </div>
                     </TabsContent>
                     <TabsContent value="files" className="mt-6">
                          <div className="space-y-4 text-center text-muted-foreground py-16">
