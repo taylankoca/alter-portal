@@ -1,23 +1,23 @@
 #!/bin/bash
 
-# Hata durumunda betiği sonlandır
+# Exit immediately if a command exits with a non-zero status.
 set -e
 
-# Proje dizinine git (Doğru dizin adını varsayıyoruz, gerekirse değiştirin)
+# Navigate to the project directory (assuming this is the correct directory)
 cd /var/www/alter-portal
 
-echo "GIT: Son değişiklikler alınıyor..."
-# 'main' branch'inden son değişiklikleri çek. Eğer branch adınız farklıysa (örneğin 'master'), burayı güncelleyin.
+echo "GIT: Pulling latest changes from the main branch..."
+# Pull the latest changes from the 'main' branch. If your branch is different (e.g., 'master'), update it here.
 git pull origin main
 
-echo "NPM: Bağımlılıklar yükleniyor..."
+echo "NPM: Installing dependencies..."
 npm install
 
-echo "NEXT.JS: Proje build ediliyor..."
+echo "NEXT.JS: Building the project..."
 npm run build
 
-echo "PM2: Uygulama yeniden başlatılıyor..."
-# pm2'deki mevcut 'portal-frontend' uygulamasını yeniden başlat
+echo "PM2: Restarting the application..."
+# Restart the existing 'portal-frontend' application in pm2
 pm2 restart portal-frontend
 
-echo "Dağıtım tamamlandı!"
+echo "Deployment completed successfully!"
