@@ -86,7 +86,7 @@ export default function SettingsPage() {
         </div>
       </header>
 
-      <Card className="max-w-2xl">
+      <Card>
         <CardHeader>
           <CardTitle>{t.form_title}</CardTitle>
           <CardDescription>{t.form_description}</CardDescription>
