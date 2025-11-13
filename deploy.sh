@@ -4,7 +4,7 @@
 set -e
 
 # Navigate to the project directory (assuming this is the correct directory)
-cd /var/www/alter-portal
+cd /var/www/portal.alter.com.tr
 
 echo "GIT: Pulling latest changes from the main branch..."
 # Pull the latest changes from the 'main' branch. If your branch is different (e.g., 'master'), update it here.
