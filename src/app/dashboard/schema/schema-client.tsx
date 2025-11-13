@@ -4,8 +4,10 @@
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 import type { ApiUnit, AppProject } from '@/lib/data-service';
+import { Card } from '@/components/ui/card';
 
 const OrgChartView = dynamic(() => import('@/components/org-chart-view'), {
   ssr: false,
@@ -21,17 +23,27 @@ export default function SchemaClient({ units, projects }: { units: ApiUnit[], pr
     const [view, setView] = useState('org');
 
     return (
-        <Tabs defaultValue="org" onValueChange={setView} className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="org">Organizasyon Şeması</TabsTrigger>
-                <TabsTrigger value="project">Proje Şeması</TabsTrigger>
-            </TabsList>
-            <TabsContent value="org">
-                <OrgChartView units={units} />
-            </TabsContent>
-            <TabsContent value="project">
-                <ProjectOrgChart projects={projects} />
-            </TabsContent>
-        </Tabs>
+        <div className="relative w-full">
+            <Card className="absolute top-4 left-4 z-10 p-3 shadow-lg">
+                <RadioGroup defaultValue="org" onValueChange={setView} className="flex flex-col gap-2">
+                    <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="org" id="org-view" />
+                        <Label htmlFor="org-view" className="cursor-pointer">Organizasyon Şeması</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="project" id="project-view" />
+                        <Label htmlFor="project-view" className="cursor-pointer">Proje Şeması</Label>
+                    </div>
+                </RadioGroup>
+            </Card>
+
+            <div className="w-full h-full">
+                {view === 'org' ? (
+                    <OrgChartView units={units} />
+                ) : (
+                    <ProjectOrgChart projects={projects} />
+                )}
+            </div>
+        </div>
     );
 }
