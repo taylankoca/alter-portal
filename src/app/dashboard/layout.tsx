@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Home, PanelLeft, FolderKanban, CheckSquare, Users, MessageSquare, Network, Calendar, FileText } from "lucide-react";
+import { Home, PanelLeft, FolderKanban, CheckSquare, Users, MessageSquare, Network, Calendar, FileText, FileCheck } from "lucide-react";
 import Image from "next/image";
 import {
   Sidebar,
@@ -38,6 +38,7 @@ export default function DashboardLayout({
     { href: "/dashboard/tasks", label: t.tasks, icon: CheckSquare },
     { href: "/dashboard/calendar", label: t.calendar, icon: Calendar },
     { href: "/dashboard/forms", label: t.forms, icon: FileText },
+    { href: "/dashboard/submissions", label: t.submissions, icon: FileCheck },
   ];
 
   return (

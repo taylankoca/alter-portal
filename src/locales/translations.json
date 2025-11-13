@@ -10,7 +10,8 @@
       "calendar": "Takvim",
       "settings": "Ayarlar",
       "correspondence": "Yazışmalar",
-      "schema": "Şema"
+      "schema": "Şema",
+      "submissions": "Başvurularım"
     },
     "projects_page": {
       "description": "Tüm aktif ve arşivlenmiş projelerinizi buradan yönetin.",
@@ -82,6 +83,43 @@
       "new_password_min_length": "Yeni şifre en az 8 karakter olmalıdır.",
       "passwords_do_not_match": "Yeni şifreler eşleşmiyor."
     },
+    "forms_page": {
+      "description": "Size atanmış formları doldurun ve gönderin.",
+      "no_description": "Açıklama mevcut değil.",
+      "fill_form": "Formu Doldur",
+      "no_forms_title": "Doldurulacak Form Yok",
+      "no_forms_description": "Şu anda size atanmış herhangi bir form bulunmamaktadır.",
+      "submit_button": "Gönder",
+      "submitting_button": "Gönderiliyor...",
+      "submit_success_title": "Başarılı",
+      "submit_success_description": "Formunuz başarıyla gönderildi.",
+      "submit_error_title": "Gönderim Hatası"
+    },
+    "submissions_page": {
+      "title": "Başvurular",
+      "description": "Yaptığınız ve onayınızı bekleyen form başvurularını yönetin.",
+      "my_submissions": "Benim Başvurularım",
+      "pending_approvals": "Onay Bekleyenler",
+      "form_name": "Form Adı",
+      "form_number": "Form No",
+      "submitted_by": "Gönderen",
+      "submitted_at": "Gönderim Tarihi",
+      "status": "Durum",
+      "no_submissions": "Henüz bir başvuru yapmamışsınız.",
+      "no_pending_approvals": "Onayınızı bekleyen bir başvuru bulunmamaktadır.",
+      "submission_details": "Başvuru Detayları",
+      "submitted_data": "Gönderilen Bilgiler",
+      "approval_history": "Onay Geçmişi",
+      "no_approval_history": "Henüz bir onay işlemi geçmişi yok.",
+      "approve": "Onayla",
+      "reject": "Reddet",
+      "approving": "Onaylanıyor...",
+      "rejecting": "Reddediliyor...",
+      "action_success_title": "İşlem Başarılı",
+      "action_success_description": "Başvuru durumu güncellendi.",
+      "action_error_title": "İşlem Hatası",
+      "rejection_reason": "Reddetme Nedeni (isteğe bağlı)"
+    },
     "login": {
       "welcome_back": "Portalınıza hoş geldiniz. Lütfen giriş yapın.",
       "login_title": "Giriş Yap",
@@ -113,7 +151,8 @@
       "calendar": "Calendar",
       "settings": "Settings",
       "correspondence": "Correspondence",
-      "schema": "Org Chart"
+      "schema": "Org Chart",
+      "submissions": "Submissions"
     },
     "projects_page": {
       "description": "Manage all your active and archived projects from here.",
@@ -185,6 +224,43 @@
       "new_password_min_length": "New password must be at least 8 characters.",
       "passwords_do_not_match": "The new passwords do not match."
     },
+    "forms_page": {
+        "description": "Fill out and submit forms assigned to you.",
+        "no_description": "No description available.",
+        "fill_form": "Fill Form",
+        "no_forms_title": "No Forms to Fill",
+        "no_forms_description": "There are currently no forms assigned to you.",
+        "submit_button": "Submit",
+        "submitting_button": "Submitting...",
+        "submit_success_title": "Success",
+        "submit_success_description": "Your form has been submitted successfully.",
+        "submit_error_title": "Submission Error"
+    },
+    "submissions_page": {
+        "title": "Submissions",
+        "description": "Manage your form submissions and those pending your approval.",
+        "my_submissions": "My Submissions",
+        "pending_approvals": "Pending Approvals",
+        "form_name": "Form Name",
+        "form_number": "Form No",
+        "submitted_by": "Submitted By",
+        "submitted_at": "Submission Date",
+        "status": "Status",
+        "no_submissions": "You haven't made any submissions yet.",
+        "no_pending_approvals": "There are no submissions awaiting your approval.",
+        "submission_details": "Submission Details",
+        "submitted_data": "Submitted Data",
+        "approval_history": "Approval History",
+        "no_approval_history": "No approval history yet.",
+        "approve": "Approve",
+        "reject": "Reject",
+        "approving": "Approving...",
+        "rejecting": "Rejecting...",
+        "action_success_title": "Action Successful",
+        "action_success_description": "The submission status has been updated.",
+        "action_error_title": "Action Error",
+        "rejection_reason": "Reason for rejection (optional)"
+    },
      "login": {
       "welcome_back": "Welcome to your portal. Please sign in.",
       "login_title": "Sign In",
@@ -216,7 +292,8 @@
       "calendar": "Календарь",
       "settings": "Настройки",
       "correspondence": "Переписка",
-      "schema": "Орг. схема"
+      "schema": "Орг. схема",
+      "submissions": "Заявки"
     },
     "projects_page": {
       "description": "Управляйте всеми своими активными и архивными проектами здесь.",
@@ -287,6 +364,43 @@
       "current_password_required": "Требуется текущий пароль.",
       "new_password_min_length": "Новый пароль должен содержать не менее 8 символов.",
       "passwords_do_not_match": "Новые пароли не совпадают."
+    },
+    "forms_page": {
+        "description": "Заполните и отправьте назначенные вам формы.",
+        "no_description": "Описание отсутствует.",
+        "fill_form": "Заполнить форму",
+        "no_forms_title": "Нет форм для заполнения",
+        "no_forms_description": "В настоящее время вам не назначено никаких форм.",
+        "submit_button": "Отправить",
+        "submitting_button": "Отправка...",
+        "submit_success_title": "Успешно",
+        "submit_success_description": "Ваша форма успешно отправлена.",
+        "submit_error_title": "Ошибка отправки"
+    },
+    "submissions_page": {
+        "title": "Заявки",
+        "description": "Управляйте вашими заявками и теми, что ожидают вашего утверждения.",
+        "my_submissions": "Мои заявки",
+        "pending_approvals": "Ожидают утверждения",
+        "form_name": "Название формы",
+        "form_number": "Номер формы",
+        "submitted_by": "Отправитель",
+        "submitted_at": "Дата отправки",
+        "status": "Статус",
+        "no_submissions": "Вы еще не делали заявок.",
+        "no_pending_approvals": "Нет заявок, ожидающих вашего утверждения.",
+        "submission_details": "Детали заявки",
+        "submitted_data": "Отправленные данные",
+        "approval_history": "История утверждений",
+        "no_approval_history": "Пока нет истории утверждений.",
+        "approve": "Утвердить",
+        "reject": "Отклонить",
+        "approving": "Утверждение...",
+        "rejecting": "Отклонение...",
+        "action_success_title": "Действие успешно",
+        "action_success_description": "Статус заявки обновлен.",
+        "action_error_title": "Ошибка действия",
+        "rejection_reason": "Причина отклонения (необязательно)"
     },
     "login": {
       "welcome_back": "Добро пожаловать в ваш портал. Пожалуйста, войдите.",

@@ -241,6 +241,281 @@ paths:
         '204':
           description: No content
 
+  /api/forms:
+    get:
+      tags:
+        - Forms
+      summary: Kullanıcıya atanmış formları listele
+      description: Kullanıcının gönderim yapma yetkisi bulunan formları döndürür.
+      operationId: listForms
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  forms:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FormSummary'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /api/forms/{code}:
+    get:
+      tags:
+        - Forms
+      summary: Form detayını getir
+      description: Form alanları ve sabit alanlarla birlikte form meta verisini döndürür.
+      operationId: getFormByCode
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: code
+          required: true
+          schema:
+            type: string
+          description: Formun benzersiz kodu (örneğin `izin-formu`)
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  form:
+                    $ref: '#/components/schemas/FormDetail'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          description: Yetkisiz erişim
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Form bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Forms
+      summary: Form gönderimi yap
+      description: İlgili form için yeni bir başvuru oluşturur.
+      operationId: submitForm
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: code
+          required: true
+          schema:
+            type: string
+          description: Formun benzersiz kodu
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormSubmissionRequest'
+      responses:
+        '201':
+          description: Form başarıyla gönderildi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormSubmissionCreated'
+        '400':
+          description: Geçersiz JSON isteği
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          description: Yetkisiz işlem
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Form bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Doğrulama hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Sunucu hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/forms/submissions:
+    get:
+      tags:
+        - Forms
+      summary: Form başvurularını listele
+      description: Kullanıcının kendi başvurularını ve onay bekleyen başvuruları döndürür.
+      operationId: listFormSubmissions
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: include_archived
+          schema:
+            type: boolean
+          description: true ise arşivlenmiş başvurular da listeye eklenir.
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  submissions:
+                    type: object
+                    properties:
+                      mine:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/FormSubmissionListItem'
+                      pending_approvals:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/FormSubmissionListItem'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /api/forms/submissions/{id}:
+    get:
+      tags:
+        - Forms
+      summary: Form başvurusunu görüntüle
+      description: Başvurunun detaylarını ve gönderilen kayıtları döndürür.
+      operationId: getFormSubmission
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Başvuru ID değeri
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  submission:
+                    $ref: '#/components/schemas/FormSubmissionDetail'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          description: Yetkisiz erişim
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Başvuru bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Forms
+      summary: Form başvurusu üzerinde işlem yap
+      description: Başvuruyu onaylar, reddeder veya iptal eder.
+      operationId: actOnFormSubmission
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Başvuru ID değeri
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmissionActionRequest'
+      responses:
+        '200':
+          description: İşlem başarılı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormSubmissionUpdateResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          description: Yetkisiz işlem
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Başvuru bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Geçersiz başvuru durumu
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Doğrulama hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Sunucu hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /api/units:
     get:
       tags:
@@ -564,6 +839,384 @@ components:
           nullable: true
           example: "2025-11-10 12:00:00"
 
+    FormSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+          description: Form ID
+        code:
+          type: string
+          example: "izin-formu"
+          description: Form kodu
+        title:
+          type: string
+          example: "İzin Formu"
+          description: Form başlığı
+        description:
+          type: string
+          nullable: true
+          example: "Personel izin taleplerini toplamak için kullanılır."
+          description: Form açıklaması
+        requires_approval:
+          type: boolean
+          example: true
+          description: Form için onay süreci gerekli mi?
+        can_submit:
+          type: boolean
+          example: true
+          description: Kullanıcı formu doldurabilir mi?
+        can_approve:
+          type: boolean
+          example: false
+          description: Kullanıcının form onaylama yetkisi var mı?
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2025-01-15T10:00:00Z"
+          description: Son güncelleme zamanı
+
+    FormStaticField:
+      type: object
+      properties:
+        key:
+          type: string
+          example: "tarih"
+          description: Alan anahtarı
+        label:
+          type: string
+          example: "Tarih"
+          description: Ekranda gösterilecek etiket
+        type:
+          type: string
+          example: "date"
+          description: Alan türü (text, date, time, vb.)
+        default:
+          type: string
+          nullable: true
+          example: "2025-01-15"
+          description: Varsayılan değer
+        required:
+          type: boolean
+          example: true
+          description: Alan zorunlu mu?
+        read_only:
+          type: boolean
+          example: true
+          description: Alan salt okunur mu?
+
+    FormDynamicField:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 12
+          description: Veritabanındaki alan ID'si
+        key:
+          type: string
+          example: "izin_baslangic_tarihi"
+          description: Alan anahtarı
+        label:
+          type: string
+          example: "İzin Başlangıç Tarihi"
+          description: Alan etiketi
+        type:
+          type: string
+          example: "date"
+          description: Alan türü (text, textarea, checkbox, vb.)
+        required:
+          type: boolean
+          example: true
+          description: Alan zorunlu mu?
+        read_only:
+          type: boolean
+          example: false
+          description: Alan salt okunur mu?
+        default:
+          type: string
+          nullable: true
+          description: Varsayılan değer
+        options:
+          type: array
+          items:
+            type: string
+          example: ["Opsiyon 1", "Opsiyon 2"]
+          description: Çoklu seçim alanları için seçenek listesi
+        sort_order:
+          type: integer
+          nullable: true
+          example: 1
+          description: Alanın form içindeki sıralama değeri
+
+    FormDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        code:
+          type: string
+          example: "izin-formu"
+        title:
+          type: string
+          example: "İzin Formu"
+        description:
+          type: string
+          nullable: true
+        requires_approval:
+          type: boolean
+          example: true
+        static_fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormStaticField'
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormDynamicField'
+        can_submit:
+          type: boolean
+          example: true
+        can_approve:
+          type: boolean
+          example: false
+
+    FormSubmissionForm:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        code:
+          type: string
+          example: "izin-formu"
+        title:
+          type: string
+          example: "İzin Formu"
+
+    UserSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 8
+        first_name:
+          type: string
+          example: "Ayşe"
+        last_name:
+          type: string
+          example: "Yılmaz"
+        email:
+          type: string
+          format: email
+          example: "ayse.yilmaz@example.com"
+
+    FormSubmissionRecord:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 42
+        field_name:
+          type: string
+          example: "İzin Başlangıç Tarihi"
+        value:
+          type: string
+          nullable: true
+          example: "2025-02-01"
+
+    FormApprovalEntry:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        approver_id:
+          type: integer
+          example: 3
+        status:
+          type: string
+          enum: [approved, rejected]
+          example: "approved"
+        note:
+          type: string
+          nullable: true
+          example: "Onaylandı."
+        approved_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2025-01-16T08:30:00Z"
+
+    FormSubmissionListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 120
+        form:
+          $ref: '#/components/schemas/FormSubmissionForm'
+        form_number:
+          type: string
+          example: "İF-00045"
+        status:
+          type: string
+          example: "pending"
+        is_archived:
+          type: boolean
+          example: false
+        submitted_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T09:45:00Z"
+        user:
+          $ref: '#/components/schemas/UserSummary'
+          nullable: true
+          description: Başvuruyu yapan kullanıcı (pending_approvals listelerinde döner)
+
+    FormSubmissionDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 120
+        form:
+          $ref: '#/components/schemas/FormSubmissionForm'
+        form_number:
+          type: string
+          example: "İF-00045"
+        status:
+          type: string
+          example: "pending"
+        is_archived:
+          type: boolean
+          example: false
+        submitted_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T09:45:00Z"
+        user:
+          $ref: '#/components/schemas/UserSummary'
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormSubmissionRecord'
+        approvals:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormApprovalEntry'
+        can_approve:
+          type: boolean
+          example: true
+
+    FormSubmissionCreated:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Form başarıyla gönderildi."
+        submission:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 120
+            form_number:
+              type: string
+              example: "İF-00045"
+            status:
+              type: string
+              example: "pending"
+            submitted_at:
+              type: string
+              format: date-time
+              nullable: true
+              example: "2025-01-15T09:45:00Z"
+
+    FormSubmissionUpdateResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Başvuru başarıyla onaylandı."
+        submission:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 120
+            status:
+              type: string
+              example: "approved"
+            is_archived:
+              type: boolean
+              example: false
+            updated_at:
+              type: string
+              format: date-time
+              nullable: true
+              example: "2025-01-16T08:30:00Z"
+
+    FormSubmissionRequest:
+      type: object
+      properties:
+        tarih:
+          type: string
+          nullable: true
+          example: "2025-01-15"
+          description: Form için kullanılan tarih alanı
+        saat:
+          type: string
+          nullable: true
+          example: "09:30"
+          description: Form için kullanılan saat alanı
+        personel_adi_soyadi:
+          type: string
+          nullable: true
+          example: "Ayşe Yılmaz"
+        personel_gorevi:
+          type: string
+          nullable: true
+          example: "İnsan Kaynakları Uzmanı"
+        fields:
+          type: object
+          description: Dinamik form alanlarının anahtar/değer haritası
+          additionalProperties:
+            oneOf:
+              - type: string
+              - type: number
+              - type: boolean
+              - type: array
+                items:
+                  type: string
+          example:
+            seyahat_baslangic_tarihi: "2025-03-01"
+            seyahat_bitis_tarihi: "2025-03-05"
+            arac_talebi: true
+
+    SubmissionActionRequest:
+      type: object
+      required:
+        - action
+      properties:
+        action:
+          type: string
+          enum: [approve, reject, cancel]
+          example: "approve"
+          description: Yapılacak işlem
+        note:
+          type: string
+          nullable: true
+          example: "Onaylandı, iyi yolculuklar."
+
     Communication:
       type: object
       properties:
@@ -635,6 +1288,14 @@ components:
           type: string
           example: "Hata mesajı"
           description: Hata açıklaması
+        error:
+          type: string
+          nullable: true
+          description: Opsiyonel hata detayı
+
+    ErrorResponse:
+      allOf:
+        - $ref: '#/components/schemas/Error'
 
   responses:
     UnauthorizedError:

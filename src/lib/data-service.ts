@@ -93,6 +93,103 @@ export interface AppProject {
 export interface AppCommunication extends ApiCommunication {}
 
 
+// Form-related types from Swagger
+export interface FormSummary {
+    id: number;
+    code: string;
+    title: string;
+    description: string | null;
+    requires_approval: boolean;
+    can_submit: boolean;
+    can_approve: boolean;
+    updated_at: string | null;
+}
+
+export interface FormStaticField {
+    key: string;
+    label: string;
+    type: string;
+    default: string | null;
+    required: boolean;
+    read_only: boolean;
+}
+
+export interface FormDynamicField {
+    id: number;
+    key: string;
+    label: string;
+    type: string;
+    required: boolean;
+    read_only: boolean;
+    default: string | null;
+    options: string[];
+    sort_order: number | null;
+}
+
+export interface FormDetail {
+    id: number;
+    code: string;
+    title: string;
+    description: string | null;
+    requires_approval: boolean;
+    static_fields: FormStaticField[];
+    fields: FormDynamicField[];
+    can_submit: boolean;
+    can_approve: boolean;
+}
+
+export interface UserSummary {
+    id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+}
+
+export interface FormSubmissionListItem {
+    id: number;
+    form: {
+        id: number;
+        code: string;
+        title: string;
+    };
+    form_number: string;
+    status: string;
+    is_archived: boolean;
+    submitted_at: string;
+    user?: UserSummary;
+}
+
+export interface FormSubmissionRecord {
+    id: number;
+    field_name: string;
+    value: string | null;
+}
+
+export interface FormApprovalEntry {
+    id: number;
+    approver_id: number;
+    status: 'approved' | 'rejected';
+    note: string | null;
+    approved_at: string | null;
+}
+
+export interface FormSubmissionDetail {
+    id: number;
+    form: {
+        id: number;
+        code: string;
+        title: string;
+    };
+    form_number: string;
+    status: string;
+    is_archived: boolean;
+    submitted_at: string;
+    user: UserSummary;
+    records: FormSubmissionRecord[];
+    approvals: FormApprovalEntry[];
+    can_approve: boolean;
+}
+
 // API'den gelen proje verisini uygulama modeline dönüştüren fonksiyon
 function mapApiProjectToAppProject(apiProject: ApiProject, index: number): AppProject {
     const projectMembers = (apiProject.members || [])
@@ -124,156 +221,115 @@ function mapApiProjectToAppProject(apiProject: ApiProject, index: number): AppPr
     };
 }
 
-
-/**
- * /api/projects endpoint'inden tüm projeleri çeker.
- */
-export async function fetchProjects(): Promise<AppProject[]> {
+async function fetchFromApi(endpoint: string, options: RequestInit = {}) {
     try {
         const token = cookies().get('auth_token')?.value;
-        const headers = new Headers();
+        const headers = new Headers(options.headers || {});
         headers.append('Accept', 'application/json');
         if (token) {
             headers.append('Authorization', `Bearer ${token}`);
         }
 
-        const response = await fetch(`${API_BASE_URL}/api/projects`, { headers, cache: 'no-store' });
-        
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+            ...options,
+            headers,
+            cache: 'no-store'
+        });
+
         if (!response.ok) {
             const errorText = await response.text();
-            console.error(`Failed to fetch projects with status: ${response.status}. Response: ${errorText}`);
-            return [];
+            console.error(`Failed to fetch ${endpoint} with status: ${response.status}. Response: ${errorText}`);
+            // Don't throw for 404 on single item requests
+            if (response.status === 404 && endpoint.match(/\/\d+$/)) {
+                return null;
+            }
+            throw new Error(`API request failed: ${response.status}`);
         }
         
-        const apiData: { projects: ApiProject[] } = await response.json();
-        
-        if (!apiData || !Array.isArray(apiData.projects)) {
-            console.error("Fetched project data is not in the expected format.");
-            return [];
-        }
-        return apiData.projects.map((project, index) => mapApiProjectToAppProject(project, index));
+        return response.json();
+
     } catch (error) {
-        console.error("A network or parsing error occurred while fetching projects:", error);
+        console.error(`A network or parsing error occurred while fetching ${endpoint}:`, error);
+        throw error;
+    }
+}
+
+
+/**
+ * /api/projects endpoint'inden tüm projeleri çeker.
+ */
+export async function fetchProjects(): Promise<AppProject[]> {
+    const data = await fetchFromApi('/api/projects');
+    if (!data || !Array.isArray(data.projects)) {
+        console.error("Fetched project data is not in the expected format.");
         return [];
     }
+    return data.projects.map((project: ApiProject, index: number) => mapApiProjectToAppProject(project, index));
 }
 
 /**
  * /api/users endpoint'inden tüm kullanıcıları çeker.
  */
 export async function fetchUsers(): Promise<ApiUser[]> {
-    try {
-        const token = cookies().get('auth_token')?.value;
-        const headers = new Headers();
-        headers.append('Accept', 'application/json');
-        if (token) {
-            headers.append('Authorization', `Bearer ${token}`);
-        }
-
-        const response = await fetch(`${API_BASE_URL}/api/users`, { headers, cache: 'no-store' });
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error(`Failed to fetch users with status: ${response.status}. Response: ${errorText}`);
-            return [];
-        }
-        const apiData: { users: ApiUser[] } = await response.json();
-        if (!apiData || !Array.isArray(apiData.users)) {
-            console.error("Fetched user data is not in the expected format.");
-            return [];
-        }
-        return apiData.users;
-    } catch (error) {
-        console.error("A network or parsing error occurred while fetching users:", error);
+    const data = await fetchFromApi('/api/users');
+    if (!data || !Array.isArray(data.users)) {
+        console.error("Fetched user data is not in the expected format.");
         return [];
     }
+    return data.users;
 }
 
 /**
  * /api/units endpoint'inden tüm birimleri çeker.
  */
 export async function fetchUnitsData(): Promise<{ units: ApiUnit[] }> {
-    try {
-        const token = cookies().get('auth_token')?.value;
-        const headers = new Headers();
-        headers.append('Accept', 'application/json');
-        if (token) {
-            headers.append('Authorization', `Bearer ${token}`);
-        }
-
-        const response = await fetch(`${API_BASE_URL}/api/units`, { headers, cache: 'no-store' });
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error(`Failed to fetch units data with status: ${response.status}. Response: ${errorText}`);
-            return { units: [] };
-        }
-        const apiData: { units: ApiUnit[] } = await response.json();
-        return {
-            units: apiData.units || []
-        };
-    } catch (error) {
-        console.error("A network or parsing error occurred while fetching units data:", error);
-        return { units: [] };
-    }
+    const data = await fetchFromApi('/api/units');
+    return { units: data?.units || [] };
 }
 
 /**
  * /api/communications endpoint'inden tüm yazışmaları çeker.
  */
 export async function fetchCommunications(): Promise<AppCommunication[]> {
-    try {
-        const token = cookies().get('auth_token')?.value;
-        const headers = new Headers();
-        headers.append('Accept', 'application/json');
-        if (token) {
-            headers.append('Authorization', `Bearer ${token}`);
-        }
-
-        const response = await fetch(`${API_BASE_URL}/api/communications`, { headers, cache: 'no-store' });
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error(`Failed to fetch communications with status: ${response.status}. Response: ${errorText}`);
-            return [];
-        }
-        const apiData: { communications: AppCommunication[] } = await response.json();
-        if (!apiData || !Array.isArray(apiData.communications)) {
-            console.error("Fetched communication data is not in the expected format.");
-            return [];
-        }
-        return apiData.communications;
-    } catch (error) {
-        console.error("A network or parsing error occurred while fetching communications:", error);
+     const data = await fetchFromApi('/api/communications');
+     if (!data || !Array.isArray(data.communications)) {
+        console.error("Fetched communication data is not in the expected format.");
         return [];
     }
+    return data.communications;
 }
 
 /**
  * /api/communications/{id} endpoint'inden tek bir yazışmayı çeker.
  */
 export async function fetchCommunicationById(id: string): Promise<AppCommunication | null> {
-    try {
-        const token = cookies().get('auth_token')?.value;
-        const headers = new Headers();
-        headers.append('Accept', 'application/json');
-        if (token) {
-            headers.append('Authorization', `Bearer ${token}`);
-        }
-
-        const response = await fetch(`${API_BASE_URL}/api/communications/${id}`, { headers, cache: 'no-store' });
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error(`Failed to fetch communication with id ${id}, status: ${response.status}. Response: ${errorText}`);
-            if (response.status === 404) return null;
-            return null;
-        }
-        const apiData: { communication: AppCommunication } = await response.json();
-        if (!apiData || !apiData.communication) {
-            console.error("Fetched single communication data is not in the expected format.");
-            return null;
-        }
-        return apiData.communication;
-    } catch (error)
- {
-        console.error(`A network or parsing error occurred while fetching communication ${id}:`, error);
+    const data = await fetchFromApi(`/api/communications/${id}`);
+    if (!data || !data.communication) {
+        // 404 will return null, so this handles other unexpected cases
+        console.error("Fetched single communication data is not in the expected format.");
         return null;
     }
+    return data.communication;
+}
+
+
+// Form Functions
+export async function fetchAvailableForms(): Promise<FormSummary[]> {
+    const data = await fetchFromApi('/api/forms');
+    return data?.forms || [];
+}
+
+export async function fetchFormByCode(code: string): Promise<FormDetail | null> {
+    const data = await fetchFromApi(`/api/forms/${code}`);
+    return data?.form || null;
+}
+
+export async function fetchSubmissions(): Promise<{ mine: FormSubmissionListItem[], pending_approvals: FormSubmissionListItem[] }> {
+    const data = await fetchFromApi('/api/forms/submissions');
+    return data?.submissions || { mine: [], pending_approvals: [] };
+}
+
+export async function fetchSubmissionById(id: string): Promise<FormSubmissionDetail | null> {
+    const data = await fetchFromApi(`/api/forms/submissions/${id}`);
+    return data?.submission || null;
 }
