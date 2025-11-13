@@ -10,6 +10,7 @@
       "calendar": "Takvim",
       "settings": "Ayarlar",
       "correspondence": "Yazışmalar",
+      "files": "Dosyalar",
       "schema": "Şema",
       "submissions": "Başvurularım"
     },
@@ -164,6 +165,7 @@
       "calendar": "Calendar",
       "settings": "Settings",
       "correspondence": "Correspondence",
+      "files": "Files",
       "schema": "Org Chart",
       "submissions": "Submissions"
     },
@@ -318,6 +320,7 @@
       "calendar": "Календарь",
       "settings": "Настройки",
       "correspondence": "Переписка",
+      "files": "Файлы",
       "schema": "Орг. схема",
       "submissions": "Заявки"
     },
