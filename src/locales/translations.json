@@ -61,6 +61,23 @@
       "title": "Organizasyon Şeması",
       "description": "Şirket ve proje hiyerarşisini buradan görüntüleyin."
     },
+    "settings_page": {
+      "description": "Hesap ayarlarınızı yönetin ve şifrenizi değiştirin.",
+      "form_title": "Şifre Değiştir",
+      "form_description": "Güvenliğiniz için düzenli olarak şifrenizi değiştirmeniz önerilir.",
+      "current_password": "Mevcut Şifre",
+      "new_password": "Yeni Şifre",
+      "confirm_new_password": "Yeni Şifreyi Onayla",
+      "new_password_description": "Şifreniz en az 8 karakter uzunluğunda olmalıdır.",
+      "save_button": "Değişiklikleri Kaydet",
+      "saving_button": "Kaydediliyor...",
+      "success_title": "Başarılı!",
+      "success_description": "Şifreniz başarıyla güncellendi.",
+      "error_title": "Hata",
+      "current_password_required": "Mevcut şifre gereklidir.",
+      "new_password_min_length": "Yeni şifre en az 8 karakter olmalıdır.",
+      "passwords_do_not_match": "Yeni şifreler eşleşmiyor."
+    },
     "login": {
       "welcome_back": "Portalınıza hoş geldiniz. Lütfen giriş yapın.",
       "login_title": "Giriş Yap",
@@ -143,6 +160,23 @@
         "title": "Organization Chart",
         "description": "View the company and project hierarchy from here."
     },
+    "settings_page": {
+      "description": "Manage your account settings and change your password.",
+      "form_title": "Change Password",
+      "form_description": "It is recommended to change your password regularly for your security.",
+      "current_password": "Current Password",
+      "new_password": "New Password",
+      "confirm_new_password": "Confirm New Password",
+      "new_password_description": "Your password must be at least 8 characters long.",
+      "save_button": "Save Changes",
+      "saving_button": "Saving...",
+      "success_title": "Success!",
+      "success_description": "Your password has been updated successfully.",
+      "error_title": "Error",
+      "current_password_required": "Current password is required.",
+      "new_password_min_length": "New password must be at least 8 characters.",
+      "passwords_do_not_match": "The new passwords do not match."
+    },
      "login": {
       "welcome_back": "Welcome to your portal. Please sign in.",
       "login_title": "Sign In",
@@ -224,6 +258,23 @@
      "schema_page": {
         "title": "Организационная схема",
         "description": "Просматривайте иерархию компании и проектов здесь."
+    },
+    "settings_page": {
+      "description": "Управляйте настройками своей учетной записи и меняйте пароль.",
+      "form_title": "Изменить пароль",
+      "form_description": "Для вашей безопасности рекомендуется регулярно менять пароль.",
+      "current_password": "Текущий пароль",
+      "new_password": "Новый пароль",
+      "confirm_new_password": "Подтвердите новый пароль",
+      "new_password_description": "Ваш пароль должен содержать не менее 8 символов.",
+      "save_button": "Сохранить изменения",
+      "saving_button": "Сохранение...",
+      "success_title": "Успешно!",
+      "success_description": "Ваш пароль успешно обновлен.",
+      "error_title": "Ошибка",
+      "current_password_required": "Требуется текущий пароль.",
+      "new_password_min_length": "Новый пароль должен содержать не менее 8 символов.",
+      "passwords_do_not_match": "Новые пароли не совпадают."
     },
     "login": {
       "welcome_back": "Добро пожаловать в ваш портал. Пожалуйста, войдите.",
