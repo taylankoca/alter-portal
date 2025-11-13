@@ -29,7 +29,7 @@ export default async function CorrespondenceDetailPage({ params }: { params: { i
 
     // Proje bulunamasa bile sayfanın çökmemesi için güvenli atama
     const projectName = projectForComm?.title || comm.project_short_name || 'N/A';
-    const projectSlug = projectForComm?.short_name_slug || slugify(comm.project_short_name || '');
+    const projectSlug = projectForComm?.short_name_slug || slugify(projectForComm?.short_name_slug || comm.project_short_name || '');
 
     const communication: EnrichedCommunication = {
         ...comm,
