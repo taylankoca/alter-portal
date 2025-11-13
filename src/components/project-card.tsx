@@ -37,7 +37,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <div className="absolute inset-0 bg-primary/80" />
         <div className="relative z-10 flex items-start justify-between">
             <Link href={projectUrl} className="flex-1">
-                <CardTitle className="text-lg font-semibold text-primary-foreground hover:underline cursor-pointer leading-tight">
+                <CardTitle className="text-lg font-semibold text-primary-foreground hover:underline cursor-pointer leading-tight line-clamp-2 h-[56px]">
                     {project.title}
                 </CardTitle>
             </Link>
