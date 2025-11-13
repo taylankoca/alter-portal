@@ -3,8 +3,8 @@
 # Hata durumunda betiği sonlandır
 set -e
 
-# Proje dizinine git
-cd /var/www/portal.alter.com.tr
+# Proje dizinine git (Doğru dizin adını varsayıyoruz, gerekirse değiştirin)
+cd /var/www/alter-portal
 
 echo "GIT: Son değişiklikler alınıyor..."
 # 'main' branch'inden son değişiklikleri çek. Eğer branch adınız farklıysa (örneğin 'master'), burayı güncelleyin.
