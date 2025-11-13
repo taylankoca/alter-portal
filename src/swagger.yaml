@@ -160,6 +160,79 @@ paths:
                       $ref: '#/components/schemas/User'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+    post:
+      tags:
+        - Users
+      summary: Kullanıcı şifresi güncelle
+      description: Kullanıcıların kendi hesap şifrelerini güncellemelerini sağlar. JWT token gereklidir.
+      operationId: updateOwnPassword
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user_id
+                - current_password
+                - password
+                - password_confirmation
+              properties:
+                user_id:
+                  type: integer
+                  description: Şifresi güncellenecek kullanıcının ID değeri. Sadece giriş yapan kullanıcının kendi ID'si kabul edilir.
+                  example: 12
+                current_password:
+                  type: string
+                  format: password
+                  description: Mevcut şifre
+                  example: eskiSifre123
+                password:
+                  type: string
+                  format: password
+                  description: Yeni şifre (en az 8 karakter)
+                  example: YeniSifre456
+                password_confirmation:
+                  type: string
+                  format: password
+                  description: Yeni şifre tekrarı
+                  example: YeniSifre456
+      responses:
+        '200':
+          description: Şifre başarıyla güncellendi
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Şifre başarıyla güncellendi
+        '400':
+          description: Geçersiz JSON isteği
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          description: Yetkisiz işlem
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Doğrulama hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     options:
       tags:
         - Users

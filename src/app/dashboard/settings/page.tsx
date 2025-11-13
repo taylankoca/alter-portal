@@ -10,7 +10,7 @@ import { useLanguage } from '@/context/language-context';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
@@ -45,25 +45,36 @@ export default function SettingsPage() {
     setIsLoading(true);
     setError(null);
 
-    // Placeholder for API call
-    console.log(values);
+    try {
+      const response = await fetch('/api/user/change-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          current_password: values.current_password,
+          password: values.new_password,
+          password_confirmation: values.new_password_confirmation,
+        }),
+      });
 
-    // TODO: Implement API call to /api/user/change-password
-    
-    // Simulating API call for now
-    await new Promise(resolve => setTimeout(resolve, 1000));
+      const result = await response.json();
 
-    // Example of a successful response
-    toast({
+      if (!response.ok) {
+        throw new Error(result.message || 'An unknown error occurred');
+      }
+      
+      toast({
         title: t.success_title,
         description: t.success_description,
-    });
-    form.reset();
+      });
+      form.reset();
 
-    // Example of a failed response
-    // setError("Mevcut şifreniz hatalı.");
-
-    setIsLoading(false);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
