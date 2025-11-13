@@ -13,6 +13,16 @@
       "schema": "Şema",
       "submissions": "Başvurularım"
     },
+    "calendar_page": {
+      "description": "Etkinliklerinizi ve proje zaman çizelgenizi yönetin.",
+      "project_filter": "Proje Filtresi",
+      "select_project": "Proje seçin...",
+      "general_calendar": "Genel Takvim",
+      "view_month": "Ay",
+      "view_week": "Hafta",
+      "view_day": "Gün",
+      "view_list": "Liste"
+    },
     "projects_page": {
       "description": "Tüm aktif ve arşivlenmiş projelerinizi buradan yönetin.",
       "created_by": "Oluşturan",
@@ -157,6 +167,16 @@
       "schema": "Org Chart",
       "submissions": "Submissions"
     },
+     "calendar_page": {
+      "description": "Manage your events and project timeline.",
+      "project_filter": "Project Filter",
+      "select_project": "Select a project...",
+      "general_calendar": "General Calendar",
+      "view_month": "Month",
+      "view_week": "Week",
+      "view_day": "Day",
+      "view_list": "List"
+    },
     "projects_page": {
       "description": "Manage all your active and archived projects from here.",
       "created_by": "Created by",
@@ -300,6 +320,16 @@
       "correspondence": "Переписка",
       "schema": "Орг. схема",
       "submissions": "Заявки"
+    },
+     "calendar_page": {
+      "description": "Управляйте своими событиями и временной шкалой проекта.",
+      "project_filter": "Фильтр по проекту",
+      "select_project": "Выберите проект...",
+      "general_calendar": "Общий календарь",
+      "view_month": "Месяц",
+      "view_week": "Неделя",
+      "view_day": "День",
+      "view_list": "Список"
     },
     "projects_page": {
       "description": "Управляйте всеми своими активными и архивными проектами здесь.",
