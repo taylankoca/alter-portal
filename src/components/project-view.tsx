@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useMemo } from 'react';
@@ -14,7 +13,7 @@ interface ProjectViewProps {
 }
 
 export default function ProjectView({ projects }: ProjectViewProps) {
-  const [view, setView] = useState('list');
+  const [view, setView] = useState('grid');
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredProjects = useMemo(() => {
