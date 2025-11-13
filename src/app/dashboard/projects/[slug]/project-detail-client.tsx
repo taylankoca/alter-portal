@@ -150,7 +150,7 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
              <header className="bg-primary text-primary-foreground p-6 md:p-8 rounded-lg shadow-md">
                 <div className="flex items-start justify-between gap-6">
                     <div className="flex-1">
-                        <h1 className="text-2xl md:text-4xl font-bold">{project.title}</h1>
+                        <h1 className="text-2xl md:text-4xl font-bold leading-tight">{project.title}</h1>
                         <p className="text-lg text-primary-foreground/80 mt-2">
                             {project.description}
                         </p>
@@ -168,11 +168,12 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                 <Tabs defaultValue="description" className="w-full">
                     <TabsList className="grid w-full grid-cols-5">
                         <TabsTrigger value="description">{t.project_description}</TabsTrigger>
-                        <TabsTrigger value="team">{t.project_team}</TabsTrigger>
-                        <TabsTrigger value="correspondence">{t.correspondence}</TabsTrigger>
-                         <TabsTrigger value="tasks">{t.tasks}</TabsTrigger>
                         <TabsTrigger value="files">{t.files}</TabsTrigger>
+                        <TabsTrigger value="correspondence">{t.correspondence}</TabsTrigger>
+                        <TabsTrigger value="tasks">{t.tasks}</TabsTrigger>
+                        <TabsTrigger value="team">{t.project_team}</TabsTrigger>
                     </TabsList>
+
                     <TabsContent value="description" className="mt-6">
                         <div className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -231,25 +232,30 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                             </div>
                         </div>
                     </TabsContent>
-                    <TabsContent value="team" className="mt-6">
+
+                    <TabsContent value="files" className="mt-6">
                         <div className="space-y-6">
-                            {admins.length > 0 && (
-                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                                    {admins.map(member => renderMemberCard(member, true))}
+                            <div>
+                                <h3 className="text-lg font-medium text-foreground mb-2">Sözleşmeler</h3>
+                                <div className="space-y-4 text-center text-muted-foreground py-8 border rounded-lg">
+                                    <p>Henüz sözleşme bulunmamaktadır.</p>
                                 </div>
-                            )}
-
-                            {admins.length > 0 && members.length > 0 && (
-                                <Separator className="my-6" />
-                            )}
-
-                            {members.length > 0 && (
-                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                                    {members.map(member => renderMemberCard(member, false))}
+                            </div>
+                             <div>
+                                <h3 className="text-lg font-medium text-foreground mb-2">Hakedişler</h3>
+                                <div className="space-y-4 text-center text-muted-foreground py-8 border rounded-lg">
+                                    <p>Henüz hakediş bulunmamaktadır.</p>
                                 </div>
-                            )}
+                            </div>
+                             <div>
+                                <h3 className="text-lg font-medium text-foreground mb-2">Taşeron Sözleşmeleri</h3>
+                                <div className="space-y-4 text-center text-muted-foreground py-8 border rounded-lg">
+                                    <p>Henüz taşeron sözleşmesi bulunmamaktadır.</p>
+                                </div>
+                            </div>
                         </div>
                     </TabsContent>
+
                     <TabsContent value="correspondence" className="mt-6 space-y-4">
                         <div className="relative w-full">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -326,14 +332,30 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
                             </div>
                         )}
                     </TabsContent>
+
                      <TabsContent value="tasks" className="mt-6">
                          <div className="space-y-4 text-center text-muted-foreground py-16">
                             <p>Henüz görev bulunmamaktadır.</p>
                         </div>
                     </TabsContent>
-                    <TabsContent value="files" className="mt-6">
-                         <div className="space-y-4 text-center text-muted-foreground py-16">
-                            <p>Henüz dosya bulunmamaktadır.</p>
+                    
+                    <TabsContent value="team" className="mt-6">
+                        <div className="space-y-6">
+                            {admins.length > 0 && (
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                                    {admins.map(member => renderMemberCard(member, true))}
+                                </div>
+                            )}
+
+                            {admins.length > 0 && members.length > 0 && (
+                                <Separator className="my-6" />
+                            )}
+
+                            {members.length > 0 && (
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                                    {members.map(member => renderMemberCard(member, false))}
+                                </div>
+                            )}
                         </div>
                     </TabsContent>
                 </Tabs>
@@ -341,3 +363,5 @@ export default function ProjectDetailClient({ project, t }: ProjectDetailClientP
         </div>
     );
 }
+
+    
