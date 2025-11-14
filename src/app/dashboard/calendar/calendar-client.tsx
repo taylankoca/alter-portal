@@ -231,7 +231,9 @@ export default function CalendarClient({ projects }: CalendarClientProps) {
                         <SelectContent>
                             <SelectItem value="all">{t_cal.general_calendar}</SelectItem>
                             {projects.map(project => (
-                                <SelectItem key={project.id} value={project.id}>{project.title}</SelectItem>
+                                <SelectItem key={project.id} value={project.id}>
+                                    {project.title} ({project.alterProjectNo})
+                                </SelectItem>
                             ))}
                         </SelectContent>
                     </Select>
