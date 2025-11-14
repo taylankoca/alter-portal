@@ -59,6 +59,7 @@
       "email": "E-posta",
       "title_label": "Unvan",
       "location_label": "Konum",
+      "phone_label": "Telefon",
       "search_placeholder": "İsim, soyisim, e-posta, unvan veya konum ile ara..."
     },
     "correspondence_page": {
@@ -214,6 +215,7 @@
       "email": "Email",
       "title_label": "Title",
       "location_label": "Location",
+      "phone_label": "Phone",
       "search_placeholder": "Search by name, surname, email, title or location..."
     },
      "correspondence_page": {
@@ -369,6 +371,7 @@
       "email": "Эл. почта",
       "title_label": "Должность",
       "location_label": "Местоположение",
+      "phone_label": "Телефон",
       "search_placeholder": "Поиск по имени, фамилии, электронной почте, должности или местоположению..."
     },
      "correspondence_page": {

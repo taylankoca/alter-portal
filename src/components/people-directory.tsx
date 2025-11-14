@@ -96,7 +96,7 @@ export default function PeopleDirectory({ users }: PeopleDirectoryProps) {
                         <TableHead>{t.email}</TableHead>
                         <TableHead>{t.title_label}</TableHead>
                         <TableHead>{t.location_label}</TableHead>
-                        <TableHead>Telefon</TableHead>
+                        <TableHead>{t.phone_label}</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
